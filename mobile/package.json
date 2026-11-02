@@ -1,0 +1,33 @@
+{
+  "name": "proready-coach-mobile",
+  "version": "1.1.0",
+  "private": true,
+  "description": "ProReady Coach native shell (Capacitor) — wraps the web app in ../index.html for iOS & Android store builds.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "sync:www": "node scripts/sync-www.mjs",
+    "add:android": "npm run sync:www && cap add android",
+    "add:ios": "npm run sync:www && cap add ios",
+    "sync": "npm run sync:www && cap sync",
+    "copy": "npm run sync:www && cap copy",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios",
+    "run:android": "cap run android",
+    "run:ios": "cap run ios",
+    "assets": "npx @capacitor/assets generate",
+    "doctor": "cap doctor"
+  },
+  "dependencies": {
+    "@capacitor-community/speech-recognition": "^7.0.1",
+    "@capacitor-community/text-to-speech": "^6.1.0",
+    "@capacitor/android": "^7.6.10",
+    "@capacitor/core": "^7.6.10",
+    "@capacitor/ios": "^7.6.10"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.6.10"
+  }
+}

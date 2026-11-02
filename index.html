@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="coach">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProReady Coach — Resume & Interview Prep for Professional Jobs</title>
+<meta name="description" content="Step-by-step resume builder and proofreader, interview lessons, and a formal AI video mock interview with scored feedback.">
+<meta name="app-version" content="1.2.0">
+<meta name="app-build" content="2026-10-31">
+<meta name="theme-color" content="#432818">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ProReady">
+<script>
+/* SafeStore: real localStorage when allowed, in-memory fallback in sandboxed previews (never throws).
+   Design is locked to "Warm Coach" (html data-theme="coach"); palette lives in CSS variables in <style>. */
+window.SafeStore=(function(){var mem={},ok=false;try{window.localStorage.setItem('__pr_t__','1');window.localStorage.removeItem('__pr_t__');ok=true;}catch(e){ok=false;}
+return{getItem:function(k){try{return ok?window.localStorage.getItem(k):(k in mem?mem[k]:null);}catch(e){return k in mem?mem[k]:null;}},
+setItem:function(k,v){mem[k]=String(v);try{if(ok)window.localStorage.setItem(k,v);}catch(e){}},
+removeItem:function(k){delete mem[k];try{if(ok)window.localStorage.removeItem(k);}catch(e){}}};})();
+</script>
+<style>
+/* ===== ProReady v2 Design System: 3 switchable concepts ===== */
+html[data-theme="coach"]{
+  --bg:#F9E9D2;--card:#FFFDF8;--ink:#2F241B;--muted:#7A6A5E;--line:#EEDDCB;
+  --navy:#432818;--navy2:#7C4A2D;--teal:#5F7161;--teal2:#84A98C;
+  --amber:#C75B39;--amber2:#FFC98A;--amber-ink:#FFFFFF;
+  --green:#3E7C3A;--greenbg:#E3EEDB;--red:#B23A2E;--redbg:#FBE3DB;
+  --headerBg:#FFFDF8;--headerInk:#2F241B;--headerMuted:#B07D4F;--navActiveBg:#432818;--navActiveInk:#FFF6EC;--pillBg:#FFF1DE;
+  --radius:24px;--shadow:0 12px 32px rgba(67,40,24,.10);--display:Georgia,'Times New Roman',serif;--bold:#432818;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;transition:background .25s}
+a{color:var(--teal)} button{cursor:pointer;font-family:inherit}
+h1,h2{font-family:var(--display)}
+header{position:sticky;top:0;z-index:50;background:var(--headerBg);color:var(--headerInk);box-shadow:0 4px 20px rgba(0,0,0,.12);border-bottom:2px solid var(--line)}
+.header-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 20px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.02em;font-size:22px}
+.logo-badge{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--amber),var(--teal2));display:grid;place-items:center;font-size:22px;color:#fff}
+.logo small{display:block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--headerMuted);line-height:1}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+nav button{background:transparent;color:var(--headerInk);border:1.5px solid var(--line);padding:9px 13px;border-radius:999px;font-weight:700;font-size:13px}
+nav button.active{background:var(--navActiveBg);color:var(--navActiveInk);border-color:var(--navActiveBg)}
+nav button:hover{opacity:.85}
+.progress-pill{background:var(--pillBg);color:var(--headerInk);border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}
+.progress-pill b{color:var(--amber)}
+html[data-theme="coach"] .progress-pill b{color:#C75B39}
+.wrap{max-width:1240px;margin:0 auto;padding:24px 20px 60px}
+.view{display:none}.view.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 55%,var(--teal) 100%);color:#fff;border-radius:calc(var(--radius) + 8px);padding:38px;overflow:hidden;position:relative}
+.hero h1{font-size:clamp(30px,4.5vw,52px);line-height:1.02;letter-spacing:-.02em;margin:0 0 14px;max-width:720px}
+.hero h1 em{color:var(--amber2);font-style:normal}
+.hero p{font-size:18px;color:rgba(255,255,255,.88);max-width:680px;margin:0 0 22px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:0;padding:13px 20px;border-radius:999px;font-weight:900;font-size:15px;display:inline-flex;align-items:center;gap:8px;justify-content:center;text-decoration:none}
+.btn-amber{background:var(--amber);color:var(--amber-ink)}.btn-amber:hover{filter:brightness(1.08)}
+.btn-white{background:#fff;color:var(--navy)}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{filter:brightness(.92)}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-outline{background:#fff;color:var(--navy);border:2px solid var(--line)}
+.btn-ghost{background:transparent;border:2px solid rgba(255,255,255,.45);color:#fff}
+.btn-sm{padding:9px 14px;font-size:13px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}.split,.split-r{grid-template-columns:1fr!important}.hero{padding:24px}}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
+.split-r{display:grid;grid-template-columns:.95fr 1.05fr;gap:22px;align-items:start}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card h2,.card h3{margin-top:0;letter-spacing:-.01em;line-height:1.15}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--teal);margin:0 0 8px}
+.muted{color:var(--muted)}.small{font-size:13px}.big{font-size:18px}
+label{font-weight:800;font-size:13px;display:block;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font:inherit;background:#fff;color:var(--ink)}
+html[data-theme="coach"] input,html[data-theme="coach"] select,html[data-theme="coach"] textarea{border-radius:16px;background:#fff}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--amber2);border-color:var(--teal)}
+textarea{min-height:96px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{padding:8px 12px;border-radius:999px;border:2px solid var(--line);background:#fff;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip.teal.on{background:var(--teal);border-color:var(--teal)}
+.stepcard{text-align:left;width:100%;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .15s}
+.stepcard:hover{border-color:var(--teal);transform:translateY(-2px)}
+.stepnum{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:900;margin-bottom:10px}
+.stepcard.done .stepnum{background:var(--green)}
+.badge{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:900;background:#FEF3C7;color:#92400E;border:1px solid #FDE68A}
+.badge.green{background:var(--greenbg);color:#166534;border-color:#BBF7D0}.badge.blue{background:#E3EEDB;color:#355E3B;border-color:#CBDCC0}.badge.red{background:var(--redbg);color:#991B1B;border-color:#FECACA}
+.scorebar{height:12px;background:#E7E5E4;border-radius:999px;overflow:hidden}.scorebar>i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));width:0;transition:width .5s}
+.checklist{list-style:none;padding:0;margin:10px 0}.checklist li{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);align-items:flex-start}
+.check{width:24px;height:24px;border-radius:50%;flex:0 0 24px;display:grid;place-items:center;background:#E7E5E4;font-size:13px;font-weight:900}.check.yes{background:var(--greenbg);color:var(--green)}
+.resume-preview{background:#fff;border:1px solid #CBD5E1;padding:34px 36px;font-family:Georgia,serif;color:#111827;box-shadow:0 18px 40px rgba(0,0,0,.08);min-height:640px;border-radius:6px}
+.resume-preview h1{font-size:28px;margin:0;letter-spacing:-.02em;font-family:Inter,system-ui,sans-serif}
+.resume-preview h2{font-family:Inter,system-ui,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#6B4226;border-bottom:2px solid #E8DDCB;padding-bottom:6px;margin:20px 0 10px}
+.resume-preview ul{margin:6px 0 10px 18px;padding:0}.resume-preview li{margin:4px 0}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:700px){.dodont{grid-template-columns:1fr}}
+.do{background:#F0FDF4;border:2px solid #BBF7D0;border-radius:16px;padding:18px;color:#14532D}.dont{background:#FEF2F2;border:2px solid #FECACA;border-radius:16px;padding:18px;color:#7F1D1D}
+.do h3{color:#166534}.dont h3{color:#991B1B}
+details{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0}summary{font-weight:900;cursor:pointer}
+.quiz-opt{width:100%;text-align:left;padding:14px;border-radius:14px;border:2px solid var(--line);background:#fff;font-weight:800;margin:8px 0;color:var(--ink)}.quiz-opt.correct{border-color:#22C55E;background:#F0FDF4}.quiz-opt.wrong{border-color:#EF4444;background:#FEF2F2}
+.stage{background:#2B1A10;color:#fff;border-radius:24px;padding:18px}
+.avatar-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px}
+.avatar{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FEF3C7,var(--amber) 55%,var(--teal));display:grid;place-items:center;border:6px solid rgba(255,255,255,.15);position:relative}
+.avatar.speaking{animation:pulse 1s infinite alternate}
+@keyframes pulse{from{transform:scale(1);box-shadow:0 0 0 0 rgba(255,255,255,.35)}to{transform:scale(1.03);box-shadow:0 0 0 18px rgba(255,255,255,.06)}}
+.wave{display:flex;gap:5px;justify-content:center;height:28px;align-items:center;margin:10px 0}
+.wave span{width:6px;border-radius:999px;background:var(--amber2);height:8px}.speaking-wave span{animation:wave .7s infinite alternate}.wave span:nth-child(2){animation-delay:.1s}.wave span:nth-child(3){animation-delay:.2s}.wave span:nth-child(4){animation-delay:.3s}.wave span:nth-child(5){animation-delay:.4s}
+@keyframes wave{from{height:8px}to{height:26px}}
+video.cam{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;background:#111827;border:2px solid rgba(255,255,255,.15);transform:scaleX(-1)}
+.cam-fallback{aspect-ratio:4/3;border-radius:16px;background:#3A2415;display:grid;place-items:center;text-align:center;padding:20px;color:#FFE8D6;border:2px dashed #C75B39}
+.notes{background:#FFFBEB;color:#422006;border-radius:16px;padding:16px;border:1px solid #FDE68A;max-height:340px;overflow:auto}
+.notes h4{margin:0 0 10px}.noteitem{border-bottom:1px dashed #FCD34D;padding:9px 0;font-size:13.5px}
+.caption{background:#1E130C;border:1px solid #C75B39;border-radius:14px;padding:16px;font-size:18px;font-weight:800;line-height:1.35}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;background:#3A2415;padding:8px 12px;border-radius:999px}
+.rec-on{background:#DC2626!important;color:#fff!important}
+.bar-row{display:grid;grid-template-columns:150px 1fr 46px;gap:12px;align-items:center;margin:10px 0;font-weight:800;font-size:14px}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}@media(max-width:800px){.kpi{grid-template-columns:repeat(2,1fr)}}
+.kpi div{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px;text-align:center;box-shadow:var(--shadow)}.kpi b{font-size:28px;display:block;letter-spacing:-.03em}
+.notice{background:#EFF6FF;border:1px solid #BFDBFE;color:#1E3A8A;padding:14px 16px;border-radius:14px}
+html[data-theme="coach"] .notice{background:#EFF3EA;border-color:#CBDCC0;color:#2F4429}
+.warn{background:#FFFBEB;border:1px solid #FDE68A;color:#78350F;padding:14px 16px;border-radius:14px}
+footer{max-width:1240px;margin:0 auto;padding:0 20px 34px;color:var(--muted);font-size:13px}
+/* ===== Layout A: Warm Coach — narrow, centered, guided ===== */
+html[data-theme="coach"] .wrap{max-width:1000px}
+html[data-theme="coach"] .hero{text-align:center;padding:52px 34px}
+html[data-theme="coach"] .hero h1,html[data-theme="coach"] .hero p{margin-left:auto;margin-right:auto}
+html[data-theme="coach"] .hero-ctas{justify-content:center}
+html[data-theme="coach"] #journeyCards{grid-template-columns:1fr!important;max-width:840px}
+html[data-theme="coach"] .stepcard{padding:28px 30px}
+html[data-theme="coach"] .stepnum{width:52px;height:52px;font-size:19px;border-radius:18px;background:var(--teal)}
+html[data-theme="coach"] .btn{padding:15px 24px}
+
+/* ===== Resume mode tabs + proofreader ===== */
+.modetabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.modetab{padding:13px 20px;border-radius:999px;border:2.5px solid var(--line);background:#fff;color:var(--ink);font-weight:900;font-size:15px}
+.modetab.on{background:var(--navy);color:#FFF6EC;border-color:var(--navy)}
+.finding{border-bottom:1px dashed var(--line);padding:12px 0}
+.finding:last-child{border-bottom:0}
+
+/* ===== a11y, export, backup, version (v1.1) ===== */
+:focus-visible{outline:3px solid #C75B39;outline-offset:2px;border-radius:6px}
+.skip-link{position:absolute;left:-9999px;top:8px;background:#432818;color:#FFF6EC;padding:10px 16px;border-radius:10px;z-index:9999;font-weight:800}
+.skip-link:focus{left:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.explain{font-size:12.5px;color:#7A6A5E;margin:6px 0 0;line-height:1.45}
+.explain b{color:#5F7161}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);background:#432818;color:#FFF6EC;padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px;z-index:10000;box-shadow:0 12px 32px rgba(67,40,24,.35);transition:transform .28s ease;max-width:90vw;text-align:center}
+.toast.on{transform:translate(-50%,0)}
+.exportbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.exportbar .btn{padding:11px 16px;font-size:14px}
+.btn-ghost{background:transparent;border:2px solid var(--line);color:var(--ink)}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+@media print{ .no-print,.exportbar,.toast,.skip-link{display:none!important} }
+@media print{header,footer,.no-print,.design-picker{display:none!important}body{background:#fff;padding-left:0!important}.wrap{padding:0}.view{display:none!important}#view-resume{display:block!important}.resume-preview{box-shadow:none;border:0}}
+
+
+/* v2.1: unmistakable theme identity at ANY screen width */
+html[data-theme="coach"] header{border-bottom:5px solid #C75B39}
+html[data-theme="coach"] .stepcard,html[data-theme="coach"] .card{border-top:5px solid #84A98C}
+
+
+
+/* ===== Warm Coach — final polish (locked design) ===== */
+html[data-theme="coach"] .hero{background-image:radial-gradient(rgba(255,255,255,.13) 1.5px,transparent 1.6px),linear-gradient(135deg,var(--navy) 0%,var(--navy2) 55%,var(--teal) 100%);background-size:22px 22px,cover}
+html[data-theme="coach"] .card h3,html[data-theme="coach"] .card h2{color:var(--navy)}
+html[data-theme="coach"] .stepcard:hover{border-color:#C75B39}
+::selection{background:#FFC98A}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#appMain">Skip to main content</a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<header>
+  <div class="header-in">
+    <div class="logo"><div class="logo-badge">✓</div><div>ProReady<small>Resume & Interview Coach</small></div></div>
+    <nav id="mainNav">
+      <button data-view="home" class="active">🏠 Journey</button>
+      <button data-view="job">1 · Target Job</button>
+      <button data-view="resume">2 · Resume</button>
+      <button data-view="prep">3 · Prep School</button>
+      <button data-view="interview">4 · AI Video Interview</button>
+      <button data-view="followup">5 · Follow-Up</button>
+    </nav>
+    
+    <div class="progress-pill">Ready score: <b id="readyScore">0%</b></div>
+  </div>
+</header>
+
+<main class="wrap" id="appMain" tabindex="-1">
+
+<!-- HOME -->
+<section id="view-home" class="view active">
+  <div class="hero">
+    <p class="eyebrow" style="color:#FDE68A">For professional jobs — no college degree required to be ready</p>
+    <h1>Get hired with confidence, <em>step by step.</em></h1>
+    <p>Whether this is your first office job, a career change, returning to work, or moving up — ProReady walks you from resume to thank-you note, then lets you practice face-to-face with an AI hiring manager.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-amber" onclick="showView('job')">Start: Enter Your Target Job →</button>
+      <button class="btn btn-ghost" onclick="showView('interview')">🎥 Try the AI Video Interview</button>
+      <button class="btn btn-white" onclick="loadExample()">Load Example Profile</button>
+    </div>
+    <p class="small" style="margin-top:14px;color:#BFDBFE">🔒 Private by design: your camera & mic stay in your browser. Nothing is recorded or uploaded in this version.</p>
+  </div>
+
+  
+  <div style="height:18px"></div>
+  <div class="kpi">
+    <div><b id="kpiJob">—</b><span class="muted small">Target job set</span></div>
+    <div><b id="kpiResume">0%</b><span class="muted small">Resume strength</span></div>
+    <div><b id="kpiPrep">0/6</b><span class="muted small">Prep quiz score</span></div>
+    <div><b id="kpiInterview">—</b><span class="muted small">Last mock interview</span></div>
+  </div>
+
+  <h2 style="margin:28px 0 6px;letter-spacing:-.02em">Your 5-step journey</h2>
+  <p class="muted">Do them in order the first time. After that, jump back to any step to practice or polish.</p>
+  <div class="grid g3" id="journeyCards">
+    <button class="stepcard" onclick="showView('job')"><div class="stepnum">1</div><h3>Target Job</h3><p class="muted">Tell us the job you want. Paste the posting — we'll pull out the keywords employers scan for and tailor every question.</p><span class="badge blue">Start here · 3 min</span></button>
+    <button class="stepcard" onclick="showView('resume')"><div class="stepnum">2</div><h3>Build a Strong Resume</h3><p class="muted">Guided builder with live preview, ATS keyword match, action-verb help, and credit for certifications, licenses & training.</p><span class="badge">Live preview · Printable</span></button>
+    <button class="stepcard" onclick="showView('prep')"><div class="stepnum">3</div><h3>Prep School</h3><p class="muted">Do's & Don'ts, what to wear, tough questions, the STAR method, and questions <em>you</em> should ask them.</p><span class="badge">Lessons + quiz</span></button>
+    <button class="stepcard" onclick="showView('interview')"><div class="stepnum">4</div><h3>AI Video Mock Interview</h3><p class="muted">A full staged interview with AI hiring manager Alex: elevator intro, your real work history, skills proof, behavioral stories with follow-up probes, a job scenario, your questions, and the close — with live notes throughout.</p><span class="badge green">🎥 Most popular</span></button>
+    <button class="stepcard" onclick="showView('followup')"><div class="stepnum">5</div><h3>Day-Of & Follow-Up</h3><p class="muted">Night-before checklist, what to bring, salary & gap questions, and a thank-you email generator.</p><span class="badge">Checklists</span></button>
+    <div class="card" style="background:#FFFBEB;border-color:#FDE68A"><h3>💛 Who this is for</h3><p class="small">First professional job · Career changers · Returning after caregiving or a break · Military transition · Trades moving into supervisor/office roles · Experienced pros polishing up.</p><p class="small"><b>Your experience counts.</b> We help you translate retail, food service, warehouse, caregiving, trades, and volunteer work into professional language employers respect.</p></div>
+  </div>
+</section>
+
+<!-- JOB -->
+<section id="view-job" class="view">
+  <p class="eyebrow">Step 1 · Tailor everything to one job</p>
+  <h1 style="margin:0 0 8px;letter-spacing:-.03em">What job are you going for?</h1>
+  <p class="muted big">One specific job = a much stronger resume and interview. You can change this anytime for a new application.</p>
+  <div class="split">
+    <div class="card">
+      <label for="jobTitle">Job title you're applying for *</label><input  id="jobTitle" placeholder="e.g., Medical Office Assistant, Customer Service Representative, Operations Supervisor">
+      <label for="jobCompany">Company (optional)</label><input  id="jobCompany" placeholder="e.g., OSF HealthCare, Flagstar Bank, Delta County">
+      <label for="jobLocation">Location</label><input  id="jobLocation" placeholder="e.g., Escanaba, MI / Hybrid / Remote">
+      <label for="jobLevel">Your experience level for this kind of work</label>
+      <select  id="jobLevel"><option>New to this field</option><option>Some related experience</option><option>1–3 years in similar role</option><option>3+ years — experienced</option><option>Returning to work after a break</option></select>
+      <label for="jobDesc">Paste the job posting / description (recommended)</label>
+      <textarea  id="jobDesc" rows="8" placeholder="Paste the full posting here. We'll extract the skills & keywords the hiring software (ATS) looks for, and generate interview questions from it."></textarea>
+      <label>Your top strengths (tap all that fit)</label><div class="chips" id="strengthChips"></div>
+      <label>Anything you're worried about? (we'll coach you on it, judgment-free)</label><div class="chips" id="concernChips"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+        <button class="btn btn-teal" onclick="saveJob()">Save & Tailor My Coach →</button>
+        <button class="btn btn-outline" onclick="loadExample()">Load Example</button>
+      </div>
+    </div>
+    <div>
+      <div class="card" id="tailorPanel">
+        <h3>🎯 Your tailored focus</h3>
+        <p class="muted" id="tailorEmpty">Enter a job title and paste a posting, then tap Save. You'll see:</p>
+        <ul class="small muted"><li>Keywords to put in your resume</li><li>Likely interview topics for this role</li><li>Skills to highlight from any background</li></ul>
+        <div id="tailorOut" style="display:none">
+          <p><b>Target:</b> <span id="tailorTitle"></span></p>
+          <p class="eyebrow">ATS keywords found in posting</p><div class="chips" id="keywordChips"></div>
+          <p class="eyebrow">Interviewers will likely probe</p><ul id="focusList" class="small"></ul>
+          <div class="notice small"><b>Next:</b> Head to Step 2 — your resume builder is now watching for these keywords.</div>
+          <button class="btn btn-navy btn-sm" style="margin-top:12px" onclick="showView('resume')">Go to Resume Builder →</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px"><h3>No posting yet?</h3><p class="small muted">That's okay. Enter just a job title (e.g., "Bank Teller"). ProReady will use common professional questions for that field. Come back and paste a real posting before you apply — tailoring one resume per job is the #1 tip from hiring managers.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="view-resume" class="view">
+  <p class="eyebrow">Step 2 · Resume builder & proofreader</p>
+  <h1 style="margin:0 0 8px;letter-spacing:-.03em">Build a resume — or have your current one proofread</h1>
+  <p class="muted">Starting fresh? Use the Builder on the left and watch the preview, score, and keyword match update as you type. Already have a resume? Switch to <b>Proofread My Existing Resume</b> and submit it for a full evaluation with prioritized, constructive fixes. No degree? Lead with experience, certifications, and results.</p>
+  <div class="modetabs no-print">
+    <button type="button" class="modetab on" id="modeBuildBtn" onclick="showResumeMode('build')">✍️ Build a Resume</button>
+    <button type="button" class="modetab" id="modeProofBtn" onclick="showResumeMode('proof')">🔍 Proofread My Existing Resume</button>
+  </div>
+
+  <div id="proofWrap" class="no-print" style="display:none">
+    <div class="card">
+      <p class="eyebrow">Resume Proofreader</p>
+      <h2 style="margin-bottom:6px">Submit your current resume. Get honest, specific feedback.</h2>
+      <p class="muted">Upload a file or paste the text. The proofreader checks <b>spelling & mechanics, structure, whether bullets prove impact or just list duties, keyword match with your target job, and professional red flags</b> — then gives you prioritized fixes, line-by-line notes, and suggested rewrites.</p>
+      <p class="small"><span class="badge green">🔒 Private</span> <span class="muted">Analysis happens entirely in your browser. Your resume is never uploaded or sent to a server.</span></p>
+      <p class="small muted" id="proofTargetEcho"></p>
+      <label for="proofFile">Upload your resume file (.docx, .txt, .html — or paste below)</label>
+      <input type="file"  id="proofFile" accept=".docx,.txt,.md,.html,.htm,.pdf" onchange="handleProofFile(this)">
+      <p class="small muted" id="proofFileStatus">PDF resumes: if a PDF will not load automatically, open it, press Ctrl+A then Ctrl+C, and paste the text below — the proofreading is identical.</p>
+      <label for="proofText">…or paste your full resume text here</label>
+      <textarea  id="proofText" rows="16" placeholder="Paste everything: your name and contact line, summary, work experience with dates and bullets, skills, and education/certifications. Plain text is fine — headings help the proofreader find each section."></textarea>
+      <label style="display:flex;gap:10px;align-items:center;font-size:14px"><input type="checkbox" id="proofUseJob" checked style="width:auto" aria-label="proofUseJob"> Compare against my target job posting from Step 1 (ATS keywords)</label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button class="btn btn-amber" onclick="analyzeProof()">🔍 Proofread My Resume</button>
+        <button class="btn btn-outline" onclick="loadProofSample()">Try a Sample Resume (with deliberate problems)</button>
+        <button class="btn btn-outline" onclick="document.getElementById('proofText').value='';document.getElementById('proofResults').innerHTML=''">Clear</button>
+      </div>
+    </div>
+    <div id="proofResults" style="margin-top:18px" role="region" aria-live="polite" aria-label="Proofreading results"></div>
+  </div>
+
+  <div class="split-r" id="builderWrap">
+    <div class="card no-print">
+      <h3>Contact</h3>
+      <label for="rName">Full name</label><input  id="rName" oninput="renderResume()" placeholder="Jordan Taylor">
+      <label for="rHeadline">Professional headline</label><input  id="rHeadline" oninput="renderResume()" placeholder="Reliable Customer Service Professional | 4 Years Front-Line Experience">
+      <div class="grid g2"><div><label for="rCity">City, State</label><input  id="rCity" oninput="renderResume()" placeholder="Escanaba, MI"></div><div><label for="rPhone">Phone</label><input  id="rPhone" oninput="renderResume()" placeholder="(906) 555-0142"></div></div>
+      <label for="rEmail">Email (professional-sounding)</label><input  id="rEmail" oninput="renderResume()" placeholder="Jordan.Taylor@email.com">
+
+      <h3 style="margin-top:24px">Professional Summary</h3>
+      <p class="small muted">2–3 sentences: who you are + years/strengths + what you bring to <em>this</em> job.</p>
+      <button class="btn btn-outline btn-sm" onclick="generateSummary()">✨ Generate a draft for me</button>
+      <label for="rSummary">Summary</label><textarea  id="rSummary" oninput="renderResume()" placeholder="Dependable and friendly professional with..."></textarea>
+
+      <h3 style="margin-top:24px">Work Experience</h3>
+      <p class="small muted">Include any paid work, plus relevant volunteer, caregiving, military, or family-business experience. Start bullets with an action verb + result.</p>
+      <div id="expList"></div>
+      <button class="btn btn-outline btn-sm" onclick="addExp()">+ Add a job / experience</button>
+
+      <h3 style="margin-top:24px">Skills</h3>
+      <p class="small muted">Tap suggested skills or type your own, separated by commas.</p>
+      <div class="chips" id="skillSuggest"></div>
+      <input id="rSkills" oninput="renderResume()" placeholder="Scheduling, Microsoft Excel, Cash Handling, HIPAA Awareness" aria-label="Scheduling, Microsoft Excel, Cash Handling, HIPAA Awareness">
+
+      <h3 style="margin-top:24px">Education, Training & Certifications</h3>
+      <textarea id="rEdu" oninput="renderResume()" placeholder="High School Diploma — Escanaba Area High School, 2018&#10;CPR & First Aid Certified — American Red Cross, 2024&#10;Customer Service Certificate — Bay College Workforce Training, 2023" aria-label="High School Diploma — Escanaba Area High School, 2018&#10;CPR & First "></textarea>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+        <div class="exportbar no-print">
+          <button class="btn btn-teal" onclick="exportResume('pdf')">⬇ PDF</button>
+          <button class="btn btn-outline" onclick="exportResume('docx')">⬇ Word (.docx)</button>
+          <button class="btn btn-outline" onclick="exportResume('txt')">⬇ Plain text</button>
+          <button class="btn btn-ghost" onclick="printResume()">🖨 Print</button>
+        </div>
+        <p class="small muted no-print" style="margin-top:8px">All four formats are generated on your device from the same content — they match what you see in the preview. <b>PDF</b> is best for applying; <b>Word</b> is best when a recruiter asks for an editable file; <b>plain text</b> is the safest for online forms that strip formatting.</p>
+        <button class="btn btn-navy" onclick="window.print()">🖨 Print</button>
+        <button class="btn btn-outline" onclick="loadExample()">Load Example</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="resume-preview" id="resumePreviewWrap"><div id="resumePreview" role="region" aria-label="Live resume preview"></div></div>
+      <div class="grid g2 no-print" style="margin-top:16px">
+        <div class="card"><h3>Resume Strength: <span id="resumeScoreTxt" aria-live="polite">0%</span></h3><div class="scorebar"><i id="resumeScoreBar"></i></div><p class="explain"><b>What this number means:</b> a 0–100 practice score built from 8 checklist items (contact block, summary, experience, action verbs, numbers, skills, education, tailored headline). It measures how complete and specific your resume is — <b>it is not a prediction from any employer or applicant tracking system.</b></p><ul class="checklist small" id="resumeChecklist"></ul></div>
+        <div class="card"><h3>🔍 ATS Keyword Match</h3><p class="small muted">Based on your pasted job posting (Step 1). Aim to naturally include missing keywords you truly have.</p><div id="atsOut" class="small"></div>
+          <h4 style="margin:16px 0 6px">Strong action verbs (click to copy)</h4><div class="chips" id="verbChips"></div></div>
+      </div>
+      <div class="dodont no-print" style="margin-top:16px">
+        <div class="do"><h3>✅ Resume DO's</h3><ul class="small"><li>Tailor to one job; mirror its keywords honestly</li><li>Start bullets with verbs: <i>Served, Trained, Resolved</i></li><li>Add numbers: "helped 40+ customers/day"</li><li>Keep to 1 page (2 max if 10+ years)</li><li>Proofread out loud; consistent dates</li></ul></div>
+        <div class="dont"><h3>🚫 Resume DON'Ts</h3><ul class="small"><li>No photo, age, SSN, or full home address</li><li>No "References available on request"</li><li>Don't list duties only — show results</li><li>No unprofessional email or voicemail</li><li>Never lie about degrees or dates</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREP -->
+<section id="view-prep" class="view">
+  <p class="eyebrow">Step 3 · Prep School</p>
+  <h1 style="margin:0 0 8px;letter-spacing:-.03em">Know the rules before you walk in</h1>
+  <p class="muted big">Short, practical lessons for professional settings — offices, healthcare, banking, government, customer-facing and supervisor roles.</p>
+
+  <div class="card">
+    <h2>The Professional Do's & Don'ts</h2>
+    <div class="dodont">
+      <div class="do"><h3>✅ DO</h3><ul><li>Arrive 10–15 min early; silence your phone</li><li>Firm handshake (or friendly nod), smile, eye contact</li><li>Research the company: what they do, who they serve</li><li>Bring 2 resume copies, a pen, and your questions list</li><li>Use examples (STAR) instead of "I'm a hard worker"</li><li>Thank them, ask about next steps, send a thank-you</li></ul></div>
+      <div class="dont"><h3>🚫 DON'T</h3><ul><li>Bad-mouth a former employer — ever</li><li>Answer with just "yes/no" or ramble past ~2 minutes</li><li>Ask about pay/time off in the first minutes</li><li>Chew gum, wear a hat, or bring a drink in</li><li>Say "I have no questions"</li><li>Lie or exaggerate — it surfaces in background checks</li></ul></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="notice small"><b>👔 What to wear:</b> One step more formal than the daily dress code. Clean, pressed slacks/skirt, button-down or blouse, closed-toe shoes. Healthcare admin: business casual, minimal fragrance. When unsure, it's okay to ask the scheduler: "What is the dress code?"</div>
+      <div class="notice small"><b>🧍 Body language:</b> Sit tall, feet flat, hands visible. Nod while listening. Look at the person asking, then include others. Nervous? Slow breathing + a sip of water (before you go in) helps.</div>
+      <div class="notice small"><b>🎥 Video interviews:</b> Camera at eye level, light in front of you, quiet room, plain background, dress fully professional, test 30 min early, look at the camera when answering.</div>
+    </div>
+  </div>
+
+  <div class="split" style="margin-top:18px">
+    <div class="card">
+      <h2>Common Questions — tailored to <span id="prepJobName">your target job</span></h2>
+      <p class="small muted">Tap a question for how to answer it plus a strong example that <em>doesn't</em> require a degree.</p>
+      <div id="commonQuestions"></div>
+    </div>
+    <div>
+      <div class="card">
+        <h2>⭐ STAR Answer Trainer</h2>
+        <p class="small muted">Interviewers love STAR: <b>S</b>ituation → <b>T</b>ask → <b>A</b>ction → <b>R</b>esult. Build one story and reuse it.</p>
+        <label for="starS">S — Situation (what happened?)</label><input  id="starS" placeholder="Our front desk was backed up during flu season...">
+        <label for="starT">T — Task (what was your job?)</label><input  id="starT" placeholder="I needed to check in patients and keep wait times down...">
+        <label for="starA">A — Action (what did YOU do?)</label><textarea  id="starA" placeholder="I created a quick sign-in sheet, called ahead to verify insurance..."></textarea>
+        <label for="starR">R — Result (how did it turn out? add a number)</label><input  id="starR" placeholder="Wait times dropped and we got 3 positive comments that week.">
+        <button class="btn btn-teal btn-sm" style="margin-top:12px" onclick="buildSTAR()">Build My Answer</button>
+        <div id="starOut" class="notice small" style="display:none;margin-top:12px"></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>❓ Questions YOU should ask them</h3>
+        <ul class="small"><li>"What does a typical day in this role look like?"</li><li>"How is success measured in the first 90 days?"</li><li>"What training is provided?"</li><li>"Who would I work with most closely?"</li><li>"What are the next steps in the hiring process?"</li></ul>
+        <h3>🧩 Quick Quiz: Do or Don't?</h3>
+        <div id="quizBox"></div>
+        <button class="btn btn-outline btn-sm" onclick="renderQuiz(true)">Restart Quiz</button> <span class="small muted" id="quizScoreTxt"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERVIEW -->
+<section id="view-interview" class="view">
+  <p class="eyebrow">Step 4 · AI Video Mock Interview</p>
+  <h1 style="margin:0 0 8px;letter-spacing:-.03em">Practice face-to-face with Alex, your AI hiring manager</h1>
+  <p class="muted">This is a formal, staged interview. Alex begins with your introduction, then proceeds through your reasons for applying, your actual work history from Step 2, the skills required by the posting, behavioral examples, a work scenario, practical matters, your questions, and a formal close. Brief follow-up questions are asked when an answer requires more detail. Camera optional but recommended.</p>
+
+  <!-- Setup -->
+  <div class="card" id="interviewSetup">
+    <div class="split">
+      <div>
+        <h3>Set up your mock interview</h3>
+        <label for="intJobEcho">Interviewing for</label><input  id="intJobEcho" readonly>
+        <label for="intCount">Interview format</label>
+        <select  id="intCount"><option value="screen">📞 Phone Screen — first call with a recruiter (~10 min)</option><option value="full" selected>🎥 Full Interview — the real thing, start to finish (~20 min)</option><option value="final">🏁 Final Round — full interview + tougher fit questions (~25 min)</option></select>
+        <label for="intStyle">Interviewer style</label>
+        <select  id="intStyle"><option value="friendly">Formal — standard follow-up questions</option><option value="professional" selected>Formal — standard (recommended)</option><option value="tough">Formal — direct, with additional follow-up questions</option></select>
+        <label for="intMode">Mode</label>
+        <select  id="intMode"><option value="real" selected>🎬 Real Mode — Alex stays in character, feedback at the end (most realistic)</option><option value="coaching">🧭 Coaching Mode — pause for a quick tip after each answer</option></select>
+        <label style="display:flex;gap:10px;align-items:center;font-size:15px"><input type="checkbox" id="intCamera" checked style="width:auto" aria-label="intCamera"> Turn my camera on</label>
+        <p class="small muted" style="margin:-4px 0 8px">🔒 <b>Your video is shown only to you</b> — it is never recorded, stored, or uploaded. If you answer by voice, your browser's speech service turns your speech into text (or type instead). Nothing else leaves this device. <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
+        <label style="display:flex;gap:10px;align-items:center;font-size:15px"><input type="checkbox" id="intVoice" checked style="width:auto" aria-label="intVoice"> Alex speaks questions aloud</label>
+        <p class="small muted" id="voiceSupportNote">Voice answers work best in Chrome/Edge. No mic? You can type answers — the notes and scoring work identically.</p>
+        <button class="btn btn-amber" onclick="startInterview()">🎥 Start Video Interview</button>
+      </div>
+      <div class="notice"><b>How this interview runs (like a real one):</b><ol class="small" style="margin:8px 0;padding-left:20px"><li><b>Formal opening:</b> the interview begins immediately with your introduction — no small talk</li><li><b>Your elevator intro</b> — Present → Past proof → why this job</li><li><b>Why this job/company</b>, then a <b>walk-through of YOUR actual resume</b> (from Step 2)</li><li><b>Prove the skills</b> from the posting — with examples, not claims</li><li><b>Behavioral stories + a realistic on-the-job scenario</b></li><li><b>Practical fit, YOUR questions, your closing pitch, and the goodbye/next-steps</b></li></ol><p class="small"><b>Alex reacts to you:</b> short or vague answers get a polite follow-up probe — "Can you give me a specific example?" "And how did that turn out?" — just like a real panel. Notes land in Alex's notepad throughout.</p><p class="small"><b>60-second setup:</b> eye-level camera, light in front of you, quiet room. Fill in Step 1 + Step 2 first so Alex can ask about <em>your</em> jobs and the real posting.</p></div>
+    </div>
+  </div>
+
+  <!-- Live -->
+  <div id="interviewLive" style="display:none">
+    <div class="stage">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <b>● LIVE MOCK INTERVIEW</b><span class="timer" id="intTimer">00:00</span>
+        <span id="intProgress" class="small">Question 1 of 6</span>
+        <button class="btn btn-ghost btn-sm" onclick="endInterview(true)">End Interview</button>
+      </div>
+      <div class="split" style="margin-top:14px">
+        <div>
+          <div class="avatar-wrap">
+            <div class="avatar" id="avatarEl">
+              <svg width="120" height="120" viewBox="0 0 120 120" aria-label="AI interviewer Alex"><circle cx="60" cy="44" r="24" fill="#FFF7ED"/><path d="M18 108c6-24 22-34 42-34s36 10 42 34z" fill="#0F2A44"/><path d="M52 74h16l-8 22z" fill="#F2B705"/><circle cx="51" cy="42" r="3" fill="#111827"/><circle cx="69" cy="42" r="3" fill="#111827"/><path d="M50 54q10 8 20 0" stroke="#111827" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            </div>
+            <h3 style="margin:10px 0 0">Alex Morgan</h3><span class="small" style="color:#94A3B8">Hiring Manager · AI Interviewer</span>
+            <div class="wave" id="waveEl"><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="caption" id="questionCaption" role="region" aria-live="polite" aria-label="Current interview question">The interview is ready to begin.</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px">
+              <button class="btn btn-white btn-sm" onclick="repeatQuestion()">🔊 Hear question again</button>
+              <button class="btn btn-ghost btn-sm" onclick="skipQuestion()">Skip question</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="small" style="color:#CBD5E1;margin:0 0 6px"><b>YOU</b> · Check your framing & eye contact</p>
+          <video class="cam" id="camEl" autoplay playsinline muted style="display:none"></video>
+          <div class="cam-fallback" id="camFallback"><div><div style="font-size:36px">🎥</div><b>Camera off or unavailable</b><p class="small">That's okay — you can still practice by voice or typing. In a real video interview, test your camera 30 minutes early.</p><button class="btn btn-white btn-sm" onclick="startCamera()">Try camera again</button></div></div>
+          <div style="height:12px"></div>
+          <div class="notes"><h4>📝 Alex's Live Notes</h4><div id="liveNotes"><div class="noteitem">Notes will appear here as you answer — strengths, filler words, STAR use, keywords.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Your answer</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-teal" id="recBtn" onclick="toggleRecording()">🎤 Start Speaking</button>
+        <span class="small muted" id="recStatus">Pause and think like you would in the room, then answer. Timing guidance appears for each stage.</span>
+        <span class="badge" id="wordCountBadge">0 words</span>
+      </div>
+      <label for="answerText">Transcript (you can edit before submitting)</label>
+      <textarea  id="answerText" rows="6" oninput="updateWordCount()" placeholder="Your spoken answer will appear here… or type it. Example structure: Situation… my task was… I did… the result was…"></textarea>
+      <div id="instantFeedback" style="display:none;margin-top:12px"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button class="btn btn-navy" onclick="submitAnswer()">Submit Answer & Next Question →</button>
+        <button class="btn btn-outline" onclick="document.getElementById('answerText').value='';updateWordCount()">Clear & retry this answer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div id="interviewReport" role="region" aria-live="polite" aria-label="Interview results" style="display:none;margin-top:18px">
+    <div class="card">
+      <p class="eyebrow">Your Mock Interview Report</p>
+      <h2 style="font-size:32px">Overall: <span id="overallScore" aria-live="polite">—</span> <span class="badge green" id="overallLabel"></span></h2>
+      <p class="muted" id="overallSummary"></p><p class="explain"><b>What this score means:</b> your answers were rated on structure, specifics, evidence and delivery against a fixed rubric, weighted by interview phase. It is a practice signal to guide improvement — <b>not a prediction that any employer will hire you.</b></p>
+      <div id="scoreBars"></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="do"><h3>✅ What Alex liked</h3><ul class="small" id="strengthList"></ul></div>
+        <div class="warn" style="border-radius:16px"><h3 style="margin-top:0">🎯 Practice next</h3><ul class="small" id="improveList"></ul></div>
+      </div>
+      <h3 style="margin-top:20px">Per-question notes & transcript</h3>
+      <div id="perQuestion"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <button class="btn btn-amber" onclick="resetInterviewUI()">Practice Again</button>
+        <button class="btn btn-teal" onclick="showView('followup')">Go to Follow-Up & Thank-You →</button>
+        <button class="btn btn-outline" onclick="downloadReport()">⬇ Download Report</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOLLOWUP -->
+<section id="view-followup" class="view">
+  <p class="eyebrow">Step 5 · Day-of & follow-up</p>
+  <h1 style="margin:0 0 8px;letter-spacing:-.03em">Finish strong</h1>
+  <p class="muted big">Small professional touches after the interview often tip close decisions.</p>
+  <div class="split">
+    <div>
+      <div class="card"><h3>🌙 Night Before</h3><ul class="checklist" data-checkgroup>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Lay out outfit, check for stains/wrinkles, polish shoes</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Print 2 resume copies + note interviewer names & address</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Plan route/parking or test video link & camera</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Review the posting, your STAR stories, and your 3 questions for them</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Set two alarms; aim for real sleep</li></ul></div>
+      <div class="card" style="margin-top:16px"><h3>☀️ Day Of — Bring</h3><ul class="checklist" data-checkgroup>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Photo ID, resume copies, pen & small notebook</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Certifications/licenses list & references (names, titles, phone/email)</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Phone silenced before you walk in</li>
+        <li><input type="checkbox" style="width:auto" onchange="updateReady()"> Arrive 10–15 min early; be kind to everyone (reception counts!)</li></ul></div>
+      <div class="card" style="margin-top:16px"><h3>Tough moments, handled with class</h3>
+        <details><summary>"You don't have a degree / direct experience."</summary><p class="small">"That's right, my background is in ___, where I built skills in ___ and ___. I completed ___ training, and I'm eager to apply that here. In my last role I…" Then give a STAR example.</p></details>
+        <details><summary>Employment gap</summary><p class="small">Be brief, honest, forward-looking: "From 2022–2024 I cared for a family member full-time. During that time I ___. I'm now fully available and excited to return to…"</p></details>
+        <details><summary>Salary question</summary><p class="small">"I'm focused on finding the right fit. Could you share the budgeted range for this role?" Research local ranges beforehand (e.g., Michigan Works / Bureau of Labor Statistics).</p></details>
+        <details><summary>"Why did you leave your last job?"</summary><p class="small">Neutral & forward: "I learned a lot there. I'm looking for ___ (growth, schedule stability, work that uses my ___ skills), which is why this role stood out."</p></details>
+      </div>
+    </div>
+    <div class="card">
+      <h3>✉️ Thank-You Email Generator</h3>
+      <p class="small muted">Send within 24 hours to each interviewer if you have their email.</p>
+      <label for="tyName">Interviewer name</label><input  id="tyName" placeholder="Ms. Rivera">
+      <label for="tyRole">Job title & company</label><input  id="tyRole" placeholder="Medical Office Assistant at OSF HealthCare">
+      <label for="tyTopic">One specific thing you discussed</label><input  id="tyTopic" placeholder="your new patient check-in process">
+      <label for="tyYou">Your name & phone</label><input  id="tyYou" placeholder="Jordan Taylor · (906) 555-0142">
+      <button class="btn btn-teal btn-sm" style="margin-top:12px" onclick="generateThankYou()">Generate Email</button>
+      <label for="tyOut">Your thank-you email</label><textarea  id="tyOut" rows="10"></textarea>
+      <button class="btn btn-outline btn-sm" onclick="copyText('tyOut')">Copy Email</button>
+      <div class="warn small" style="margin-top:16px"><b>Didn't hear back?</b> One polite follow-up after the timeline they gave you (or ~1 week) is professional. Keep applying elsewhere in the meantime — momentum helps confidence.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div class="card no-print" id="dataCard" style="margin-top:22px">
+  <h3>Your data — backup, restore, erase</h3>
+  <p class="small muted">Everything you type lives in this browser only. Nothing is uploaded. That also means clearing your browser data, switching browsers, or using private mode <b>will erase your work</b> — so save a backup before you start anything you would hate to lose.</p>
+  <div class="exportbar">
+    <button class="btn btn-teal" onclick="backupData()">⬇ Back up my data</button>
+    <button class="btn btn-outline" onclick="document.getElementById('restoreFile').click()">⬆ Restore from backup</button>
+    <input type="file" id="restoreFile" accept=".json,application/json" class="sr-only" aria-label="Choose a ProReady backup file to restore" onchange="restoreData(this)">
+    <button class="btn btn-ghost" onclick="eraseData()">Erase everything</button>
+  </div>
+  <p class="small muted" id="backupStatus" style="margin-top:8px">Backups are a small JSON file you can keep in your email, cloud drive, or on a USB stick. Nothing is sent anywhere.</p>
+</div>
+<footer>
+  <p><b>ProReady Coach</b> <span class="muted">v1.2.0</span> · Your typing is saved only in this browser (localStorage). Camera/mic streams are never uploaded. Speech uses your browser's built-in tools, or your phone's in the app. · Scores are rule-based practice signals, explained on screen. · <a href="desktop.html">Desktop version with document export</a></p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let state=JSON.parse(SafeStore.getItem('proready_v1')||'{}');
+state.job=state.job||{}; state.resume=state.resume||{}; state.interviewLast=state.interviewLast||null; state.quiz=state.quiz||{score:0,answered:0};
+function save(){SafeStore.setItem('proready_v1',JSON.stringify(state));updateReady();}
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  $('view-'+name).classList.add('active');
+  document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='resume')renderResume();
+  if(name==='prep'){renderCommonQuestions();renderQuiz(false);}
+  if(name==='interview'){$('intJobEcho').value=(state.job.title||'Professional role')+(state.job.company?' at '+state.job.company:'');}
+  updateReady();
+}
+document.querySelectorAll('#mainNav button').forEach(b=>b.onclick=()=>showView(b.dataset.view));
+
+/* Chips */
+const strengths=['Customer service','Reliable & punctual','Cash handling','Scheduling','Computer / data entry','Problem-solving','Teamwork','Training others','Calm under pressure','Detail-oriented','Bilingual','Safety-focused'];
+const concerns=['Nervous speaking','Employment gap','No degree','Changing fields','No direct experience','Age / returning to work','Explaining job loss','Talking about pay'];
+function renderChips(el,list,key){
+  el.innerHTML=list.map(s=>`<button type="button" class="chip ${(state.job[key]||[]).includes(s)?'on':''}" onclick="toggleChip('${key}','${s.replace(/'/g,"\\'")}')">${s}</button>`).join('');
+}
+function toggleChip(key,val){state.job[key]=state.job[key]||[];let a=state.job[key];a.includes(val)?a.splice(a.indexOf(val),1):a.push(val);save();renderChips($('strengthChips'),strengths,'strengths');renderChips($('concernChips'),concerns,'concerns');}
+
+/* Keywords */
+const stop=new Set('the and or for with and to of a in is are will be you your our we this that from as an at on by it its their they have has who can all per day work working job role position positions team ability abilities able include including includes required requirements experience years year skills knowledge must should other duties assigned perform provide support ensure maintain seeking looking friendly fast paced environment ideal candidate candidates join joining growing apply today now hiring preferred strong new help needed needed responsible responsibilities etc may also within across various related field fields using used use well plus'.split(' '));
+const SKILL_LEXICON=['scheduling','data entry','customer service','appointments','insurance','medical records','confidentiality','hipaa','communication','multitasking','cash handling','billing','microsoft office','excel','patient check-in','answering phones','records','inventory','training','problem-solving','accuracy','documentation','filing','safety','cleaning','driving','sales','teamwork','greeting','phones','patients','customers'];
+function extractKeywords(text){
+  if(!text||text.trim().length<20)return [];
+  let lower=text.toLowerCase();
+  let lex=SKILL_LEXICON.filter(s=>lower.includes(s));
+  let words=(lower.match(/[a-z][a-z\/-]{2,}/g)||[]);
+  let freq={};words.forEach(w=>{if(!stop.has(w)&&w.length>2)freq[w]=(freq[w]||0)+1});
+  let freqList=Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(x=>x[0]).filter(w=>!lex.includes(w));
+  return [...new Set([...lex,...freqList])].slice(0,18);
+}
+
+function saveJob(){
+  state.job.title=$('jobTitle').value.trim();state.job.company=$('jobCompany').value.trim();state.job.location=$('jobLocation').value.trim();state.job.level=$('jobLevel').value;state.job.desc=$('jobDesc').value.trim();
+  if(!state.job.title){alert('Please enter a job title first — e.g., "Customer Service Representative".');return;}
+  state.job.keywords=extractKeywords(state.job.desc);
+  save();renderTailor();renderResume();alert('Saved! Your resume builder and AI interviewer are now tailored to: '+state.job.title);
+}
+function renderTailor(){
+  if(!state.job.title)return;
+  $('tailorEmpty').style.display='none';$('tailorOut').style.display='block';
+  $('tailorTitle').textContent=state.job.title+(state.job.company?' at '+state.job.company:'');
+  let kw=state.job.keywords&&state.job.keywords.length?state.job.keywords:['communication','customer service','scheduling','accuracy','teamwork','computer skills','confidentiality','problem-solving'];
+  $('keywordChips').innerHTML=kw.map(k=>`<span class="chip teal on">${k}</span>`).join('');
+  $('focusList').innerHTML=['Why you want <b>'+esc(state.job.title)+'</b> specifically','Handling difficult customers / situations calmly','Accuracy, confidentiality & following procedures','Reliability, schedule flexibility & teamwork','A specific example where you solved a problem'].map(x=>'<li>'+x+'</li>').join('');
+  $('prepJobName').textContent=state.job.title;
+}
+function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+/* Resume */
+const verbs=['Served','Resolved','Trained','Scheduled','Processed','Greeted','Organized','Improved','Reduced','Assisted','Documented','Coordinated','Handled','Verified','Supported','Delivered'];
+function addExp(data={}){
+  let d=document.createElement('div');d.style.cssText='border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;background:#FFF6EC';
+  d.innerHTML=`<label>Job title / Role</label><input class="eTitle" value="${esc(data.title||'')}" oninput="renderResume()" placeholder="Shift Lead / Cashier">
+  <label>Employer / Organization</label><input class="eOrg" value="${esc(data.org||'')}" oninput="renderResume()" placeholder="Walmart, Escanaba, MI">
+  <label>Dates</label><input class="eDates" value="${esc(data.dates||'')}" oninput="renderResume()" placeholder="2021 – Present">
+  <label>Bullet points (one per line — verb + result)</label><textarea class="eBullets" oninput="renderResume()" placeholder="Trained 6 new cashiers on register and returns process&#10;Resolved customer concerns calmly, earning repeat positive surveys">${esc(data.bullets||'')}</textarea>
+  <button class="btn btn-outline btn-sm" onclick="this.parentElement.remove();renderResume()">Remove</button>`;
+  $('expList').appendChild(d);
+}
+function gatherExp(){return [...document.querySelectorAll('#expList > div')].map(d=>({title:d.querySelector('.eTitle').value,org:d.querySelector('.eOrg').value,dates:d.querySelector('.eDates').value,bullets:d.querySelector('.eBullets').value}));}
+function generateSummary(){
+  let title=state.job.title||'professional';let lvl=state.job.level||'Some related experience';let st=(state.job.strengths||[]).slice(0,3).join(', ').toLowerCase()||'customer service, reliability, and attention to detail';
+  $('rSummary').value=`Dependable and personable professional with strengths in ${st}. Known for staying calm under pressure, learning new systems quickly, and treating every customer and coworker with respect. Seeking a ${title} role where I can bring strong organization, accuracy, and a positive attitude to the team.`;
+  renderResume();
+}
+function renderResume(){
+  // persist light fields
+  ['rName','rHeadline','rCity','rPhone','rEmail','rSummary','rSkills','rEdu'].forEach(id=>{let el=$(id);if(el)state.resume[id]=el.value});
+  state.resume.experiences=gatherExp();save();
+  let exps=state.resume.experiences.filter(e=>e.title||e.org);
+  let skills=($('rSkills').value||'').split(',').map(s=>s.trim()).filter(Boolean);
+  $('resumePreview').innerHTML=`
+    <h1>${esc($('rName').value||'Your Name')}</h1>
+    <p style="font-family:Inter,system-ui,sans-serif;font-weight:800;color:#5F7161;margin:4px 0">${esc($('rHeadline').value||state.job.title||'Professional Headline')}</p>
+    <p style="font-family:Inter,system-ui,sans-serif;font-size:13px;color:#7A6A5E">${esc($('rCity').value)} ${$('rPhone').value?'· '+esc($('rPhone').value):''} ${$('rEmail').value?'· '+esc($('rEmail').value):''}</p>
+    ${$('rSummary').value?`<h2>Professional Summary</h2><p>${esc($('rSummary').value)}</p>`:''}
+    ${exps.length?`<h2>Experience</h2>`+exps.map(e=>`<p style="margin:10px 0 2px"><b>${esc(e.title)}</b> — ${esc(e.org)} <span style="float:right;color:#8A7A68;font-family:Inter,sans-serif;font-size:12px">${esc(e.dates)}</span></p><ul>${(e.bullets||'').split('\n').filter(Boolean).map(b=>'<li>'+esc(b.replace(/^[-•]\s*/,''))+'</li>').join('')}</ul>`).join(''):''}
+    ${skills.length?`<h2>Skills</h2><p>${skills.map(esc).join(' · ')}</p>`:''}
+    ${$('rEdu').value?`<h2>Education, Training & Certifications</h2>${$('rEdu').value.split('\n').filter(Boolean).map(l=>'<p style="margin:4px 0">'+esc(l)+'</p>').join('')}`:''}`;
+  // score
+  let full=($('resumePreview').innerText||'').toLowerCase();
+  let checks=[
+    ['Name + phone + email at top',!!($('rName').value&&$('rPhone').value&&$('rEmail').value.includes('@'))],
+    ['Professional summary (2+ sentences)',($('rSummary').value.split('.').length>=3)],
+    ['At least one experience entry',exps.length>=1],
+    ['Bullets start with action verbs',verbs.some(v=>full.includes(v.toLowerCase()))],
+    ['Includes numbers / results',/\d/.test(full)],
+    ['Skills section (5+ skills)',skills.length>=5],
+    ['Education / training / certs listed',$('rEdu').value.trim().length>10],
+    ['Tailored headline for target job',($('rHeadline').value.length>8|| (state.job.title&&full.includes(state.job.title.toLowerCase().split(' ')[0])))]
+  ];
+  let score=Math.round(checks.filter(c=>c[1]).length/checks.length*100);
+  $('resumeScoreTxt').textContent=score+'%';$('resumeScoreBar').style.width=score+'%';$('kpiResume').textContent=score+'%';state.resume.score=score;
+  $('resumeChecklist').innerHTML=checks.map(c=>`<li><span class="check ${c[1]?'yes':''}">${c[1]?'✓':'○'}</span><span>${c[0]}</span></li>`).join('');
+  // ATS
+  let kw=state.job.keywords||[];
+  if(!kw.length){$('atsOut').innerHTML='<span class="muted">Paste a job posting in Step 1 to unlock keyword matching.</span><p class="explain">This compares words, not decisions: it shows which terms from the posting appear in your resume. Real screening software is a searchable database that recruiters filter — a high match is a tailoring aid, not a pass.</p>'}
+  else{let hit=kw.filter(k=>full.includes(k)),miss=kw.filter(k=>!full.includes(k));
+    $('atsOut').innerHTML=`<p><b>${hit.length}/${kw.length}</b> keywords found</p><p class="eyebrow" style="color:#166534">Found</p><div class="chips">${hit.map(k=>`<span class="chip" style="background:#DCFCE7;border-color:#BBF7D0">${esc(k)}</span>`).join('')||'—'}</div><p class="eyebrow" style="color:#991B1B">Missing — add if truthful</p><div class="chips">${miss.map(k=>`<span class="chip" style="background:#FEE2E2;border-color:#FECACA">${esc(k)}</span>`).join('')||'None 🎉'}</div>`;}
+  // suggestions
+  let sug=[...(state.job.keywords||[]).slice(0,8),'Customer Service','Scheduling','Data Entry','Microsoft Office','Cash Handling','Confidentiality'];
+  $('skillSuggest').innerHTML=[...new Set(sug)].map(s=>`<button type="button" class="chip" onclick="addSkill('${esc(s)}')">${esc(s)}</button>`).join('');
+  updateReady();
+}
+function addSkill(s){let cur=$('rSkills').value.split(',').map(x=>x.trim()).filter(Boolean);if(!cur.map(x=>x.toLowerCase()).includes(s.toLowerCase()))cur.push(s);$('rSkills').value=cur.join(', ');renderResume();}
+function exportResume(format){
+  if(!window.ResumeExport){toast('Export engine missing — reload the page.');return;}
+  let data=ResumeExport.resumeDataFromDOM();
+  if(!data.name||!data.name.trim()){toast('Add your name first, then export.');$('rName')&&$('rName').focus();return;}
+  let base=ResumeExport.safeName(data.name)+'_Resume';
+  try{
+    if(format==='pdf')ResumeExport.save(ResumeExport.buildResumePDF(data),base+'.pdf');
+    else if(format==='docx')ResumeExport.save(ResumeExport.buildResumeDOCX(data),base+'.docx');
+    else if(format==='txt')ResumeExport.save(ResumeExport.buildResumeTXT(data),base+'.txt');
+    else if(format==='html')ResumeExport.save(new Blob([ResumeExport.buildResumeHTML(data)],{type:'text/html'}),base+'.html');
+    toast(format==='pdf'?'PDF downloaded — check it before you send it.':format==='docx'?'Word file downloaded — open it once to confirm the layout.':'Downloaded.');
+  }catch(e){toast('Export failed: '+e.message);}
+}
+function downloadResume(){exportResume('pdf');}
+function printResume(){let w=window.open('','_blank');if(!w){toast('Allow pop-ups to print, or use the PDF download.');return;}w.document.write(ResumeExport.buildResumeHTML(ResumeExport.resumeDataFromDOM()));w.document.close();setTimeout(()=>{try{w.focus();w.print();}catch(e){}},350);}
+function toast(msg){let t=$('toast');if(!t)return;t.textContent=msg;t.classList.add('on');clearTimeout(window.__toastT);window.__toastT=setTimeout(()=>t.classList.remove('on'),3200);}
+
+/* Prep */
+const commonQ=[
+ {q:'Tell me about yourself.',how:'Present → Past → Future in 60 seconds. Who you are professionally now, 1–2 relevant strengths/examples, why this job.',ex:'"I\'ve spent 4 years in customer-facing roles, most recently as a shift lead where I trained new staff and handled busy registers. I\'m known for staying calm and accurate. I\'m excited to bring that to a medical office setting where organization and kindness matter."'},
+ {q:'Why do you want this job / why here?',how:'Name something specific about the company + connect your skills. Avoid "I just need a job."',ex:'"I live here in the community and I\'ve heard great things about how your team treats patients. The scheduling and check-in parts of this role fit my strengths in…"'},
+ {q:'Tell me about a difficult customer / coworker.',how:'Use STAR. Show listening, calm, policy, and a good outcome. Never blame.',ex:'Use your STAR Trainer story on this page — practice it until it sounds natural, not memorized.'},
+ {q:'What is your greatest weakness?',how:'Pick a real, fixable one + what you are doing about it. Never "perfectionist" with no example, never a core job requirement.',ex:'"I used to double-check my work so much it slowed me down. I now use a checklist and a final review, which keeps me accurate and on pace."'},
+ {q:'Why should we hire you?',how:'Match 3 posting requirements to 3 proofs from your life/work. End with enthusiasm for this team.',ex:'"You need someone reliable, accurate with scheduling, and warm with patients. In my last role I… (proof). I would bring that same…"'},
+ {q:'Where do you see yourself in a few years?',how:'Show stability and growth inside this kind of role/company.',ex:'"I want to master this role, become someone the team can count on, and keep building skills like ___ certification."'}
+];
+function renderCommonQuestions(){
+  let title=state.job.title||'this role';
+  let extra=[{q:`What interests you about working as a ${title}?`,how:'Tie the daily work in the posting to work you have enjoyed and done well — in any setting.',ex:'Mention 2 duties from the posting + a past example for each, even from retail, caregiving, trades, or volunteering.'},
+             {q:`How would you handle confidential or sensitive information?`,how:'Professional roles require privacy. Mention following policy, locking screens, never sharing outside work.',ex:'"I treat customer information like it was my own — only access what I need, follow policy exactly, and ask a supervisor if unsure."'}];
+  $('commonQuestions').innerHTML=[...extra,...commonQ].map(x=>`<details><summary>${esc(x.q)}</summary><p class="small"><b>How to answer:</b> ${esc(x.how)}</p><p class="small"><b>Example:</b> ${esc(x.ex)}</p></details>`).join('');
+}
+function buildSTAR(){
+  let out=`"${$('starS').value} My responsibility was ${$('starT').value} So I ${$('starA').value} As a result, ${$('starR').value}"`;
+  $('starOut').style.display='block';$('starOut').innerHTML='<b>Your polished STAR answer (practice saying it aloud):</b><br>'+esc(out)+'<br><br><b>Tip:</b> Keep it under 90 seconds. End on the result — do not trail off.';
+}
+const quiz=[
+ {q:'Arriving 25 minutes early and waiting in the lobby staring at staff.',a:'dont',why:'10–15 minutes early is ideal. Too early can pressure staff. Wait in your car if needed.'},
+ {q:'Bringing a list of thoughtful questions to ask them.',a:'do',why:'Yes — it shows genuine interest and preparation.'},
+ {q:'Saying your last boss was terrible and the place was a mess.',a:'dont',why:'Never bad-mouth. Stay neutral and forward-focused.'},
+ {q:'Silencing your phone before you walk in.',a:'do',why:'Essential. A ringing phone is a top interview complaint.'},
+ {q:'Wearing clean business-casual clothes one step above daily dress.',a:'do',why:'Exactly right for most professional settings.'},
+ {q:'Answering "Tell me about yourself" with your full life story since childhood.',a:'dont',why:'Keep it professional and relevant: present → past proof → why this job, ~60 seconds.'}
+];
+let quizIdx=0;
+function renderQuiz(restart){
+  if(restart){quizIdx=0;state.quiz={score:0,answered:0};save();}
+  if(quizIdx>=quiz.length){$('quizBox').innerHTML=`<div class="notice"><b>Done! You scored ${state.quiz.score}/${quiz.length}.</b> Review Prep School above, then try the AI interview.</div>`;$('kpiPrep').textContent=state.quiz.score+'/6';return;}
+  let x=quiz[quizIdx];
+  $('quizBox').innerHTML=`<p><b>Q${quizIdx+1}:</b> ${esc(x.q)}</p><button class="quiz-opt" onclick="answerQuiz('do')">✅ DO</button><button class="quiz-opt" onclick="answerQuiz('dont')">🚫 DON'T</button><div id="quizWhy" class="small"></div>`;
+  $('quizScoreTxt').textContent=`Score: ${state.quiz.score}/${state.quiz.answered}`;
+}
+function answerQuiz(ans){
+  let x=quiz[quizIdx];let ok=ans===x.a;state.quiz.answered++;if(ok)state.quiz.score++;save();
+  $('quizWhy').innerHTML=`<div class="${ok?'notice':'warn'}" style="margin-top:10px"><b>${ok?'Correct!':'Not quite.'}</b> ${esc(x.why)}<br><button class="btn btn-teal btn-sm" style="margin-top:8px" onclick="quizIdx++;renderQuiz(false)">Next →</button></div>`;
+  $('kpiPrep').textContent=state.quiz.score+'/6';$('quizScoreTxt').textContent=`Score: ${state.quiz.score}/${state.quiz.answered}`;
+}
+
+/* Interview engine v3 — staged, resume-aware, adaptive (as close to a real interview as possible)
+   Arc: Arrival/small-talk -> Elevator intro -> Why this job/company -> Walk thru YOUR history ->
+   Prove the skills (from the posting) -> Behavioral STAR stories -> Realistic scenario ->
+   Practical fit -> Candidate's questions -> Final pitch -> The close / next steps.
+   Alex stays in character in Real Mode (feedback lands in the report), and probes with
+   follow-up questions when an answer is too thin, "we"-only, or missing a result. */
+let queue=[], qIdx=0, answers=[], timerInt=null, seconds=0, mediaStream=null, recognition=null, isRec=false;
+let followUpsUsed=0, curExp=[90,220], maxFollowUps=4; let detailProbeUsed=false;
+const PHASE_ORDER=['Intro / Elevator Speech','Motivation & Fit','Work History','Job Skills','Behavioral Examples','Judgment (Scenario)','Practical Fit','Your Questions','Closing'];
+const PHASE_TIPS={
+ 'Intro / Elevator Speech':'Rebuild your intro as Present -> Past proof -> Future (why THIS job), 60-90 seconds. Practice it out loud 5 times until it sounds like conversation, not a memorized script.',
+ 'Motivation & Fit':'Research the company for 10 minutes and prepare 2 specific reasons: one about the work in the posting, one about this employer. "I need a job" never wins this phase.',
+ 'Work History':'Be ready to walk role-by-role: what you did daily, what you were responsible for, why you moved on. Connect each stop to skills this job needs.',
+ 'Job Skills':'For the top 3 skills in the posting, prepare a proof story + tools/systems you used. Claims without examples get probed in real interviews too.',
+ 'Behavioral Examples':'Build 3 STAR stories (difficult person, pressure/priorities, a mistake you owned). Always end with the Result — ideally with a number.',
+ 'Judgment (Scenario)':'In scenarios, say what you would do FIRST, how you would communicate, and when you would escalate. Calm + people-first + policy-aware wins.',
+ 'Practical Fit':'Know your availability, transportation plan, and a researched pay range before the interview so these answers sound confident, not improvised.',
+ 'Your Questions':'Always ask 2-3 questions (typical day, training, how success is measured, next steps). "No questions" reads as "not interested."',
+ 'Closing':'Close like a pro: thank them by name, restate your interest in one sentence, ask about next steps, and send the thank-you email within 24 hours.'
+};
+function firstName(){let n=(state.resume.rName||'').trim();return n?n.split(/\s+/)[0]:'';}
+function resumeExps(){return (state.resume.experiences||[]).filter(e=>e.title||e.org);}
+function resumeSkills(){return (state.resume.rSkills||'').split(',').map(s=>s.trim()).filter(Boolean);}
+const KW_BAD=new Set(['seeking','looking','friendly','must','may','join','joining','apply','now','hiring','position','positions','required','preferred','strong','ability','abilities','work','working','day','daily','etc','new','help','needed','responsible','responsibilities','include','includes','including','well','plus','using','used']);
+function cleanKws(){return (state.job.keywords||[]).filter(k=>k&&!KW_BAD.has(String(k).toLowerCase()));}
+function kw(i,fb){let k=cleanKws();return k[i]||fb;}
+function makeItem(phase,type,text,listenFor,exp,timeLabel,extra){
+  let it={phase:phase,type:type,text:text,listenFor:listenFor||'',exp:exp||[90,220],timeLabel:timeLabel||'about 60–90 seconds',isFollowUp:false,bridge:''};
+  if(extra)Object.assign(it,extra);return it;
+}
+function scenarioFor(title){
+  let s=((title||'')+' '+(state.job.keywords||[]).join(' ')).toLowerCase();
+  if(/medic|patient|clinic|health|dental|pharmacy|hospital/.test(s))return "Consider the following scenario. It is Monday at 8:00 a.m. The telephone is ringing, a patient at the window is dissatisfied with the wait, and a provider has requested a chart. Please state, in order, how you would handle each matter, and what you would say to the patient.";
+  if(/bank|teller|financ|loan|credit/.test(s))return "Consider the following scenario. There is a line of customers. The customer before you is disputing a fee and has become upset, and the next customer requires only a brief transaction. How would you handle both customers, and what would you say?";
+  if(/supervisor|operations|warehouse|manufact|logist|lead|foreman|production/.test(s))return "Consider the following scenario. Two employees have called off on your busiest day, and a rush job must be completed by end of shift. How would you reassign the work, what would you communicate to the team, and at what point would you escalate the matter to your manager?";
+  if(/retail|store|sales|cashier/.test(s))return "Consider the following scenario. A customer is requesting a return you may not be authorized to approve, your line is growing, and a coworker is on break. What would you say and do in the first two minutes?";
+  if(/teach|child|school|care/.test(s))return "Consider the following scenario. A parent or family member is dissatisfied with how a matter was handled and raises the concern in front of others. How would you respond at the time, and what steps would you take afterward?";
+  return "Consider the following scenario. During your busiest hour, the telephone is ringing, a customer before you is dissatisfied, and your supervisor has assigned an urgent task with a deadline. Please state, in order, how you would handle each matter, and what you would say to the customer.";
+}
+function buildInterviewPlan(format, style){
+  let t=state.job.title||'this position', c=state.job.company||'this organization', name=firstName();
+  let exps=resumeExps(), e1=exps[0], e2=exps[1], skills=resumeSkills();
+  let k1=kw(0,'the duties described in the posting'), k2=kw(1,'the duties of this position');
+  let concerns=state.job.concerns||[];
+  let P=[];
+  /* Formal opening only — no small talk, no separate "arrival" question. The interview begins with the introduction. */
+  if(format==='screen'){
+    P.push(makeItem('Intro / Elevator Speech','intro',
+      `Hello${name?(', '+name):''}. This is Alex Morgan from ${c}. I am calling regarding your application for the ${t} position. To begin, please tell me about yourself and your professional background.`,
+      'Present (who you are now) -> Past (1-2 proofs) -> Future (why this position); 60-90 seconds',[90,200],'about 60–90 seconds'));
+  } else {
+    P.push(makeItem('Intro / Elevator Speech','intro',
+      `Good day${name?(', '+name):''}. Thank you for meeting with us. My name is Alex Morgan, and I will be conducting this interview for the ${t} position. To begin, please tell me about yourself and your professional background.`,
+      'Present (who you are now) -> Past (1-2 proofs) -> Future (why this position); 60-90 seconds',[90,200],'about 60–90 seconds'));
+  }
+  P.push(makeItem('Motivation & Fit','motivation',
+    `Why have you applied for the ${t} position at ${c}? What do you know about this organization and the work involved?`,
+    'specific reasons tied to the posting and organization; how their background fits',[70,180],'about 60–75 seconds'));
+  if(e1){
+    P.push(makeItem('Work History','history',
+      `Your resume lists employment as ${e1.title||'a staff member'}${e1.org?(' at '+e1.org):''}${e1.dates?(', '+e1.dates):''}. Please describe that role and your primary responsibilities.`,
+      'day-to-day duties; personal responsibilities ("I", not only "we"); skills relevant to this position',[90,220],'about 75–90 seconds'));
+    P.push(makeItem('Work History','transition',
+      concerns.includes('Changing fields')||concerns.includes('No direct experience')
+        ? `Your background differs from ${t} work. Why are you seeking this change, and how does your experience prepare you for this position?`
+        : `Why are you seeking a new position at this time?`,
+      'a positive, forward-looking reason; no criticism of a former employer',[70,180],'about 60 seconds'));
+    if(e2 && format!=='screen'){
+      P.push(makeItem('Work History','history',
+        `Prior to that, you worked as ${e2.title||'a staff member'}${e2.org?(' at '+e2.org):''}. What experience from that role is relevant to this position?`,
+        'a relevant skill or responsibility carried forward',[60,170],'about 60 seconds'));
+    }
+  } else {
+    P.push(makeItem('Work History','history',
+      `Please walk me through your work history, beginning with your most recent position. State what you did and what you were personally responsible for.`,
+      'most-recent-first; personal responsibilities; brief and factual regarding any gaps',[90,220],'about 75–90 seconds'));
+  }
+  if(format==='screen'){
+    P.push(makeItem('Practical Fit','practical',
+      `This position requires a consistent schedule and dependable attendance. Please state your availability. A final practical item: what salary range are you seeking?`,
+      'clear availability and transportation plan; a researched, flexible range (or a request for the budgeted range)',[60,170],'about 60 seconds'));
+    P.push(makeItem('Your Questions','candidateqs',
+      `That concludes my questions for this call. What questions do you have regarding this position or ${c}?`,
+      'at least one relevant question (training, responsibilities, next steps)',[15,140],'ask 1–2 questions'));
+    P.push(makeItem('Closing','closing',
+      `That concludes this call. Candidates will be contacted next week regarding next steps. Thank you for your time.`,
+      'thank the interviewer; state your interest briefly; acknowledge the next steps',[12,80],'20–30 seconds'));
+    return P;
+  }
+  P.push(makeItem('Job Skills','skill',
+    `This position requires ${k1}. Please describe your experience with this type of work. Provide a specific example, including the outcome.`,
+    'a specific example proving the primary skill in the posting, with an outcome',[90,220],'about 75–90 seconds'));
+  P.push(makeItem('Job Skills','skill',
+    skills.length
+      ? `Your resume lists ${skills.slice(0,3).join(', ')}. Which of these skills are most relevant to this position, what tools or systems have you used, and in what areas would you require training?`
+      : `What tools or systems have you used that are relevant to ${k2}? In what areas would you require training during your first month?`,
+    'named tools or systems; a direct and honest statement of training needs',[70,190],'about 60–75 seconds'));
+  P.push(makeItem('Behavioral Examples','behavioral',
+    `Please describe a time you dealt with a difficult customer, client, patient, or coworker. What happened, what action did you take, and what was the outcome?`,
+    'situation, their actions, and the outcome; composed and professional throughout',[100,240],'about 90 seconds'));
+  P.push(makeItem('Behavioral Examples','behavioral',
+    `Please describe a time something went wrong at work, whether a mistake or a period of excessive workload. What happened, what action did you take, and what did you learn?`,
+    'accountability; corrective action; what they do differently now',[100,240],'about 90 seconds'));
+  P.push(makeItem('Judgment (Scenario)','scenario', scenarioFor(t),
+    'priorities in order; clear communication; adherence to policy; appropriate escalation',[90,220],'about 75–90 seconds'));
+  if(format==='final'||style==='tough'){
+    P.push(makeItem('Motivation & Fit','fit',
+      `Other candidates may have more direct experience in ${t} work. What would you accomplish in your first ninety days, and why should you be selected?`,
+      'a concrete first-90-days plan; specific strengths with supporting evidence',[90,220],'about 90 seconds'));
+  }
+  P.push(makeItem('Practical Fit','practical',
+    `Please describe your record regarding attendance, punctuality, and follow-through. If your most recent supervisor were contacted, what would they state about your work?`,
+    'specific evidence of reliability; a credible summary from a supervisor',[70,190],'about 60–75 seconds'));
+  P.push(makeItem('Your Questions','candidateqs',
+    `That concludes my questions. What questions do you have regarding this position, this team, or ${c}?`,
+    'two or three relevant questions (responsibilities, training, measures of success, next steps)',[15,160],'ask 2–3 questions'));
+  P.push(makeItem('Closing','pitch',
+    `In closing, please state briefly — in approximately thirty seconds — why you are the right candidate for the ${t} position.`,
+    'two or three strengths relevant to this position, supported briefly by evidence',[50,130],'about 30 seconds'));
+  P.push(makeItem('Closing','closing',
+    `That concludes the interview. We expect to complete interviews this week and will contact candidates early next week regarding next steps. Thank you for your time.`,
+    'thank the interviewer by name; state your interest briefly; acknowledge the next steps',[12,80],'20–30 seconds'));
+  return P;
+}
+function pickDetail(text){
+  let lower=(text||'').toLowerCase();
+  let pool=[].concat(resumeExps().map(e=>e.org),resumeExps().map(e=>e.title),resumeSkills(),cleanKws());
+  for(let cand of pool){ if(cand && cand.length>2 && lower.includes(cand.toLowerCase())) return cand; }
+  let m=text.match(/\b(trained|scheduled|helped|served|handled|managed|built|cleaned|drove|cared for|answered|processed)\b[^.,;]{0,48}/i);
+  return m?m[0].trim():null;
+}
+function generateFollowUp(item,text,a){
+  if(item.type==='closing'||item.type==='pitch')return null;
+  if(item.type==='candidateqs'){
+    if(a.qCount===0)return{text:`Do you have any questions regarding training, daily responsibilities, or the next steps in this process?`,why:'you had no questions ready'};
+    return null;
+  }
+  if(a.words<35)
+    return{text:`Please provide a specific example.`,why:'that answer did not include a concrete example'};
+  if((item.type==='behavioral'||item.type==='skill') && a.resultWords===0 && !a.hasNumber && a.words>=35)
+    return{text:`What was the outcome?`,why:'the outcome (the R in STAR) was not stated'};
+  if(a.weCount>=3 && a.iCount<=1 && a.words>=35)
+    return{text:`What was your specific role in that?`,why:'Alex heard what the team did, not your individual contribution'};
+  if(item.type==='intro' && !a.futureHit)
+    return{text:`How does your background connect to this position specifically?`,why:'your introduction covered your past but not this position'};
+  if(item.type==='motivation' && !a.fitHit)
+    return{text:`What specifically appeals to you about this position and this organization?`,why:'a reason specific to this position and employer was not stated'};
+  if((item.type==='intro'||item.type==='history'||item.type==='skill') && a.words>=70 && !detailProbeUsed){
+    let d=pickDetail(text);
+    if(d){detailProbeUsed=true;return{text:`You mentioned ${d}. Please elaborate.`,why:'Alex requested more detail on a point in your answer',kind:'detail'};}
+  }
+  return null;
+}
+async function startCamera(){
+  try{mediaStream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});$('camEl').srcObject=mediaStream;$('camEl').style.display='block';$('camFallback').style.display='none';}
+  catch(e){$('camEl').style.display='none';$('camFallback').style.display='grid';}
+}
+function stopCamera(){if(mediaStream)mediaStream.getTracks().forEach(t=>t.stop());}
+function stopSpeaking(){try{window.VoiceAdapter&&window.VoiceAdapter.cancelSpeak();}catch(e){}
+  $('avatarEl')&&$('avatarEl').classList.remove('speaking');$('waveEl')&&$('waveEl').classList.remove('speaking-wave');}
+function speak(text){
+  if(!$('intVoice').checked)return;
+  const VA=window.VoiceAdapter;
+  const onStart=()=>{$('avatarEl').classList.add('speaking');$('waveEl').classList.add('speaking-wave')};
+  const onEnd=()=>{$('avatarEl').classList.remove('speaking');$('waveEl').classList.remove('speaking-wave')};
+  if(!VA){onEnd();return;}
+  VA.speak(text,{rate:1.0,pitch:1.0,onStart:onStart,onEnd:onEnd});
+}
+function startInterview(){
+  let modeEl=$('intMode'); /* coaching | real */
+  let format=$('intCount').value; /* screen | full | final */
+  let exps=resumeExps();
+  if(!state.job.title && !exps.length){
+    if(!confirm('Tip: this interview gets much more realistic if you first set a Target Job (Step 1) and add your work history (Step 2) — Alex will ask about your actual jobs and the posting. Start a generic interview anyway?')){showView('job');return;}
+  }
+  queue=buildInterviewPlan(format,$('intStyle').value);
+  maxFollowUps=($('intStyle').value==='tough'||format==='final')?5:4;
+  qIdx=0;answers=[];seconds=0;followUpsUsed=0;detailProbeUsed=false;
+  $('interviewSetup').style.display='none';$('interviewReport').style.display='none';$('interviewLive').style.display='block';
+  let realMode=!modeEl||modeEl.value==='real';
+  $('liveNotes').innerHTML='<div class="noteitem">✍️ Alex is in character now'+(realMode?' — in <b>Real Mode</b> you will not get coaching between answers (just like the real thing). Your full report comes at the end. These notes are Alex\'s private notepad.':' — <b>Coaching Mode</b>: you will see a quick tip after each answer.')+'</div>';
+  if(exps.length)addNote('📄 Alex has your resume in front of them ('+exps.map(e=>esc(e.title||e.org)).join('; ')+') — expect questions about it.');
+  if($('intCamera').checked)startCamera();
+  clearInterval(timerInt);timerInt=setInterval(()=>{seconds++;$('intTimer').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')},1000);
+  askCurrent();
+}
+function curItem(){return queue[qIdx];}
+function askCurrent(){
+  let item=curItem();if(!item){endInterview(false);return;}
+  curExp=item.exp||[90,220];
+  $('intProgress').textContent=item.phase+' · Question '+(qIdx+1)+' of '+queue.length+(item.isFollowUp?' (follow-up)':'');
+  $('questionCaption').textContent=item.text;
+  $('answerText').value='';$('instantFeedback').style.display='none';updateWordCount();
+  $('recStatus').textContent='Please answer when ready. Suggested length: '+item.timeLabel+'.';
+  speak((item.bridge?item.bridge+' ':'')+item.text);
+  addNote('<b>'+esc(item.phase)+(item.isFollowUp?' — follow-up':'')+'.</b> Listening for: '+esc(item.listenFor)+'.');
+}
+function repeatQuestion(){let item=curItem();if(item)speak(item.text);}
+function skipQuestion(){let item=curItem();answers.push({q:item.text,phase:item.phase,type:item.type,text:'(Skipped)',analysis:analyzeAnswer('',item.text,item)});nextQ();}
+function addNote(html){let d=document.createElement('div');d.className='noteitem';d.innerHTML=html;$('liveNotes').prepend(d);}
+function updateWordCount(){
+  let n=($('answerText').value.trim().match(/\S+/g)||[]).length;
+  $('wordCountBadge').textContent=n+' words';
+  $('wordCountBadge').className='badge '+((n>=curExp[0]&&n<=curExp[1])?'green':(n<Math.max(10,curExp[0]*0.4)?'red':''));
+}
+function stopRecUI(msg){
+  isRec=false;recSession=null;
+  $('recBtn').textContent='🎤 Start Speaking';
+  $('recBtn').classList.remove('rec-on');
+  if(msg)$('recStatus').textContent=msg;
+}
+let recSession=null;
+function toggleRecording(){
+  if(isRec){recSession&&recSession.stop();return;}
+  const VA=window.VoiceAdapter;
+  if(!VA){alert('Speech is unavailable on this page.');return;}
+
+  const supported=VA.detect(true).canListen;
+  if(!supported){
+    const plain=VA.describe().text.replace(/<[^>]+>/g,'');
+    alert(plain+'\n\nYou can type your answer — the notes, follow-up questions and scoring work exactly the same.');
+    return;
+  }
+
+  const base=$('answerText').value;
+  let mySession=null;
+  mySession=VA.listen({
+    language:'en-US',
+    onStart:()=>{},
+    onPartial:t=>{$('answerText').value=(base+' '+t).trim();updateWordCount();},
+    onResult:t=>{$('answerText').value=(base+' '+t).trim();updateWordCount();},
+    onError:code=>{
+      stopRecUI(code==='not-allowed'
+        ? 'Microphone permission was declined. Allow it in your phone/browser settings, or type your answer.'
+        : 'Mic issue ('+code+'). Check the microphone permission, or type your answer.');
+    },
+    onEnd:()=>{if(isRec)stopRecUI('Recording stopped. Review your transcript, then submit.');}
+  });
+  recSession=mySession;
+  isRec=true;$('recBtn').textContent='⏹ Stop Recording';$('recBtn').classList.add('rec-on');
+  $('recStatus').textContent='🔴 Listening… speak naturally, look at your camera.';
+
+  // Never leave a fake "Listening" indicator: if nothing is heard, say so.
+  clearTimeout(window.__micWatch);
+  window.__micWatch=setTimeout(()=>{
+    if(isRec&&!VA.hasHeardSpeech()){
+      mySession&&mySession.stop();
+      stopRecUI('No speech was detected. Check the microphone permission, or type your answer — scoring and notes are unaffected.');
+    }
+  },7000);
+}
+function analyzeAnswer(text,q,item){
+  item=item||{type:'general',exp:[90,220]};
+  let clean=(text||'').trim();let words=(clean.match(/\S+/g)||[]).length;let lower=clean.toLowerCase();
+  let fillers=(lower.match(/\b(um+|uh+|like|you know|sort of|kind of|basically|actually)\b/g)||[]).length;
+  let hasNumber=/\d|percent|%/.test(clean);
+  let resultList=['result','improved','increased','decreased','saved','completed','resolved','helped','reduced','earned','finished','on time','happy','thanked','came back','no longer'];
+  let resultWords=resultList.filter(w=>lower.includes(w)).length;
+  let actionWords=verbs.concat(['created','called','checked','listened','followed','asked','stayed','learned','apologized','explained']).filter(w=>lower.includes(w.toLowerCase())).length;
+  let kwList=cleanKws();let kwHits=kwList.filter(k=>lower.includes(k));
+  let iCount=(lower.match(/\bi\b/g)||[]).length;
+  let weCount=(lower.match(/\bwe\b/g)||[]).length;
+  let qCount=(clean.match(/\?/g)||[]).length;
+  let futureHit=/(looking for|excited|want to|hope to|this role|this job|your team|grow|apply my|bring)/.test(lower)||((state.job.title||'')&&lower.includes((state.job.title||'').toLowerCase().split(' ')[0]));
+  let fitHit=futureHit||((state.job.company||'')&&lower.includes((state.job.company||'').toLowerCase()));
+  let negativity=['hated','terrible boss','stupid','lazy','quit because','worst'].filter(w=>lower.includes(w)).length;
+  let exp=item.exp||[90,220];
+  let lengthScore=words===0?10:(words<exp[0]?35+Math.round(40*(words/exp[0])):(words>exp[1]*1.4?58:(words>exp[1]?78:92)));
+  let clarity=Math.max(12,Math.min(98,lengthScore-fillerPenalty(fillers,words)*0.5));
+  let star=Math.max(10,Math.min(98,30+resultWords*13+actionWords*6+(hasNumber?16:0)+(words>exp[0]?10:0)+(iCount>=2?6:0)));
+  let relevance=Math.max(12,Math.min(98,48+kwHits.length*8+(fitHit?12:0)+(words>=exp[0]?8:0)));
+  let confidence=Math.max(12,Math.min(98,72-fillerPenalty(fillers,words)-(/i don.?t know|i guess|maybe|stuff|whatever/.test(lower)?12:0)+(words>=exp[0]?8:0)));
+  let prof=Math.max(15,95-negativity*25-(words<5?40:0));
+  function fillerPenalty(f,w){return w?Math.min(35,(f/Math.max(w,1))*220):20}
+  let notes=[];
+  // type-specific scoring & notes
+  if(item.type==='greeting'){
+    let polite=/(thank|nice|glad|great|good|pleasure|appreciate)/.test(lower);
+    clarity=words>=6?86:35; star=polite?80:55; relevance=polite?85:60; if(words>exp[1])confidence=65;
+    notes.push(polite?'Warm, professional greeting — that first impression lands well.':'Add a simple "Thank you for having me" — warmth in the first 30 seconds shapes the whole interview.');
+    if(words>exp[1])notes.push('Keep the greeting brief; save your story for "Tell me about yourself."');
+  } else if(item.type==='candidateqs'){
+    let topics=['training','typical day','success','team','next step','schedule','grow','supervisor','culture','challenge'].filter(w=>lower.includes(w)).length;
+    let payFirst=/\b(pay|salary|wage|vacation|time off|pto)\b/.test(lower)&&qCount<=1;
+    relevance=Math.max(15,Math.min(98,25+qCount*22+topics*9-(payFirst?12:0)));
+    clarity=qCount===0?30:(qCount===1?68:88); star=relevance; confidence=qCount>=2?88:(qCount===1?70:40);
+    notes.push(qCount===0?'Having no questions is the #1 missed opportunity — it reads as low interest. Always ask about the typical day, training, or next steps.':('You asked '+qCount+' question'+(qCount>1?'s':'')+' — interviewers notice that. '+(topics?'Good topics too.':'Try topics like training, how success is measured, and next steps.')));
+    if(payFirst)notes.push('Leading with pay/benefits as your only question can hurt — ask about the work first; pay comes later in the process.');
+  } else if(item.type==='closing'){
+    let thanks=/(thank|appreciate|pleasure)/.test(lower);
+    let interest=/(excited|look forward|hope|interested|love to|great fit)/.test(lower);
+    let nexts=/(next step|hear from|follow up|in touch)/.test(lower);
+    relevance=Math.max(20,35+(thanks?22:0)+(interest?22:0)+(nexts?16:0)); prof=thanks?95:65; clarity=words>=10?88:55; star=relevance;
+    notes.push((thanks&&interest)?'Textbook close: thanks + clear interest. Finish in real life with a same-day thank-you email.':'A strong close = thank them by name + one line of genuine interest + confirm next steps. Practice it like a signature.');
+  } else if(item.type==='pitch'){
+    notes.push(fitHit?'Your closing pitch tied you to this specific job — that is what a panel repeats about you afterward.':'Make your pitch specific: name the role/team and 2 proof points. Generic pitches are forgettable.');
+    if(words>exp[1])notes.push('Tighten the pitch toward 30 seconds — short and specific beats long and complete.');
+    if(!hasNumber&&actionWords<2)notes.push('Add one proof point (a result or number) so the pitch is evidence, not adjectives.');
+  } else if(item.type==='intro'){
+    notes.push(words<exp[0]?'Your elevator speech was short — aim for 60–90 seconds: who you are now, two proofs from your past, and why this job.':(words>exp[1]?'Strong material — trim toward 90 seconds so the highlights stand out.':'Good elevator-speech length.'));
+    notes.push(futureHit?'You connected your story to this job (the "future" leg interviewers listen for).':'End your intro looking forward: "…and that is why I am excited about this role." Interviewers score the connection, not just the history.');
+    if(iCount<2)notes.push('Make it personal: more "I" statements about what YOU did and are good at.');
+  } else {
+    if(words<exp[0]*0.5)notes.push('That answer will feel thin to an interviewer — add a specific example so they can picture you doing the work.');
+    else if(words>exp[1]*1.4)notes.push('That answer ran long — in a real interview Alex would likely redirect you. Land your main point, then stop.');
+    else notes.push('Answer length is in a good range for this kind of question.');
+    if(fillers>=5)notes.push('About '+fillers+' filler words (um/like/you know). A silent pause sounds more confident than a filler.');
+    else if(words>30)notes.push('Filler words are well controlled — sounds polished.');
+    if((item.type==='behavioral'||item.type==='skill')){
+      if(hasNumber)notes.push('You included a number/result, which makes the story believable and memorable.');
+      if(resultWords===0&&words>=35)notes.push('Finish with the result: "As a result…" is the sentence interviewers write down.');
+      if(weCount>=3&&iCount<=1)notes.push('That was mostly "we" — interviewers hire a person, not a team. Claim your specific actions.');
+    }
+    if(kwHits.length)notes.push('You naturally used language from the posting: '+kwHits.slice(0,4).join(', ')+'.');
+  }
+  let overall=Math.round((clarity+star+relevance+confidence+prof)/5);
+  if(words===0)overall=Math.min(overall,20);
+  return {words,fillers,hasNumber,resultWords,kwHits,iCount,weCount,qCount,futureHit,fitHit,scores:{Clarity:Math.round(clarity),'STAR / Examples':Math.round(star),'Job Relevance':Math.round(relevance),Confidence:Math.round(confidence),Professionalism:Math.round(prof)},overall,notes};
+}
+function submitAnswer(){
+  let item=curItem();if(!item)return;
+  let text=$('answerText').value.trim();
+  if(text.length<8 && item.type!=='greeting' && item.type!=='closing'){
+    if(!confirm('That answer is very short for a real interview. Submit it as-is? (Alex will likely follow up and ask for more — just like a real interviewer.)'))return;
+  }
+  if(isRec&&recognition)recognition.stop();
+  let a=analyzeAnswer(text,item.text,item);
+  answers.push({q:item.text,phase:item.phase,type:item.type,isFollowUp:!!item.isFollowUp,text,analysis:a});
+  addNote('<b>'+esc(item.phase)+' ('+a.overall+'/100):</b> '+esc(a.notes[0]));
+  // adaptive follow-up, in character
+  let fu=null;
+  if(!item.isFollowUp && followUpsUsed<maxFollowUps){ fu=generateFollowUp(item,text,a); }
+  if(fu){
+    queue.splice(qIdx+1,0,makeItem(item.phase,item.type,fu.text,item.listenFor,item.exp,item.timeLabel,{isFollowUp:true}));
+    if(fu.kind!=='detail')followUpsUsed++;
+    addNote('↪️ <b>Alex is following up</b> — '+esc(fu.why)+'.');
+  } else {
+    let nx=queue[qIdx+1];
+    if(nx && !nx.isFollowUp && !nx.bridge){ nx.bridge='Thank you.'; }
+  }
+  let modeEl=$('intMode');let coaching=modeEl&&modeEl.value==='coaching';
+  if(coaching){
+    $('instantFeedback').style.display='block';
+    $('instantFeedback').innerHTML='<div class="notice"><b>Coach pause — '+a.overall+'/100:</b><ul class="small">'+a.notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul><span class="small muted">Next question in a few seconds…</span></div>';
+    setTimeout(()=>nextQ(),2600);
+  } else {
+    $('instantFeedback').style.display='none';
+    setTimeout(()=>nextQ(),650);
+  }
+}
+function nextQ(){qIdx++;if(qIdx>=queue.length)endInterview(false);else askCurrent();}
+function phaseAverages(){
+  let map={};
+  answers.forEach(x=>{ (map[x.phase]=map[x.phase]||[]).push(x.analysis.overall); });
+  return PHASE_ORDER.filter(p=>map[p]).map(p=>({phase:p,avg:Math.round(map[p].reduce((s,v)=>s+v,0)/map[p].length)}));
+}
+function endInterview(early){
+  clearInterval(timerInt);stopCamera();try{stopSpeaking()}catch(e){}
+  if(isRec&&recognition)recognition.stop();
+  $('interviewLive').style.display='none';
+  if(!answers.length){resetInterviewUI();return;}
+  let phases=phaseAverages();
+  let overall=Math.round(answers.reduce((s,x)=>s+x.analysis.overall,0)/answers.length);
+  state.interviewLast={overall,date:new Date().toLocaleDateString(),answers,phases,format:($('intCount')?$('intCount').value:''),minutes:Math.max(1,Math.round(seconds/60))};save();
+  $('overallScore').textContent=overall+'/100';
+  $('overallLabel').textContent=overall>=80?'Interview-ready 🎉':overall>=62?'Getting strong 💪':'Keep practicing — you are building the skill 🌱';
+  $('overallSummary').textContent=(early?'You ended early — here is feedback on what you completed. ':'')+(overall>=80?'You handled a full, staged interview — intro, history, skills proof, follow-ups, your questions, and the close — at a level Alex could recommend onward.':overall>=62?'You have the backbone of a real interview. The phase scores below show exactly which stage to rehearse next — that focus beats re-doing everything.':'This is what practice is for. Work the lowest phase below (and your STAR stories in Prep School), then run it again — you will hear the difference in one session.');
+  $('scoreBars').innerHTML=phases.map(p=>'<div class="bar-row"><span>'+esc(p.phase)+'</span><div class="scorebar"><i style="width:'+p.avg+'%"></i></div><span>'+p.avg+'%</span></div>').join('')+'<p class="small muted">Scored by interview phase, the way a hiring panel debriefs — including how you handled Alex\'s follow-up probes ('+answers.filter(x=>x.isFollowUp).length+' follow-up'+(answers.filter(x=>x.isFollowUp).length===1?'':'s')+' asked).</p>';
+  let strengths=phases.filter(p=>p.avg>=75).map(p=>'Strong '+p.phase.toLowerCase()+' ('+p.avg+'%).');
+  if(answers.some(a=>a.analysis.hasNumber))strengths.push('You used numbers/results to prove your impact.');
+  if(answers.some(a=>a.type==='candidateqs'&&a.analysis.qCount>=2))strengths.push('You asked real questions back — panels consistently rate that as high interest.');
+  if(!strengths.length)strengths.push('You completed a realistic, full-arc interview out loud — most candidates never practice this way. That alone puts you ahead.');
+  let weak=phases.filter(p=>p.avg<75).sort((a,b)=>a.avg-b.avg).slice(0,3);
+  let improve=weak.map(p=>PHASE_TIPS[p.phase]);
+  if(!improve.length)improve.push('Now try the Final Round format with the "Tough but fair" style — deeper probing, an exact-match challenge, and a first-90-days question.');
+  $('strengthList').innerHTML=strengths.map(s=>'<li>'+esc(s)+'</li>').join('');
+  $('improveList').innerHTML=improve.map(s=>'<li>'+esc(s)+'</li>').join('');
+  $('perQuestion').innerHTML=answers.map((a,i)=>'<details><summary>'+esc(a.phase)+(a.isFollowUp?' · follow-up':'')+' — '+a.analysis.overall+'/100: '+esc(a.q.slice(0,64))+'…</summary><p class="small"><b>You said:</b> '+esc(a.text)+'</p><ul class="small">'+a.analysis.notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul></details>').join('');
+  $('interviewReport').style.display='block';$('kpiInterview').textContent=overall+'%';updateReady();
+  speak('The interview is complete. Your report is presented below.');
+}
+function resetInterviewUI(){$('interviewReport').style.display='none';$('interviewLive').style.display='none';$('interviewSetup').style.display='block';}
+function downloadReport(){
+  if(!state.interviewLast)return;let r=state.interviewLast;
+  let txt='ProReady Mock Interview Report — '+r.date+'\nOverall: '+r.overall+'/100  ('+(r.format||'full')+' interview, ~'+(r.minutes||'?')+' min)\nTarget: '+(state.job.title||'')+'\n\nPhase scores:\n'+(r.phases||[]).map(p=>' - '+p.phase+': '+p.avg+'/100').join('\n')+'\n\n'+r.answers.map((a,i)=>'['+a.phase+(a.isFollowUp?' · follow-up':'')+'] '+a.q+'\nAnswer: '+a.text+'\nScore: '+a.analysis.overall+'/100\nNotes: '+a.analysis.notes.join(' ')+'\n').join('\n');
+  try{let pdf=ResumeExport.buildTextPDF({title:'Mock Interview Report',subtitle:'Overall '+r.overall+'/100 · '+(r.format||'full')+' interview · '+r.date,body:txt});ResumeExport.save(pdf,'ProReady_Interview_Report.pdf');}
+  catch(e){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download='ProReady_Interview_Report.txt';a.click();}
+}
+
+
+/* ===== Backup / restore / erase (all local) ===== */
+function backupData(){
+  try{
+    let payload={app:'ProReady Coach',version:'1.2.0',exported:new Date().toISOString(),state:state};
+    let json=JSON.stringify(payload,null,2);
+    ResumeExport.save(new Blob([json],{type:'application/json'}),'ProReady_Backup_'+new Date().toISOString().slice(0,10)+'.json');
+    $('backupStatus').textContent='Backup saved. Keep it somewhere you can find it — it is your only copy outside this browser.';
+    toast('Backup downloaded.');
+  }catch(e){toast('Backup failed: '+e.message);}
+}
+function restoreData(input){
+  let f=input.files&&input.files[0];if(!f)return;
+  let r=new FileReader();
+  r.onload=()=>{
+    try{
+      let d=JSON.parse(r.result);
+      let s=d&&d.state?d.state:d;
+      if(!s||typeof s!=='object'||(!s.resume&&!s.job&&!s.profile)){alert('That file does not look like a ProReady backup.');return;}
+      if(!confirm('Replace the data in this browser with the backup? Your current work in this browser will be overwritten.'))return;
+      state=s;save();if(typeof hydrateAll==='function')hydrateAll();if(typeof renderResume==='function')renderResume();if(typeof renderJourney==='function')renderJourney();
+      $('backupStatus').textContent='Restored from backup ('+(d.exported?new Date(d.exported).toLocaleString():'unknown date')+').';
+      toast('Backup restored.');
+    }catch(e){alert('Could not read that backup file: '+e.message);}
+    input.value='';
+  };
+  r.readAsText(f);
+}
+function eraseData(){
+  if(!confirm('Erase all ProReady data in this browser? This cannot be undone. Back up first if you are unsure.'))return;
+  try{SafeStore.removeItem('proready_v1');}catch(e){}
+  state={};save();location.reload();
+}
+
+/* Follow-up */
+function generateThankYou(){
+  $('tyOut').value=`Subject: Thank You — ${$('tyRole').value||'Interview'}\n\nDear ${$('tyName').value||'Hiring Team'},\n\nThank you for taking the time to speak with me about the ${$('tyRole').value||'position'}. I especially enjoyed learning about ${$('tyTopic').value||'your team and the work you do'}.\n\nOur conversation confirmed how excited I am about this opportunity. I believe my experience and strengths would allow me to contribute to your team, and I would welcome the chance to do so.\n\nThank you again for your consideration. I look forward to hearing about next steps.\n\nWarm regards,\n${$('tyYou').value||$('rName').value||'Your Name'}`;
+}
+function copyText(id){$(id).select();document.execCommand&&document.execCommand('copy');navigator.clipboard&&navigator.clipboard.writeText($(id).value);alert('Copied!');}
+
+/* Example */
+function loadExample(){
+  state.job={title:'Medical Office Assistant',company:'BayCare Clinic',location:'Escanaba, MI',level:'Some related experience',strengths:['Customer service','Scheduling','Calm under pressure'],concerns:['Changing fields','No degree'],desc:'Seeking a friendly Medical Office Assistant to greet patients, schedule appointments, verify insurance, answer phones, maintain accurate patient records in our EHR system, and protect confidentiality under HIPAA. Must have strong communication, data entry accuracy, and ability to multitask in a busy clinic. Customer service experience preferred. Training provided.'};
+  state.job.keywords=extractKeywords(state.job.desc);save();
+  $('jobTitle').value=state.job.title;$('jobCompany').value=state.job.company;$('jobLocation').value=state.job.location;$('jobDesc').value=state.job.desc;$('jobLevel').value=state.job.level;
+  $('rName').value='Jordan Taylor';$('rHeadline').value='Customer Service & Scheduling Professional | Transitioning to Healthcare Administration';$('rCity').value='Escanaba, MI';$('rPhone').value='(906) 555-0142';$('rEmail').value='Jordan.Taylor@email.com';
+  $('rSummary').value='Warm, dependable customer service professional with 4 years of front-line experience in busy, high-volume settings. Skilled in scheduling, accurate data entry, cash handling, and keeping calm with frustrated customers. Completed HIPAA awareness and medical terminology training and excited to bring strong organization and compassion to a clinic team.';
+  $('rSkills').value='Patient Greeting, Scheduling, Data Entry, Phone Etiquette, HIPAA Awareness, Microsoft Office, Cash Handling, Conflict Resolution, Multitasking';
+  $('rEdu').value='High School Diploma — Escanaba Area High School, 2018\nMedical Terminology Certificate — Bay College, 2024\nHIPAA Awareness Training — 2024\nCPR & First Aid — American Red Cross, 2023';
+  $('expList').innerHTML='';
+  addExp({title:'Shift Lead / Customer Service Desk',org:'Walmart — Escanaba, MI',dates:'2021 – Present',bullets:'Greeted and assisted 40+ customers daily with returns, orders, and questions\nTrained 6 new associates on register, scheduling, and service standards\nResolved escalated concerns calmly, contributing to repeated positive customer surveys\nProcessed cash, card, and account transactions with zero drawer shortages in 12 months'});
+  addExp({title:'Front Counter Associate',org:'Local Family Restaurant — Gladstone, MI',dates:'2019 – 2021',bullets:'Answered phones, took accurate orders, and coordinated pickup times during peak hours\nMaintained clean, organized front area and handled payments accurately'});
+  renderChips($('strengthChips'),strengths,'strengths');renderChips($('concernChips'),concerns,'concerns');renderTailor();renderResume();updateReady();
+  showView('job');alert('Example loaded: a retail shift lead applying for Medical Office Assistant — no degree, strong transferable skills. Explore Steps 2–4 to see tailoring in action!');
+}
+
+/* Ready score */
+function updateReady(){
+  let pts=0;if(state.job.title)pts+=20;pts+=Math.round((state.resume.score||0)*0.3);pts+=Math.round((state.quiz.score||0)/6*20);if(state.interviewLast)pts+=Math.round(state.interviewLast.overall*0.3);
+  pts=Math.min(100,pts);$('readyScore').textContent=pts+'%';
+  $('kpiJob').textContent=state.job.title?'✓':'—';if(state.interviewLast)$('kpiInterview').textContent=state.interviewLast.overall+'%';$('kpiPrep').textContent=(state.quiz.score||0)+'/6';
+}
+
+/* Init */
+$('verbChips').innerHTML=verbs.map(v=>`<button type="button" class="chip" onclick="navigator.clipboard&&navigator.clipboard.writeText('${v}');this.textContent='✓ ${v}'">${v}</button>`).join('');
+renderChips($('strengthChips'),strengths,'strengths');renderChips($('concernChips'),concerns,'concerns');
+if(state.job.title){$('jobTitle').value=state.job.title;$('jobCompany').value=state.job.company||'';$('jobLocation').value=state.job.location||'';$('jobDesc').value=state.job.desc||'';if(state.job.level)$('jobLevel').value=state.job.level;renderTailor();}
+['rName','rHeadline','rCity','rPhone','rEmail','rSummary','rSkills','rEdu'].forEach(id=>{if(state.resume[id])$(id).value=state.resume[id]});
+if(state.resume.experiences&&state.resume.experiences.length)state.resume.experiences.forEach(e=>addExp(e));else addExp();
+renderResume();renderCommonQuestions();updateReady();
+
+
+
+/* ===== Resume Proofreader (Step 2, second mode) — runs 100% in the browser; nothing is uploaded ===== */
+let lastProofPlain='', lastProofText='';
+const MISSPELLINGS={teh:'the',recieve:'receive',recieved:'received',seperate:'separate',occured:'occurred',accomodate:'accommodate',achevment:'achievement',adress:'address',enviroment:'environment',experince:'experience',exerience:'experience',responsable:'responsible',manger:'manager',managment:'management',custmer:'customer',custmers:'customers',clent:'client',schdule:'schedule',schedual:'schedule',trainning:'training',sincerly:'sincerely',comming:'coming',writting:'writing',publich:'public',goverment:'government',calender:'calendar',independant:'independent',neccessary:'necessary',profesional:'professional',proffesional:'professional',detailled:'detailed',organised:'organized (US spelling)',skils:'skills',abilites:'abilities',dutys:'duties',employement:'employment',referance:'reference',referances:'references',acurate:'accurate',acuracy:'accuracy',maintainance:'maintenance',superviser:'supervisor',asistant:'assistant',assitant:'assistant',restaraunt:'restaurant',buisness:'business',collegue:'colleague',taskes:'tasks',phons:'phones',comunication:'communication',knowlege:'knowledge',persue:'pursue',curently:'currently',previus:'previous',succesful:'successful',teamate:'teammate',handeld:'handled',processd:'processed',verifed:'verified'};
+const PROOF_VERBS=new Set(['served','resolved','trained','scheduled','processed','greeted','organized','improved','reduced','assisted','documented','coordinated','handled','verified','supported','delivered','created','built','led','managed','supervised','answered','maintained','prepared','operated','performed','provided','completed','achieved','increased','decreased','saved','earned','stocked','cleaned','transported','drove','taught','helped','entered','filed','checked','monitored','followed','ensured','communicated','collaborated','designed','developed','implemented','launched','streamlined','mentored','onboarded','audited','inspected','repaired','installed','sold','negotiated','presented','reported','tracked','updated','reviewed']);
+const WEAK_PHRASES=[['responsible for','Replace duty language with what you accomplished and the result.'],['duties included','Lead with a strong verb and a result instead.'],['in charge of','State the scale (people, money, volume) and the outcome.'],['worked on','Name exactly what you did and what changed.'],['helped out','Claim your specific contribution with a verb.'],['various tasks','Name the two or three most relevant tasks.'],['other duties as assigned','Employers read this as filler — cut it or name the duty.'],['references available upon request','Delete this line. It is assumed, and the space is better used for results.'],['references available on request','Delete this line. It is assumed, and the space is better used for results.'],['objective','Replace an Objective with a 2-3 sentence Professional Summary focused on the employer.'],['i am seeking','State what you offer the employer, not only what you want.'],['hard worker','Prove it with one line of evidence (volume, speed, reliability).'],['team player','Give a team example with an outcome instead.'],['fast learner','Name a system or skill you learned and how quickly.'],['people person','Name the customers/patients you serve and the volume.'],['detail oriented','Prove it: error rates, accuracy checks, records kept.'],['detail-oriented','Prove it: error rates, accuracy checks, records kept.'],['think outside the box','Cut the cliché; describe the idea itself.'],['self-starter','Give an example of something you started or fixed without being asked.'],['go-getter','Replace with a measured result.'],['proven track record','Show the record: numbers, awards, tenure.'],['results-driven','List the results.'],["reason for leaving",'Do not put reasons for leaving on a resume.'],['salary','Do not put salary information on a resume.']];
+
+function showResumeMode(mode){
+  let proof=mode==='proof';
+  $('builderWrap').style.display=proof?'none':'';
+  $('proofWrap').style.display=proof?'block':'none';
+  $('modeBuildBtn').classList.toggle('on',!proof);
+  $('modeProofBtn').classList.toggle('on',proof);
+  if(proof){
+    $('proofTargetEcho').textContent=state.job.title
+      ? ('Comparing against: '+state.job.title+(state.job.company?(' at '+state.job.company):'')+((state.job.keywords&&state.job.keywords.length)?' — posting keywords found in Step 1 will be used for the ATS check.':' — paste the job posting in Step 1 to unlock the keyword check.'))
+      : 'No target job set yet. Add one in Step 1 and the proofreader will also check your resume against that posting keyword by keyword.';
+  } else renderResume();
+}
+function loadProofSample(){
+  $('proofText').value=[
+   'Jimmy Smith','123 Main Street, Escanaba, Michigan 49829','cooldude2002@example.com · 906-555-0199','',
+   'OBJECTIVE','I am seeking a job where I can grow. I am a hard worker and a team player and a people person.','',
+   'EXPERIENCE','Cashier, Walmart, Escanaba, Michigan — 2020-2022',
+   '- I was responsible for helping custmers at the register',
+   '- I would recieve payments and give change back',
+   '- Responsible for cleaning and various other dutys as assigned',
+   '- Worked on the the front end with my teamates','',
+   'Food Service Worker, Local Restaurant — 2019-2020',
+   '- Duties included taking orders and answering phons',
+   '- Helped out in the kitchen when needed','',
+   'SKILLS','computers, fast learner, detail oriented, good comunication','',
+   'References available upon request'
+  ].join('\n');
+  $('proofFileStatus').textContent='Sample loaded (it has deliberate problems). Now click "Proofread My Resume."';
+}
+async function handleProofFile(input){
+  let f=input.files&&input.files[0]; if(!f)return;
+  let name=f.name.toLowerCase(); let status=$('proofFileStatus');
+  status.textContent='Reading '+f.name+'… (this happens on your device — the file is not uploaded anywhere)';
+  try{
+    let text='';
+    if(name.endsWith('.txt')||name.endsWith('.md')) text=await f.text();
+    else if(name.endsWith('.html')||name.endsWith('.htm')){ let h=await f.text(); let div=document.createElement('div'); div.innerHTML=h; text=div.innerText||div.textContent||''; }
+    else if(name.endsWith('.docx')) text=await extractDocxText(await f.arrayBuffer());
+    else if(name.endsWith('.pdf')){ text=extractPdfTextBasic(await f.arrayBuffer()); if((text.match(/\S+/g)||[]).length<60) throw new Error('pdf-compressed'); }
+    else throw new Error('type');
+    text=(text||'').trim();
+    if(text.length<80) throw new Error('short');
+    $('proofText').value=text;
+    status.textContent='✓ Loaded "'+f.name+'" ('+((text.match(/\S+/g)||[]).length)+' words). Review it below, then click "Proofread My Resume," or it runs now:';
+    analyzeProof();
+  }catch(e){
+    status.innerHTML='<b>Could not read that file automatically.</b> No problem — open your resume, press <b>Ctrl+A</b> (Select All) then <b>Ctrl+C</b> (Copy), and paste it into the box below. That works for Word, Google Docs, and PDF resumes, and the proofreading is identical.';
+  }
+}
+async function extractDocxText(buf){
+  const dv=new DataView(buf); let eocd=-1;
+  for(let i=buf.byteLength-22;i>=0;i--){ if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;} }
+  if(eocd<0) throw new Error('docx');
+  let count=dv.getUint16(eocd+10,true), pos=dv.getUint32(eocd+16,true), entry=null;
+  const dec=new TextDecoder();
+  for(let n=0;n<count;n++){
+    if(dv.getUint32(pos,true)!==0x02014b50) break;
+    let method=dv.getUint16(pos+10,true), compSize=dv.getUint32(pos+20,true);
+    let nl=dv.getUint16(pos+28,true), xl=dv.getUint16(pos+30,true), cl=dv.getUint16(pos+32,true);
+    let localOff=dv.getUint32(pos+42,true);
+    let fname=dec.decode(new Uint8Array(buf,pos+46,nl));
+    if(fname==='word/document.xml') entry={method,compSize,localOff};
+    pos+=46+nl+xl+cl;
+  }
+  if(!entry) throw new Error('docx-doc');
+  let dataStart=entry.localOff+30+dv.getUint16(entry.localOff+26,true)+dv.getUint16(entry.localOff+28,true);
+  let comp=new Uint8Array(buf,dataStart,entry.compSize), xmlBytes;
+  if(entry.method===0) xmlBytes=comp;
+  else if(entry.method===8){
+    if(typeof DecompressionStream==='undefined') throw new Error('docx-deflate');
+    let stream=new Blob([comp]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    xmlBytes=new Uint8Array(await new Response(stream).arrayBuffer());
+  } else throw new Error('docx-method');
+  let xml=dec.decode(xmlBytes);
+  xml=xml.replace(/<\/w:p>/g,'\n').replace(/<w:tab[^>]*>/g,'\t').replace(/<[^>]+>/g,'');
+  return xml.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'");
+}
+function extractPdfTextBasic(buf){
+  let bin=new TextDecoder('iso-8859-1').decode(new Uint8Array(buf));
+  let out=[], re=/\((?:\\.|[^\\)])*\)\s*(?:Tj|TJ|'|")/g, m;
+  while((m=re.exec(bin))){ out.push(m[0].replace(/^\((.*)\)\s*(?:Tj|TJ|'|")$/s,'$1').replace(/\\([()\\])/g,'$1').replace(/\\n/g,' ')); }
+  return out.join(' ').replace(/\s{2,}/g,' ');
+}
+function proofSections(lines){
+  const rules=[['summary',/^(professional summary|summary|objective|profile|about me)\b/i],['experience',/^(work experience|professional experience|experience|employment history|work history)\b/i],['skills',/^(skills|core skills|technical skills|qualifications)\b/i],['education',/^(education|training|certifications?|licenses?|credentials)\b/i]];
+  let out={pre:[]}, cur='pre';
+  lines.forEach(l=>{
+    let t=l.trim();
+    let hit=rules.find(r=>t.length<=48&&r[1].test(t)&&!/[.!?]$/.test(t));
+    if(hit){cur=hit[0];(out[cur]=out[cur]||[]);return;}
+    (out[cur]=out[cur]||[]).push(l);
+  });
+  return out;
+}
+function analyzeProof(){
+  let text=$('proofText').value||''; lastProofText=text;
+  let words=(text.match(/\S+/g)||[]).length;
+  if(words<40){ $('proofResults').innerHTML='<div class="warn"><b>That is too short to proofread ('+words+' words).</b> Paste your full resume text — including your name, contact line, experience, skills, and education — or click "Try a sample resume" to see how the feedback looks.</div>'; return; }
+  let r=proofAnalyze(text);
+  lastProofPlain=r.plain;
+  $('proofResults').innerHTML=r.html;
+}
+function proofAnalyze(text){
+  let lines=text.split(/\r?\n/), lower=text.toLowerCase();
+  let words=(text.match(/\S+/g)||[]).length;
+  let nonempty=lines.filter(l=>l.trim());
+  let bulletLines=nonempty.filter(l=>/^\s*[-•*▪◦·>]/.test(l)).map(l=>l.replace(/^\s*[-•*▪◦·>]\s*/,'').trim());
+  let impactLines=bulletLines.length>=3?bulletLines:nonempty.filter(l=>l.trim().length>35&&!/^(experience|education|skills|summary|objective)/i.test(l.trim())).map(l=>l.trim());
+  let sections=proofSections(lines);
+  let hasExp=!!sections.experience, hasSkills=!!sections.skills, hasEdu=!!sections.education, hasSummary=!!sections.summary;
+  let email=(text.match(/[\w.+-]+@[\w-]+\.[\w.]{2,}/)||[])[0]||'';
+  let phone=!!text.match(/(\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}/);
+  let cityState=!!text.match(/[A-Z][a-zA-Z .]+,\s*[A-Z]{2}\b/);
+  let linkedin=lower.includes('linkedin');
+  let hasSSN=!!text.match(/\b\d{3}-\d{2}-\d{4}\b/);
+  let street=!!text.match(/\b\d{1,6}\s+\w+(\s+\w+)?\s+(Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|Court|Ct)\b/);
+  let years=(text.match(/\b(19|20)\d{2}\b/g)||[]).length;
+  let quantified=impactLines.filter(l=>/\d|%|\$/.test(l)).length;
+  let qRatio=impactLines.length?Math.round(100*quantified/impactLines.length):0;
+  let strongStarts=impactLines.filter(l=>{let w=l.toLowerCase().replace(/^i\s+/,'').match(/[a-z]+/);return w&&PROOF_VERBS.has(w[0]);}).length;
+  let vRatio=impactLines.length?Math.round(100*strongStarts/impactLines.length):0;
+  let firstPerson=(text.match(/\bI\b/g)||[]).length+(lower.match(/\bmy\b/g)||[]).length;
+  let spellHits=[]; Object.keys(MISSPELLINGS).forEach(w=>{let re=new RegExp('\\b'+w+'\\b','i'); if(re.test(text)) spellHits.push(w+' → '+MISSPELLINGS[w]);});
+  let repeated=(lower.match(/\b(\w+)\s+\1\b/g)||[]);
+  let weakHits=WEAK_PHRASES.filter(w=>lower.includes(w[0]));
+  let lowerStarts=nonempty.filter(l=>/^[a-z]/.test(l.trim())&&!l.includes('@')).length;
+  let capsWords=(text.match(/\b[A-Z]{3,}\b/g)||[]).length;
+  let kws=($('proofUseJob').checked&&typeof cleanKws==='function')?cleanKws():[];
+  let kwHit=kws.filter(k=>lower.includes(k.toLowerCase())), kwMiss=kws.filter(k=>!lower.includes(k.toLowerCase()));
+  let kwRatio=kws.length?Math.round(100*kwHit.length/kws.length):null;
+  let findings=[]; // sev: 3 critical,2 major,1 minor
+  function F(sev,cat,title,detail,fix){findings.push({sev,cat,title,detail,fix});}
+  if(hasSSN)F(3,'Professionalism & Safety','A Social Security-style number appears in this resume.','This is a serious privacy and identity-theft risk, and employers never need it at application stage.','Delete it immediately. The same applies to birth dates and full home addresses.');
+  if(!email)F(3,'Contact','No email address found.','Most employers contact candidates by email first; without one, the application often stops here.','Add a professional email at the top, e.g., FirstName.LastName@email.com.');
+  if(email&&/(cooldude|hot|sexy|party|babe|stud|princess|sassy|wild)/i.test(email))F(2,'Contact','The email address reads as informal for a professional application.','"'+email+'" can quietly bias a busy screener in the first five seconds.','Create a simple name-based address for job applications (free at Gmail/Outlook).');
+  if(!phone)F(3,'Contact','No phone number found.','Recruiters frequently call to schedule; a missing number creates friction.','Add one mobile number with a professional voicemail greeting.');
+  if(street)F(1,'Contact','A full street address is listed.','City and state are the current professional standard; a street address is a privacy risk and can invite distance bias.','Change it to City, ST only.');
+  if(!cityState)F(1,'Contact','No city/state found.','Employers and ATS systems often filter by location.','Add "City, ST" on your contact line.');
+  if(!hasExp)F(3,'Structure','No clearly labeled Experience section found.','Screeners and ATS software look for standard headings; unlabeled history gets skipped or misread.','Use the heading "Experience" (or "Work Experience") above your roles.');
+  if(!hasSkills)F(2,'Structure','No Skills section found.','Skills sections feed ATS keyword matching and give screeners a 10-second overview.','Add a Skills section with the tools and abilities named in the posting.');
+  if(!hasEdu)F(1,'Structure','No Education / Training / Certifications section found.','Even without a degree, certifications, licenses, and training belong on a resume and often matter to this kind of role.','Add "Education, Training & Certifications" and list every credential you hold.');
+  if(!hasSummary)F(1,'Structure','No Professional Summary found.','A 2-3 sentence summary tells a screener who you are before they scan your history.','Add a short summary directly below your name (the Builder can draft one for you).');
+  if(bulletLines.length<3&&hasExp)F(2,'Structure','Experience is not presented in bullet points (only '+bulletLines.length+' found).','Paragraph-format duties are very hard to scan, and most screeners give a resume under 10 seconds.','Convert each duty/accomplishment to its own bullet beginning with a verb.');
+  if(words>900)F(2,'Length & Readability','At '+words+' words, this reads long (roughly 2 pages).','Unless you have 10+ years of relevant experience, one page is the expectation; long resumes get skimmed less, not more.','Cut the oldest/least relevant detail first and keep bullets under two lines.');
+  if(words<180)F(2,'Length & Readability','At '+words+' words, this resume is thin.','Thin resumes read as low experience even when the experience exists — the detail simply is not written down.','Add 3-4 bullets per role covering what you did, the scale, and the result.');
+  if(impactLines.length>=3&&qRatio<25)F(3,'Impact & Evidence','Only '+qRatio+'% of your experience lines include a number.','Unquantified bullets describe presence, not impact. Numbers (volume, money, time, people) are the most persuasive content on any resume.','Add a number to your strongest bullets: customers per day, people trained, accuracy, time saved.');
+  else if(impactLines.length>=3&&qRatio<50)F(2,'Impact & Evidence',qRatio+'% of your experience lines include a number.','That is a start — the strongest resumes quantify half or more of their bullets.','Look for volume, frequency, and results you can still estimate honestly.');
+  if(impactLines.length>=3&&vRatio<40)F(2,'Impact & Evidence','Only '+vRatio+'% of your experience lines begin with a strong action verb.','Lines that open with "Responsible for" or "I was…" read as duty lists rather than accomplishments.','Open bullets with verbs like Served, Trained, Processed, Scheduled, Resolved — see the suggested rewrites below.');
+  if(firstPerson>=6)F(1,'Impact & Evidence','First person ("I / my") appears '+firstPerson+' times.','Resumes conventionally drop pronouns; repeated "I" also crowds out the verb that should lead the bullet.','Remove "I was / I would" and start directly with the verb.');
+  if(spellHits.length)F(spellHits.length>=3?3:2,'Spelling & Mechanics','Likely spelling errors found: '+spellHits.slice(0,8).join(', ')+'.','Spelling errors are the most common reason screeners cite for rejecting an otherwise qualified resume — they are read as carelessness about the job itself.','Correct each flagged word, then run a full spell-check and read the resume aloud or backward, line by line.');
+  if(repeated.length)F(1,'Spelling & Mechanics','Repeated word(s) detected ('+repeated.slice(0,3).join(', ')+').','Doubled words survive normal proofreading because our brains skip them.','Fix the repetition; reading aloud or text-to-speech catches these reliably.');
+  if(lowerStarts>=3)F(1,'Spelling & Mechanics',lowerStarts+' lines begin with a lowercase letter.','Inconsistent capitalization makes the document look unfinished.','Capitalize the first word of every line and bullet.');
+  if(capsWords>Math.max(14,words*0.08))F(1,'Spelling & Mechanics','Heavy use of ALL-CAPS words ('+capsWords+').','Used beyond headings, capitals read as shouting and reduce readability.','Reserve capitals for section headings only.');
+  if(years===0)F(2,'Structure','No employment dates (years) found.','Undated history raises questions and breaks ATS experience calculations.','Add start–end years (or months) to every role, formatted consistently.');
+  weakHits.forEach(w=>{ if(w[0]==='objective'&&hasSummary===false){} F(w[0].includes('references')?1:2,'Language to Fix','"'+w[0]+'"', 'Found in your resume.', w[1]); });
+  if(kws.length){
+    if(kwRatio<34)F(2,'ATS & Tailoring','Only '+kwHit.length+' of '+kws.length+' keywords from your target posting appear ('+kwRatio+'%).','Many employers filter applications with software before a human reads them. Missing keywords can end an application silently.','Work the missing keywords you honestly have into your Skills section and bullets, using the posting\'s own wording.');
+    else if(kwRatio<65)F(1,'ATS & Tailoring',kwHit.length+' of '+kws.length+' target-posting keywords appear ('+kwRatio+'%).','A fair match. The strongest applications mirror most of the posting language they can truthfully claim.','Add the missing keywords you genuinely have — never invent skills.');
+  } else F(1,'ATS & Tailoring','No target posting to compare against.','Keyword matching is one of the highest-value checks a proofread can run.','Complete Step 1 (paste the job posting), then run this proofread again.');
+  if(state.job.title&&!lower.includes(state.job.title.toLowerCase().split(' ')[0]))F(1,'ATS & Tailoring','Your target job title ("'+state.job.title+'") is not mentioned.','Naming the target role in a headline or summary helps both software ranking and a screener\'s first scan.','Add a headline under your name naming the role you are applying for.');
+  // Subscores
+  function clamp(n){return Math.max(5,Math.min(98,Math.round(n)));}
+  let mech=clamp(100-spellHits.length*9-repeated.length*5-lowerStarts*2-(capsWords>14?6:0));
+  let struct=clamp(100-(hasExp?0:35)-(hasSkills?0:15)-(hasEdu?0:8)-(hasSummary?0:8)-(years?0:15)-(bulletLines.length<3&&hasExp?12:0)-(words>900?10:0)-(words<180?10:0));
+  let impact=clamp(impactLines.length? (qRatio*0.55+vRatio*0.45) : 30);
+  let ats=kws.length?clamp(kwRatio):clamp(45+(hasSkills?15:0)+(state.job.title&&lower.includes(state.job.title.toLowerCase().split(' ')[0])?15:0));
+  let prof=clamp(100-(email?0:30)-(phone?0:20)-(hasSSN?35:0)-(street?6:0)-weakHits.filter(w=>w[0].includes('references')||w[0]==='salary'||w[0]==='reason for leaving').length*8-(cityState?0:6));
+  let score=clamp(mech*0.20+struct*0.20+impact*0.30+ats*0.20+prof*0.10);
+  // Strengths
+  let strengths=[];
+  if(email&&phone&&cityState)strengths.push('Contact block is complete (email, phone, location) — an employer can reach you three ways.');
+  if(qRatio>=50)strengths.push(qRatio+'% of your experience lines are quantified — that is genuinely strong evidence, not description.');
+  if(vRatio>=60)strengths.push(vRatio+'% of your bullets open with action verbs, which reads as direct and capable.');
+  if(hasExp&&hasSkills&&hasEdu)strengths.push('All standard sections are present, so screeners and ATS software can parse the document cleanly.');
+  if(!spellHits.length&&words>=180)strengths.push('No common misspellings were detected — still run a full spell-check before sending, since no single check catches everything.');
+  if(kws.length&&kwRatio>=65)strengths.push('Strong keyword alignment with your target posting ('+kwRatio+'%).');
+  if(words>=300&&words<=750)strengths.push('Length ('+words+' words) is in the healthy one-page range.');
+  if(!strengths.length)strengths.push('You have the raw material — real experience is on the page. The fixes below are about presenting it at full strength, not starting over.');
+  // Line-by-line notes
+  let lineNotes=[];
+  lines.forEach((raw,idx)=>{
+    let l=raw.trim(); if(!l||lineNotes.length>=25)return;
+    let notes=[];
+    Object.keys(MISSPELLINGS).forEach(w=>{ if(new RegExp('\\b'+w+'\\b','i').test(l)) notes.push('Spelling: "'+w+'" → "'+MISSPELLINGS[w]+'"'); });
+    let rw=l.toLowerCase().match(/\b(\w+)\s+\1\b/); if(rw)notes.push('Repeated word: "'+rw[0]+'"');
+    if(/^[a-z]/.test(l)&&!l.includes('@'))notes.push('Capitalize the first word.');
+    let wn=(l.match(/\S+/g)||[]).length; if(wn>30)notes.push('Long line ('+wn+' words) — consider splitting into two bullets.');
+    WEAK_PHRASES.forEach(w=>{ if(l.toLowerCase().includes(w[0])) notes.push('"'+w[0]+'" — '+w[1]); });
+    let cleanL=l.replace(/^[-•*▪◦·>]\s*/,'');
+    if((bulletLines.includes(cleanL))&&wn>=4&&!/\d|%|\$/.test(l))notes.push('No number or measurable result — consider adding volume, frequency, or an outcome.');
+    if(notes.length)lineNotes.push({line:idx+1,text:l.length>120?l.slice(0,120)+'…':l,notes:notes.slice(0,3)});
+  });
+  // Suggested rewrites
+  let rewrites=[];
+  impactLines.forEach(l=>{
+    if(rewrites.length>=6)return;
+    let m=l.match(/^(?:i\s+was\s+|i\s+|was\s+)?(?:responsible for|duties included|in charge of|worked on|helped out with|helped with|helped to|helped)\s+(.+)$/i);
+    if(!m)return;
+    let rest=m[1].replace(/^(helping|handling)\s+/i,'').trim(); let rl=rest.toLowerCase();
+    let verb=/customer|guest/.test(rl)?'Served':/patient/.test(rl)?'Assisted':/phone|call/.test(rl)?'Answered':/schedul|appointment/.test(rl)?'Scheduled':/train/.test(rl)?'Trained':/clean|maintain/.test(rl)?'Maintained':/cash|payment|register|money/.test(rl)?'Processed':/stock|shelf|shelves/.test(rl)?'Stocked':/data|record|file|paperwork/.test(rl)?'Documented':/deliver/.test(rl)?'Delivered':/order|food|kitchen/.test(rl)?'Prepared':'Completed';
+    let after=verb+' '+rest.replace(/^[a-z]/,ch=>ch.toLowerCase()).replace(/\.*$/,'');
+    rewrites.push({before:l,after:after+' — then add YOUR real number: [how many / how often / what changed].'});
+  });
+  let sevName={3:'Do first',2:'Important',1:'Polish'};
+  let sevBadge={3:'red',2:'',1:'blue'};
+  let topFixes=findings.slice().sort((a,b)=>b.sev-a.sev).slice(0,6);
+  let cats={}; findings.forEach(f=>{(cats[f.cat]=cats[f.cat]||[]).push(f);});
+  let verdict=score>=82?'Strong resume with targeted polish remaining. Address the items below and this is ready to send.':score>=62?'A workable resume whose main problems are fixable in one editing pass. Work the priority list from the top.':score>=42?'The experience is there, but presentation is currently working against you. The fixes below are ordered by impact — most are quick.':'This draft needs substantial revision before sending. Take it one section at a time using the order below — or import it into the Builder and rebuild it section by section.';
+  let html='<div class="card"><p class="eyebrow">Proofreading Report</p><h2 style="font-size:32px;margin-bottom:4px">Overall: '+score+'/100</h2><div class="scorebar"><i style="width:'+score+'%"></i></div><p class="muted">'+verdict+'</p><p class="explain"><b>How to read these scores:</b> five rule-based checks (spelling &amp; mechanics, structure, impact &amp; evidence, keyword match, professionalism) compared against what hiring managers expect. It cannot verify that a claim is true, and it does not simulate a specific ATS.</p>'
+    +'<div class="kpi" style="margin-top:14px"><div><b>'+words+'</b><span class="muted small">Words (~'+Math.max(1,Math.round(words/550))+' page'+(Math.round(words/550)>1?'s':'')+')</span></div><div><b>'+qRatio+'%</b><span class="muted small">Bullets with numbers</span></div><div><b>'+vRatio+'%</b><span class="muted small">Start with strong verbs</span></div><div><b>'+findings.length+'</b><span class="muted small">Items flagged</span></div></div>'
+    +'<div style="margin-top:14px"><div class="bar-row"><span>Spelling & Mechanics</span><div class="scorebar"><i style="width:'+mech+'%"></i></div><span>'+mech+'%</span></div><div class="bar-row"><span>Structure</span><div class="scorebar"><i style="width:'+struct+'%"></i></div><span>'+struct+'%</span></div><div class="bar-row"><span>Impact & Evidence</span><div class="scorebar"><i style="width:'+impact+'%"></i></div><span>'+impact+'%</span></div><div class="bar-row"><span>ATS & Tailoring</span><div class="scorebar"><i style="width:'+ats+'%"></i></div><span>'+ats+'%</span></div><div class="bar-row"><span>Professionalism & Safety</span><div class="scorebar"><i style="width:'+prof+'%"></i></div><span>'+prof+'%</span></div></div></div>'
+    +'<div class="grid g2" style="margin-top:16px"><div class="card"><h3>🎯 Fix in This Order</h3>'+(topFixes.length?topFixes.map((f,i)=>'<div class="finding"><span class="badge '+sevBadge[f.sev]+'">'+sevName[f.sev]+'</span> <b>'+(i+1)+'. '+esc(f.title)+'</b><br><span class="small muted">'+esc(f.detail)+'</span><br><span class="small"><b>Fix:</b> '+esc(f.fix)+'</span></div>').join(''):'<p class="small">Nothing significant was flagged. Complete Step 1 and re-run for a keyword-level check.</p>')+'</div>'
+    +'<div class="do"><h3>✅ What Is Working</h3><ul class="small">'+strengths.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul></div></div>';
+  Object.keys(cats).forEach(c=>{
+    html+='<div class="card" style="margin-top:14px"><h3>'+esc(c)+'</h3>'+cats[c].map(f=>'<div class="finding"><span class="badge '+sevBadge[f.sev]+'">'+sevName[f.sev]+'</span> <b>'+esc(f.title)+'</b><br><span class="small muted">'+esc(f.detail)+'</span><br><span class="small"><b>Fix:</b> '+esc(f.fix)+'</span></div>').join('')+'</div>';
+  });
+  if(kws.length){
+    html+='<div class="card" style="margin-top:14px"><h3>🔍 Keywords From Your Target Posting — '+kwHit.length+'/'+kws.length+' present</h3><p class="eyebrow" style="color:#166534">Present</p><div class="chips">'+(kwHit.map(k=>'<span class="chip" style="background:#DCFCE7;border-color:#BBF7D0">'+esc(k)+'</span>').join('')||'—')+'</div><p class="eyebrow" style="color:#991B1B">Missing — add only where truthful</p><div class="chips">'+(kwMiss.map(k=>'<span class="chip" style="background:#FEE2E2;border-color:#FECACA">'+esc(k)+'</span>').join('')||'None 🎉')+'</div></div>';
+  }
+  if(lineNotes.length){
+    html+='<div class="card" style="margin-top:14px"><h3>✏️ Line-by-Line Notes</h3>'+lineNotes.map(n=>'<details><summary>Line '+n.line+': "'+esc(n.text)+'"</summary><ul class="small">'+n.notes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></details>').join('')+'</div>';
+  }
+  if(rewrites.length){
+    html+='<div class="card" style="margin-top:14px"><h3>🔁 Suggested Rewrites</h3><p class="small muted">Duty language converted to accomplishment language. <b>Add only numbers you can prove</b> — never a figure you would struggle to explain in an interview. Every bracketed [ ] is a prompt for you to fill in, not a suggestion.</p>'+rewrites.map(r=>'<div class="finding"><span class="small muted">Before:</span> <span class="small">'+esc(r.before)+'</span><br><span class="small muted">After:</span> <span class="small"><b>'+esc(r.after)+'</b></span></div>').join('')+'</div>';
+  }
+  html+='<div class="card" style="margin-top:14px"><h3>Next Step</h3><p class="small muted">The fastest path: send this resume into the Builder, fix it section by section with the live score and keyword tools beside you, then proofread the new version.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-teal" onclick="importProofToBuilder()">Send to Resume Builder →</button><button class="btn btn-outline" onclick="downloadProofReport()">⬇ Download This Report</button><button class="btn btn-outline" onclick="copyProofReport()">Copy Report</button></div><p class="small muted" style="margin-top:10px">Note: this proofreader checks what software can check — spelling patterns, structure, evidence, keywords, red flags. It cannot judge whether claims are accurate. Have one trusted person read the final version before you send it.</p></div>';
+  let plain='RESUME PROOFREADING REPORT — '+score+'/100\nSpelling & Mechanics '+mech+' · Structure '+struct+' · Impact '+impact+' · ATS '+ats+' · Professionalism '+prof+'\n'+verdict+'\n\nSTRENGTHS\n'+strengths.map(s=>'- '+s).join('\n')+'\n\nPRIORITY FIXES\n'+findings.slice().sort((a,b)=>b.sev-a.sev).map((f,i)=>(i+1)+'. ['+sevName[f.sev]+'] '+f.title+' '+f.detail+' Fix: '+f.fix).join('\n')+'\n\nLINE NOTES\n'+lineNotes.map(n=>'Line '+n.line+': "'+n.text+'" — '+n.notes.join('; ')).join('\n')+'\n\nSUGGESTED REWRITES\n'+rewrites.map(r=>'Before: '+r.before+'\nAfter: '+r.after).join('\n')+(kws.length?'\n\nKEYWORDS '+kwHit.length+'/'+kws.length+' present. Missing: '+kwMiss.join(', '):'');
+  return {html,plain,score};
+}
+function downloadProofReport(){
+  if(!lastProofPlain){alert('Run a proofread first.');return;}
+  try{let pdf=ResumeExport.buildTextPDF({title:'Resume Proofreading Report',subtitle:'ProReady Coach · generated on your device',body:lastProofPlain});ResumeExport.save(pdf,'Resume_Proofreading_Report.pdf');}
+  catch(e){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lastProofPlain],{type:'text/plain'}));a.download='Resume_Proofreading_Report.txt';a.click();}
+}
+function copyProofReport(){
+  if(!lastProofPlain){alert('Run a proofread first.');return;}
+  if(navigator.clipboard)navigator.clipboard.writeText(lastProofPlain).then(()=>alert('Report copied.'));
+}
+function importProofToBuilder(){
+  let text=($('proofText').value||'').trim();
+  if(text.length<40){alert('Paste or load a resume first.');return;}
+  if(!confirm('Import what the proofreader can detect into the Resume Builder? Fields it finds (name, contact, summary, skills, education, experience) will replace the current builder content. Your submitted text stays in the Proofreader box.'))return;
+  let lines=text.split(/\r?\n/), sec=proofSections(lines);
+  let pre=(sec.pre||[]).filter(l=>l.trim());
+  if(pre.length&&pre[0].trim().split(/\s+/).length<=4&&!pre[0].includes('@'))$('rName').value=pre[0].trim();
+  let email=(text.match(/[\w.+-]+@[\w-]+\.[\w.]{2,}/)||[])[0]; if(email)$('rEmail').value=email;
+  let phone=(text.match(/(\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}/)||[])[0]; if(phone)$('rPhone').value=phone;
+  let city=(text.match(/[A-Z][a-zA-Z .]+,\s*[A-Z]{2}\b/)||[])[0]; if(city)$('rCity').value=city;
+  if(sec.summary)$('rSummary').value=sec.summary.map(l=>l.trim()).filter(Boolean).join(' ').replace(/^objective[:\s]*/i,'');
+  if(sec.skills)$('rSkills').value=sec.skills.map(l=>l.replace(/^[-•*]\s*/,'').trim()).filter(Boolean).join(', ').replace(/,\s*,/g,', ');
+  if(sec.education)$('rEdu').value=sec.education.map(l=>l.replace(/^[-•*]\s*/,'').trim()).filter(Boolean).join('\n');
+  if(sec.experience){
+    $('expList').innerHTML='';
+    let blocks=[], cur=null;
+    sec.experience.forEach(raw=>{
+      let l=raw.trim(); if(!l)return;
+      let isBullet=/^[-•*▪◦·>]/.test(l);
+      if(!isBullet&&(!cur||cur.bullets.length)){cur={header:l,bullets:[]};blocks.push(cur);}
+      else if(isBullet){if(!cur){cur={header:'',bullets:[]};blocks.push(cur);}cur.bullets.push(l.replace(/^[-•*▪◦·>]\s*/,''));}
+      else if(cur)cur.bullets.push(l);
+    });
+    if(!blocks.length)addExp();
+    blocks.forEach(b=>{
+      let dm=b.header.match(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)?\s?(?:19|20)\d{2}\s*(?:-|–|—|to)\s*(?:Present|Current|(?:19|20)\d{2}))/i);
+      let dates=dm?dm[1]:''; let head=dm?b.header.replace(dm[1],'').replace(/[\s,—–-]+$/,'').trim():b.header;
+      let parts=head.split(/\s+[-—–]\s+|\s+at\s+|,\s*/).filter(Boolean);
+      addExp({title:parts[0]||'',org:parts.slice(1).join(', '),dates:dates,bullets:b.bullets.join('\n')});
+    });
+  }
+  renderResume(); showResumeMode('build'); showView('resume');
+  alert('Imported. Review each field for accuracy — automatic import is a starting point, especially job titles, employers, and dates — then rebuild the bullets using the feedback in your report.');
+}
+</script>
+<script>
+/* Offline/install support (PWA). Harmless where service workers are unavailable (previews, native shell). */
+try {
+  if ('serviceWorker' in navigator && navigator.serviceWorker && /^https?:$/.test(window.location.protocol)) {
+    window.addEventListener('load', function(){
+      try { navigator.serviceWorker.register('service-worker.js').catch(function(){}); } catch (e) {}
+    });
+  }
+} catch (e) {}
+
+/* Announce speech capabilities honestly, using platform detection (never feature detection:
+   iOS WKWebView exposes webkitSpeechRecognition but does not implement it). */
+(function(){
+  function check(){
+    var VA=window.VoiceAdapter;
+    var note=document.getElementById('voiceSupportNote');
+    if(note&&VA){
+      var d=VA.describe();
+      note.innerHTML=d.text;
+    }
+    var canSpeak=!(VA&&VA.detect(true)&&VA.detect(true).canSpeak===false);
+    if(!canSpeak){
+      var v=document.getElementById('intVoice');
+      if(v&&v.parentElement){v.checked=false;v.disabled=true;v.parentElement.style.opacity=.55;
+        v.parentElement.insertAdjacentHTML('afterend','<p class="small muted">Question audio is not available on this device; questions will appear on screen instead.</p>');}
+    }
+  }
+  window.refreshVoiceNotice=check;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',check);else check();
+})();
+
+/* ===== VoiceAdapter (inlined from voice-adapter.js) ===== */
+/* ============================================================================
+   ProReady Coach — speech adapter
+   ----------------------------------------------------------------------------
+   ONE speech interface for three very different environments:
+
+     browser (Chrome/Edge/Safari)  -> Web Speech API
+     Android app (Capacitor)       -> @capacitor-community/speech-recognition
+                                      @capacitor-community/text-to-speech
+     iOS app (Capacitor/WKWebView) -> same plugins (SFSpeechRecognizer / AVSpeech)
+
+   Why this file exists: iOS WKWebView *exposes* window.webkitSpeechRecognition but
+   does not implement it (WebKit bug 239816), so feature detection gives a false
+   positive. Android WebView omits it entirely. Platform detection plus plugin
+   availability is the only reliable gate.
+
+   Detection order for listening:
+     1. native plugin available  -> use it
+     2. native shell but no plugin -> report unavailable (do NOT trust the Web API)
+     3. browser with Web Speech API, not an iOS home-screen app -> use it
+     4. otherwise -> unavailable
+
+   This file is the single source of truth. tools/sync_export.py inlines it into
+   index.html between the VoiceAdapter markers.
+   ========================================================================= */
+(function (root) {
+  'use strict';
+
+  var cached = null;
+
+  function cap() {
+    try { return root.Capacitor || null; } catch (e) { return null; }
+  }
+
+  function pluginNames(c) {
+    // Capacitor 6/7: plugins registered via registerPlugin land on Capacitor.Plugins
+    var out = { stt: null, tts: null };
+    var reg = (root && root.ProReadyNative) || {};
+    try {
+      if (c && c.Plugins) {
+        out.stt = c.Plugins.SpeechRecognition || null;
+        out.tts = c.Plugins.TextToSpeech || null;
+      }
+    } catch (e) {}
+    // plugins registered later via Capacitor.registerPlugin() are held here, so the
+    // standard window.SpeechRecognition global is never overwritten
+    if (!out.stt) out.stt = reg.SpeechRecognition || null;
+    if (!out.tts) out.tts = reg.TextToSpeech || null;
+    return out;
+  }
+
+  function platformOf() {
+    var c = cap();
+    try {
+      if (c && typeof c.getPlatform === 'function') {
+        var p = c.getPlatform();
+        if (p && p !== 'web') return p;
+      }
+      if (c && typeof c.isNativePlatform === 'function' && c.isNativePlatform()) return 'native';
+    } catch (e) {}
+    var ua = (root.navigator && root.navigator.userAgent) || '';
+    if (/Android/i.test(ua)) return /;\s*wv\)/.test(ua) ? 'android-webview' : 'android-browser';
+    if (/iPhone|iPad|iPod/i.test(ua)) return 'ios-browser';
+    return 'web';
+  }
+
+  function isNativeShell() {
+    var c = cap();
+    try {
+      if (c && typeof c.isNativePlatform === 'function') return !!c.isNativePlatform();
+      if (c && typeof c.getPlatform === 'function') return c.getPlatform() !== 'web';
+    } catch (e) {}
+    var p = platformOf();
+    return p === 'android-webview' || p === 'ios-webview';
+  }
+
+  function webSTT() {
+    return root.SpeechRecognition || root.webkitSpeechRecognition || null;
+  }
+
+  function webTTS() {
+    return (root.speechSynthesis && root.SpeechSynthesisUtterance) ? root.speechSynthesis : null;
+  }
+
+  function isIosHomeScreenApp() {
+    // Added-to-home-screen web apps on iOS do not get speech recognition either.
+    try {
+      return !!(root.navigator && root.navigator.standalone === true);
+    } catch (e) { return false; }
+  }
+
+  function detect(force) {
+    if (cached && !force) return cached;
+    var c = cap();
+    var plugs = pluginNames(c);
+    var native = isNativeShell();
+    var sttCtor = webSTT();
+
+    var listenMode, reason;
+    if (plugs.stt) {
+      listenMode = 'native';
+      reason = 'native-plugin';
+    } else if (native) {
+      listenMode = 'unavailable';
+      reason = 'native-without-plugin';
+    } else if (sttCtor && !isIosHomeScreenApp()) {
+      listenMode = 'web';
+      reason = 'web-speech-api';
+    } else if (isIosHomeScreenApp()) {
+      listenMode = 'unavailable';
+      reason = 'ios-home-screen-app';
+    } else {
+      listenMode = 'unavailable';
+      reason = 'no-web-speech-api';
+    }
+
+    var speakMode;
+    if (plugs.tts) speakMode = 'native';
+    else if (webTTS()) speakMode = 'web';
+    else speakMode = 'unavailable';
+
+    cached = {
+      platform: platformOf(),
+      nativeShell: native,
+      plugins: { stt: !!plugs.stt, tts: !!plugs.tts },
+      listen: { mode: listenMode, reason: reason },
+      speak: { mode: speakMode },
+      canListen: listenMode !== 'unavailable',
+      canSpeak: speakMode !== 'unavailable'
+    };
+    return cached;
+  }
+
+  /* ------------------------------------------------------------------ listen */
+  var session = null;   // { stop:fn }
+  var state = { active: false, heard: false };
+
+  function onPlugin(target, event, handler) {
+    try {
+      if (target && typeof target.addListener === 'function') {
+        var h = target.addListener(event, handler);
+        if (h && typeof h.then === 'function') return h;
+        return h;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function removeListener(handle) {
+    try { if (handle && typeof handle.remove === 'function') handle.remove(); } catch (e) {}
+  }
+
+  function listen(opts) {
+    opts = opts || {};
+    var d = detect(true);
+    var c = cap();
+    var plugs = pluginNames(c);
+
+    if (!d.canListen) {
+      if (opts.onUnavailable) opts.onUnavailable(d.listen.reason);
+      return { stop: function () {} };
+    }
+
+    state.active = true;
+    state.heard = false;
+    var handles = [];
+
+    // ---------------- native path ----------------
+    if (d.listen.mode === 'native' && plugs.stt) {
+      var plugin = plugs.stt;
+      var finish = function () {
+        state.active = false;
+        handles.forEach(removeListener);
+        if (opts.onEnd) opts.onEnd();
+      };
+
+      handles.push(onPlugin(plugin, 'partialResults', function (ev) {
+        var text = (ev && ev.matches && ev.matches[0]) || '';
+        if (!text) return;
+        state.heard = true;
+        if (opts.onPartial) opts.onPartial(text);
+      }));
+
+      (function begin() {
+        var ready = (typeof plugin.checkPermissions === 'function')
+          ? plugin.checkPermissions().then(function (p) {
+              if (p && p.speechRecognition === 'granted') return true;
+              return plugin.requestPermissions().then(function (r) {
+                return !!(r && r.speechRecognition === 'granted');
+              });
+            })
+          : Promise.resolve(true);
+
+        ready.then(function (granted) {
+          if (!granted) {
+            state.active = false;
+            if (opts.onError) opts.onError('not-allowed');
+            if (opts.onEnd) opts.onEnd();
+            return;
+          }
+          return plugin.start({
+            language: 'en-US',
+            maxResults: 3,
+            partialResults: true,
+            popup: false
+          }).then(function () {
+            if (opts.onStart) opts.onStart();
+          }).catch(function (err) {
+            state.active = false;
+            var msg = String((err && err.message) || err || 'unknown');
+            if (opts.onError) opts.onError(/denied|permission/i.test(msg) ? 'not-allowed' : msg);
+            if (opts.onEnd) opts.onEnd();
+          });
+        }).catch(function () {
+          state.active = false;
+          if (opts.onError) opts.onError('plugin-error');
+          if (opts.onEnd) opts.onEnd();
+        });
+      })();
+
+      return {
+        stop: function () {
+          try { plugin.stop().then(finish).catch(finish); } catch (e) { finish(); }
+        }
+      };
+    }
+
+    // ---------------- web path ----------------
+    var SR = webSTT();
+    var rec = null;
+    var base = '';
+    var finished = false;
+    var finish = function () {
+      if (finished) return;
+      finished = true;
+      state.active = false;
+      if (opts.onEnd) opts.onEnd();
+    };
+
+    try {
+      rec = new SR();
+      rec.lang = (opts.language || 'en-US');
+      rec.interimResults = true;
+      rec.continuous = true;
+
+      rec.onresult = function (e) {
+        var finalTxt = '', interimTxt = '';
+        for (var i = e.resultIndex; i < e.results.length; i++) {
+          var chunk = e.results[i][0].transcript;
+          if (e.results[i].isFinal) finalTxt += chunk;
+          else interimTxt += chunk;
+        }
+        if (finalTxt) {
+          base += finalTxt;
+          state.heard = true;
+          if (opts.onResult) opts.onResult((base + ' ' + interimTxt).trim(), false);
+        } else if (interimTxt) {
+          state.heard = true;
+          if (opts.onPartial) opts.onPartial((base + ' ' + interimTxt).trim());
+        }
+      };
+      rec.onspeechstart = function () { state.heard = true; };
+      rec.onerror = function (e) {
+        var code = (e && e.error) || 'unknown';
+        if (opts.onError) opts.onError(code);
+        finish();
+      };
+      rec.onend = finish;
+      rec.start();
+    } catch (err) {
+      state.active = false;
+      if (opts.onError) opts.onError('start-failed');
+      finish();
+      return { stop: function () {} };
+    }
+
+    return {
+      stop: function () {
+        try { rec.stop(); } catch (e) { finish(); }
+      }
+    };
+  }
+
+  /* ------------------------------------------------------------------- speak */
+  var speaking = false;
+
+  function speak(text, opts) {
+    opts = opts || {};
+    var d = detect(true);
+    if (!d.canSpeak || !text) {
+      if (opts.onEnd) opts.onEnd();
+      return false;
+    }
+    var c = cap();
+    var plugs = pluginNames(c);
+
+    if (d.speak.mode === 'native' && plugs.tts) {
+      speaking = true;
+      try {
+        if (opts.onStart) opts.onStart();
+        plugs.tts.speak({
+          text: String(text),
+          lang: 'en-US',
+          rate: opts.rate == null ? 1.0 : opts.rate,
+          pitch: opts.pitch == null ? 1.0 : opts.pitch,
+          volume: 1.0,
+          category: 'playback'
+        }).then(function () {
+          speaking = false;
+          if (opts.onEnd) opts.onEnd();
+        }).catch(function () {
+          speaking = false;
+          if (opts.onEnd) opts.onEnd();
+        });
+      } catch (e) {
+        speaking = false;
+        if (opts.onEnd) opts.onEnd();
+      }
+      return true;
+    }
+
+    var synth = webTTS();
+    try {
+      synth.cancel();
+      var u = new root.SpeechSynthesisUtterance(String(text));
+      u.rate = opts.rate == null ? 1.0 : opts.rate;
+      u.pitch = opts.pitch == null ? 1.0 : opts.pitch;
+      if (opts.onStart) u.onstart = opts.onStart;
+      u.onend = function () { if (opts.onEnd) opts.onEnd(); };
+      u.onerror = function () { if (opts.onEnd) opts.onEnd(); };
+      synth.speak(u);
+      return true;
+    } catch (e) {
+      if (opts.onEnd) opts.onEnd();
+      return false;
+    }
+  }
+
+  function cancelSpeak() {
+    var c = cap();
+    var plugs = pluginNames(c);
+    try { if (plugs.tts && typeof plugs.tts.stop === 'function') plugs.tts.stop(); } catch (e) {}
+    try { if (root.speechSynthesis) root.speechSynthesis.cancel(); } catch (e) {}
+    speaking = false;
+  }
+
+  /* --------------------------------------------------------------- messaging */
+  function describe() {
+    var d = detect(true);
+    if (d.canListen) {
+      if (d.listen.mode === 'native') {
+        return { ok: true, text: '🎤 Voice answers use your phone\u2019s built-in speech recognition. You can always type instead.' };
+      }
+      return { ok: true, text: '🎤 Voice answers use your browser\u2019s speech recognition (work best in Chrome, Edge or Safari). You can always type instead.' };
+    }
+    var text;
+    if (d.listen.reason === 'native-without-plugin') {
+      text = '🎤 <b>Voice input is not available in the phone app.</b> Type your answers \u2014 the notes, follow-up questions and scoring are identical. For voice practice, open the app in Chrome, Edge or Safari.';
+    } else if (d.listen.reason === 'ios-home-screen-app') {
+      text = '🎤 <b>Voice input is unavailable in an iPhone home-screen app.</b> Type your answers \u2014 scoring and notes work identically. Opening this page in Safari enables voice.';
+    } else {
+      text = '🎤 <b>Voice answers are not available in this browser.</b> Type your answers \u2014 the notes, scoring and report work identically. For voice practice, open this page in Chrome, Edge or Safari.';
+    }
+    return { ok: false, text: text, reason: d.listen.reason };
+  }
+
+  root.VoiceAdapter = {
+    detect: detect,
+    describe: describe,
+    listen: listen,
+    speak: speak,
+    cancelSpeak: cancelSpeak,
+    isNativeShell: isNativeShell,
+    platform: platformOf,
+    isListening: function () { return state.active; },
+    hasHeardSpeech: function () { return state.heard; },
+    isSpeaking: function () { return speaking; }
+  };
+})(typeof window !== 'undefined' ? window : this);
+
+/* ===== end VoiceAdapter ===== */
+
+/* Register the optional native speech plugins. Harmless in a browser: Capacitor is
+   undefined there, so this is skipped and the adapter falls back to the Web Speech API. */
+(function(){
+  function register(){
+    try{
+      var C=window.Capacitor;
+      if(!C||typeof C.registerPlugin!=='function')return;
+      if(typeof C.isNativePlatform==='function'&&!C.isNativePlatform())return;
+      window.ProReadyNative=window.ProReadyNative||{};
+      if(!window.ProReadyNative.SpeechRecognition)window.ProReadyNative.SpeechRecognition=C.registerPlugin('SpeechRecognition');
+      if(!window.ProReadyNative.TextToSpeech)window.ProReadyNative.TextToSpeech=C.registerPlugin('TextToSpeech');
+      if(typeof window.refreshVoiceNotice==='function')window.refreshVoiceNotice();
+    }catch(e){}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',register);else register();
+})();
+
+/* ===== ResumeExport (inlined from resume-export.js) ===== */
+/* ============================================================================
+   ProReady Coach — resume & report export engine
+   ----------------------------------------------------------------------------
+   Real PDF and DOCX output with no external libraries, so it works offline,
+   inside the Capacitor wrapper, and from file:// .
+
+   This file is the single source of truth. It is inlined into index.html by
+   tools/sync_export.py and loaded directly by desktop.html.
+
+   Public API
+     ResumeExport.buildResumePDF(data)  -> Blob (application/pdf)
+     ResumeExport.buildResumeDOCX(data) -> Blob (WordprocessingML)
+     ResumeExport.buildResumeTXT(data)  -> Blob (text/plain)
+     ResumeExport.buildResumeHTML(data) -> string (print view)
+     ResumeExport.buildTextPDF({title,subtitle,body}) -> Blob
+     ResumeExport.resumeDataFromDOM()   -> data object from the builder fields
+     ResumeExport.save(blob, filename)
+     ResumeExport.filename(ext)
+   ========================================================================= */
+(function (root) {
+  'use strict';
+
+  /* ---------------------------------------------------------------- metrics */
+  // Helvetica / Helvetica-Bold advance widths for ASCII 32..126 (per 1000 units).
+  var W_REG = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,
+    556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,
+    667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,
+    278,278,278,469,556,333,
+    556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,
+    334,260,334,584];
+  var W_BOLD = [278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,
+    556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,
+    722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,
+    333,278,333,584,556,333,
+    556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,
+    389,280,389,584];
+
+  function charWidth(code, size, bold) {
+    var table = bold ? W_BOLD : W_REG;
+    var i = code - 32;
+    var w = (i >= 0 && i < table.length) ? table[i] : 500;
+    return w * size / 1000;
+  }
+
+  function textWidth(str, size, bold) {
+    var t = 0, i;
+    for (i = 0; i < str.length; i++) t += charWidth(str.charCodeAt(i), size, bold);
+    return t;
+  }
+
+  /* -------------------------------------------------------------- pdf helpers */
+  // Typographic characters have no place in a single-byte core font unless we map them
+  // to their WinAnsiEncoding slot. Without this, bullets and dashes print as "?".
+  var WINANSI = {
+    0x2013: 0x96, 0x2014: 0x97, 0x2018: 0x91, 0x2019: 0x92,
+    0x201A: 0x82, 0x201C: 0x93, 0x201D: 0x94, 0x201E: 0x84,
+    0x2020: 0x86, 0x2021: 0x87, 0x2022: 0x95, 0x2026: 0x85,
+    0x2030: 0x89, 0x2039: 0x8B, 0x203A: 0x9B, 0x20AC: 0x80,
+    0x2122: 0x99, 0x0160: 0x8A, 0x0161: 0x9A, 0x0178: 0x9F,
+    0x017D: 0x8E, 0x017E: 0x9E, 0x0192: 0x83, 0x02C6: 0x88,
+    0x02DC: 0x98, 0x2028: 0x20, 0x2029: 0x20
+  };
+
+  function pdfEscape(str) {
+    var out = '', i, c, code;
+    for (i = 0; i < str.length; i++) {
+      c = str.charAt(i);
+      code = str.charCodeAt(i);
+      if (WINANSI[code] != null) code = WINANSI[code];
+      if (c === '\\' || c === '(' || c === ')') out += '\\' + c;
+      else if (code < 32) out += ' ';
+      else if (code < 127) out += String.fromCharCode(code);
+      else if (code < 256) out += '\\' + ('000' + code.toString(8)).slice(-3);
+      else out += '?'; // anything unmappable stays a safe placeholder
+    }
+    return out;
+  }
+
+  function wrapText(str, size, bold, maxWidth) {
+    var words = String(str).replace(/\s+/g, ' ').trim().split(' ');
+    var lines = [], line = '', i, test;
+    for (i = 0; i < words.length; i++) {
+      test = line ? line + ' ' + words[i] : words[i];
+      if (textWidth(test, size, bold) <= maxWidth || !line) {
+        line = test;
+      } else {
+        lines.push(line);
+        line = words[i];
+      }
+      // hard-break a single word that cannot fit
+      while (textWidth(line, size, bold) > maxWidth && line.length > 1) {
+        var cut = line.length - 1;
+        while (cut > 1 && textWidth(line.slice(0, cut), size, bold) > maxWidth) cut--;
+        lines.push(line.slice(0, cut));
+        line = line.slice(cut);
+      }
+    }
+    if (line) lines.push(line);
+    return lines.length ? lines : [''];
+  }
+
+  var PAGE_W = 612, PAGE_H = 792;      // US Letter, points
+  var MARGIN = 54;                     // 0.75"
+  var RIGHT = PAGE_W - MARGIN;
+  var BOTTOM = MARGIN + 18;
+
+  var COL = {
+    ink:   [0.13, 0.10, 0.08],
+    body:  [0.19, 0.15, 0.12],
+    muted: [0.42, 0.36, 0.31],
+    sage:  [0.37, 0.44, 0.38],
+    rule:  [0.80, 0.78, 0.74]
+  };
+
+  function PDFWriter() {
+    this.pages = [];
+    this.ops = null;
+    this.y = 0;
+    this.newPage();
+  }
+  PDFWriter.prototype.newPage = function () {
+    this.ops = [];
+    this.pages.push(this.ops);
+    this.y = PAGE_H - MARGIN;
+  };
+  PDFWriter.prototype.space = function (pt) {
+    this.y -= pt;
+    if (this.y < BOTTOM) this.newPage();
+  };
+  PDFWriter.prototype.color = function (rgb, stroke) {
+    var n = rgb.map(function (v) { return (+v).toFixed(3).replace(/0+$/, '').replace(/\.$/, '') || '0'; });
+    this.ops.push(n.join(' ') + (stroke ? ' RG' : ' rg'));
+  };
+  PDFWriter.prototype.text = function (str, opts) {
+    opts = opts || {};
+    var size = opts.size || 10;
+    var bold = !!opts.bold;
+    var x = (opts.x == null) ? MARGIN : opts.x;
+    if (opts.right != null) x = opts.right - textWidth(str, size, bold);
+    this.color(opts.color || COL.body);
+    // baseline: y is the top of the line box
+    var baseline = this.y - size * 0.78;
+    this.ops.push('BT /' + (bold ? 'F2' : 'F1') + ' ' + size + ' Tf 1 0 0 1 ' +
+      x.toFixed(2) + ' ' + baseline.toFixed(2) + ' Tm (' + pdfEscape(str) + ') Tj ET');
+  };
+  PDFWriter.prototype.rule = function (yOffsetFromTop) {
+    var y = this.y - (yOffsetFromTop == null ? 2 : yOffsetFromTop);
+    this.color(COL.rule, true);
+    this.ops.push('0.7 w ' + MARGIN + ' ' + y.toFixed(2) + ' m ' + RIGHT + ' ' + y.toFixed(2) + ' l S');
+  };
+
+  function buildPDF(writer) {
+    // build font + page objects with correct xref offsets
+    var objects = [];
+    function add(body) { objects.push(body); return objects.length; } // 1-based ids
+
+    var fontReg = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
+    var fontBold = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
+
+    var pageIds = [], contentIds = [];
+    var pagesIdPlaceholder = objects.length + 1 + writer.pages.length * 2; // reserved later
+    // We must know ids before writing page dicts: reserve order
+    // layout: [f1,f2] then for each page: content, page. then pages tree, then catalog.
+    var nextId = objects.length + 1;
+    var contentIdFor = [], pageIdFor = [];
+    writer.pages.forEach(function () {
+      contentIdFor.push(nextId++);
+      pageIdFor.push(nextId++);
+    });
+    var pagesId = nextId++;
+    var catalogId = nextId++;
+
+    writer.pages.forEach(function (ops, i) {
+      var stream = ops.join('\n');
+      objects[contentIdFor[i] - 1] = '<< /Length ' + byteLen(stream) + ' >>\nstream\n' + stream + '\nendstream';
+      objects[pageIdFor[i] - 1] = '<< /Type /Page /Parent ' + pagesId + ' 0 R /MediaBox [0 0 ' +
+        PAGE_W + ' ' + PAGE_H + '] /Resources << /Font << /F1 ' + fontReg + ' 0 R /F2 ' + fontBold +
+        ' 0 R >> >> /Contents ' + contentIdFor[i] + ' 0 R >>';
+    });
+    objects[pagesId - 1] = '<< /Type /Pages /Count ' + writer.pages.length +
+      ' /Kids [' + pageIdFor.map(function (id) { return id + ' 0 R'; }).join(' ') + '] >>';
+    objects[catalogId - 1] = '<< /Type /Catalog /Pages ' + pagesId + ' 0 R >>';
+
+    var out = '%PDF-1.4\n%\u00E2\u00E3\u00CF\u00D3\n';
+    var offsets = [];
+    objects.forEach(function (body, idx) {
+      offsets.push(byteLen(out));
+      out += (idx + 1) + ' 0 obj\n' + body + '\nendobj\n';
+    });
+    var xrefStart = byteLen(out);
+    out += 'xref\n0 ' + (objects.length + 1) + '\n0000000000 65535 f \n';
+    offsets.forEach(function (off) {
+      out += ('0000000000' + off).slice(-10) + ' 00000 n \n';
+    });
+    out += 'trailer\n<< /Size ' + (objects.length + 1) + ' /Root ' + catalogId + ' 0 R >>\nstartxref\n' +
+      xrefStart + '\n%%EOF\n';
+    return out;
+  }
+
+  function byteLen(str) {
+    // count UTF-8 bytes without depending on TextEncoder (older Safari)
+    var n = 0, i, c;
+    for (i = 0; i < str.length; i++) {
+      c = str.charCodeAt(i);
+      if (c < 128) n += 1;
+      else if (c < 2048) n += 2;
+      else n += 3;
+    }
+    return n;
+  }
+
+  /* ------------------------------------------------------- resume structure */
+  function normLines(v) {
+    return String(v == null ? '' : v).split(/\r?\n/).map(function (s) { return s.trim(); })
+      .filter(function (s) { return s.length; });
+  }
+
+  function cleanBullet(s) {
+    return String(s).replace(/^[-–—•*·]\s*/, '').trim();
+  }
+
+  function buildResumeDoc(data) {
+    data = data || {};
+    var doc = [];
+    doc.push({ t: 'name', text: data.name || 'Your Name' });
+    if (data.headline) doc.push({ t: 'headline', text: data.headline });
+    var contact = [];
+    if (data.city) contact.push(data.city);
+    if (data.phone) contact.push(data.phone);
+    if (data.email) contact.push(data.email);
+    if (contact.length) doc.push({ t: 'contact', text: contact.join('  ·  ') });
+
+    if (data.summary && String(data.summary).trim()) {
+      doc.push({ t: 'h2', text: 'Professional Summary' });
+      normLines(data.summary).forEach(function (p) { doc.push({ t: 'p', text: p }); });
+    }
+    var exps = (data.experiences || []).filter(function (e) { return e && (e.title || e.org); });
+    if (exps.length) {
+      doc.push({ t: 'h2', text: 'Experience' });
+      exps.forEach(function (e) {
+        doc.push({ t: 'job', title: e.title || '', org: e.org || '', dates: e.dates || '' });
+        normLines(e.bullets).forEach(function (b) {
+          var c = cleanBullet(b);
+          if (c) doc.push({ t: 'bullet', text: c });
+        });
+      });
+    }
+    var skills = (data.skills || []).filter(function (s) { return String(s).trim(); });
+    if (skills.length) {
+      doc.push({ t: 'h2', text: 'Skills' });
+      doc.push({ t: 'p', text: skills.join('  ·  ') });
+    }
+    var edu = normLines(data.edu);
+    if (edu.length) {
+      doc.push({ t: 'h2', text: 'Education, Training & Certifications' });
+      edu.forEach(function (l) { doc.push({ t: 'p', text: l }); });
+    }
+    return doc;
+  }
+
+  /* ------------------------------------------------------------- PDF resume */
+  function buildResumePDF(data) {
+    var doc = buildResumeDoc(data);
+    var w = new PDFWriter();
+    var i, op, lines, k;
+    for (i = 0; i < doc.length; i++) {
+      op = doc[i];
+      if (op.t === 'name') {
+        w.space(6);
+        w.text(op.text, { size: 20, bold: true, color: COL.ink });
+        w.space(23);
+      } else if (op.t === 'headline') {
+        w.text(op.text, { size: 10.5, bold: true, color: COL.sage });
+        w.space(14);
+      } else if (op.t === 'contact') {
+        w.text(op.text, { size: 9, color: COL.muted });
+        w.space(13);
+      } else if (op.t === 'h2') {
+        w.space(9);
+        w.text(String(op.text).toUpperCase(), { size: 9.5, bold: true, color: COL.ink });
+        w.rule(3.5);
+        w.space(15);
+      } else if (op.t === 'job') {
+        w.space(7);
+        var titleTxt = op.title + (op.org ? ' — ' + op.org : '');
+        var datesW = op.dates ? textWidth(op.dates, 9, false) : 0;
+        var maxW = RIGHT - MARGIN - (datesW ? datesW + 14 : 0);
+        lines = wrapText(titleTxt, 10.5, true, maxW);
+        lines.forEach(function (ln, idx) {
+          w.text(ln, { size: 10.5, bold: true, color: COL.ink });
+          if (idx === 0 && op.dates) w.text(op.dates, { size: 9, right: RIGHT, color: COL.muted });
+          w.space(13);
+        });
+      } else if (op.t === 'bullet') {
+        w.text('•', { size: 9.8, x: MARGIN + 3, color: COL.body });
+        lines = wrapText(op.text, 9.8, false, RIGHT - (MARGIN + 14));
+        lines.forEach(function (ln, idx) {
+          w.text(ln, { size: 9.8, x: idx === 0 ? MARGIN + 14 : MARGIN + 14, color: COL.body });
+          w.space(12.4);
+        });
+      } else if (op.t === 'p') {
+        lines = wrapText(op.text, 9.8, false, RIGHT - MARGIN);
+        lines.forEach(function (ln) {
+          w.text(ln, { size: 9.8, color: COL.body });
+          w.space(12.4);
+        });
+      }
+    }
+    return new Blob([buildPDF(w)], { type: 'application/pdf' });
+  }
+
+  /* ------------------------------------------------------------ DOCX resume */
+  var CRC_TABLE = (function () {
+    var t = [], c, n, k;
+    for (n = 0; n < 256; n++) {
+      c = n;
+      for (k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+
+  function crc32(bytes) {
+    var c = 0xFFFFFFFF, i;
+    for (i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  function utf8(str) {
+    var out = [], i, c;
+    for (i = 0; i < str.length; i++) {
+      c = str.charCodeAt(i);
+      if (c < 0x80) out.push(c);
+      else if (c < 0x800) out.push(0xC0 | (c >> 6), 0x80 | (c & 63));
+      else if (c < 0xD800 || c >= 0xE000) out.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63));
+      else { // surrogate pair
+        var hi = c, lo = str.charCodeAt(++i);
+        var cp = 0x10000 + ((hi - 0xD800) << 10) + (lo - 0xDC00);
+        out.push(0xF0 | (cp >> 18), 0x80 | ((cp >> 12) & 63), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63));
+      }
+    }
+    return new Uint8Array(out);
+  }
+
+  function makeZip(files) {
+    // files: [{name, data:Uint8Array}]  — stored (no compression), valid zip
+    var chunks = [], central = [], offset = 0, i;
+    function u16(n) { return [n & 255, (n >> 8) & 255]; }
+    function u32(n) { return [n & 255, (n >> 8) & 255, (n >> 16) & 255, (n >>> 24) & 255]; }
+
+    for (i = 0; i < files.length; i++) {
+      var f = files[i];
+      var nameBytes = utf8(f.name);
+      var crc = crc32(f.data);
+      var local = [].concat(u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(crc), u32(f.data.length), u32(f.data.length), u16(nameBytes.length), u16(0));
+      var localBytes = new Uint8Array(local);
+      chunks.push(localBytes, nameBytes, f.data);
+      central.push({
+        name: nameBytes, crc: crc, size: f.data.length, offset: offset
+      });
+      offset += localBytes.length + nameBytes.length + f.data.length;
+    }
+    var centralStart = offset, centralChunks = [];
+    for (i = 0; i < central.length; i++) {
+      var c = central[i];
+      var hdr = [].concat(u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(c.crc), u32(c.size), u32(c.size), u16(c.name.length), u16(0), u16(0), u16(0), u16(0),
+        u32(0), u32(c.offset));
+      centralChunks.push(new Uint8Array(hdr), c.name);
+      /* eslint-disable no-loop-func */
+    }
+    var centralSize = 0;
+    centralChunks.forEach(function (ch) { centralSize += ch.length; });
+    var end = new Uint8Array([].concat(
+      u32(0x06054b50), u16(0), u16(0), u16(central.length), u16(central.length),
+      u32(centralSize), u32(centralStart), u16(0)
+    ));
+    var all = chunks.concat(centralChunks, [end]);
+    var total = 0;
+    all.forEach(function (ch) { total += ch.length; });
+    var buf = new Uint8Array(total), pos = 0;
+    all.forEach(function (ch) { buf.set(ch, pos); pos += ch.length; });
+    return buf;
+  }
+
+  function xmlEscape(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+  }
+
+  function para(runs, opts) {
+    opts = opts || {};
+    var pPr = '<w:pPr>';
+    if (opts.spaceBefore) pPr += '<w:spacing w:before="' + opts.spaceBefore + '"/>';
+    if (opts.spaceAfter != null) pPr += '<w:spacing w:after="' + opts.spaceAfter + '"/>';
+    if (opts.indent) pPr += '<w:ind w:left="' + opts.indent + '" w:hanging="' + (opts.hanging || 0) + '"/>';
+    if (opts.border) pPr += '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="C9C4BC"/></w:pBdr>';
+    pPr += '</w:pPr>';
+    var body = runs.map(function (r) {
+      var rPr = '<w:rPr><w:rFonts w:ascii="' + (r.font || 'Calibri') + '" w:hAnsi="' + (r.font || 'Calibri') + '"/>';
+      if (r.bold) rPr += '<w:b/>';
+      if (r.color) rPr += '<w:color w:val="' + r.color + '"/>';
+      if (r.size) rPr += '<w:sz w:val="' + r.size + '"/><w:szCs w:val="' + r.size + '"/>';
+      rPr += '</w:rPr>';
+      return '<w:r>' + rPr + '<w:t xml:space="preserve">' + xmlEscape(r.text) + '</w:t></w:r>';
+    }).join('');
+    return '<w:p>' + pPr + body + '</w:p>';
+  }
+
+  function buildResumeDOCX(data) {
+    var doc = buildResumeDoc(data);
+    var body = doc.map(function (op) {
+      if (op.t === 'name') return para([{ text: op.text, bold: true, size: 40, color: '1F1A14' }], { spaceAfter: 40 });
+      if (op.t === 'headline') return para([{ text: op.text, bold: true, size: 21, color: '5F7161' }], { spaceAfter: 40 });
+      if (op.t === 'contact') return para([{ text: op.text, size: 18, color: '6B5B4E' }], { spaceAfter: 80 });
+      if (op.t === 'h2') return para([{ text: String(op.text).toUpperCase(), bold: true, size: 19, color: '1F1A14' }],
+        { spaceBefore: 200, spaceAfter: 60, border: true });
+      if (op.t === 'job') {
+        var runs = [{ text: op.title + (op.org ? ' — ' + op.org : ''), bold: true, size: 21, color: '1F1A14' }];
+        if (op.dates) runs.push({ text: '   ' + op.dates, size: 18, color: '6B5B4E' });
+        return para(runs, { spaceBefore: 120, spaceAfter: 20 });
+      }
+      if (op.t === 'bullet') return para([{ text: '•  ' + op.text, size: 20 }], { indent: 360, hanging: 180, spaceAfter: 20 });
+      return para([{ text: op.text, size: 20 }], { spaceAfter: 20 });
+    }).join('');
+
+    var documentXml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+      '<w:body>' + body +
+      '<w:sectPr><w:pgSz w:w="12240" w:h="15840"/>' +
+      '<w:pgMar w:top="1080" w:right="1080" w:bottom="1080" w:left="1080" w:header="720" w:footer="720" w:gutter="0"/>' +
+      '</w:sectPr></w:body></w:document>';
+
+    var contentTypes = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+      '</Types>';
+
+    var rels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+      '</Relationships>';
+
+    var zip = makeZip([
+      { name: '[Content_Types].xml', data: utf8(contentTypes) },
+      { name: '_rels/.rels', data: utf8(rels) },
+      { name: 'word/document.xml', data: utf8(documentXml) }
+    ]);
+    return new Blob([zip], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+  }
+
+  /* --------------------------------------------------------- plain text/html */
+  function buildResumeTXT(data) {
+    var doc = buildResumeDoc(data);
+    var out = [];
+    doc.forEach(function (op) {
+      if (op.t === 'name') { out.push(op.text, ''); }
+      else if (op.t === 'headline') out.push(op.text);
+      else if (op.t === 'contact') { out.push(op.text, ''); }
+      else if (op.t === 'h2') { out.push('', String(op.text).toUpperCase(), '-'.repeat(Math.min(48, String(op.text).length + 8))); }
+      else if (op.t === 'job') out.push('', op.title + (op.org ? ' — ' + op.org : '') + (op.dates ? '   (' + op.dates + ')' : ''));
+      else if (op.t === 'bullet') out.push('- ' + op.text);
+      else out.push(op.text);
+    });
+    return new Blob([out.join('\n') + '\n'], { type: 'text/plain' });
+  }
+
+  function buildResumeHTML(data) {
+    var doc = buildResumeDoc(data);
+    var esc = function (s) {
+      return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+    var parts = [];
+    doc.forEach(function (op) {
+      if (op.t === 'name') parts.push('<h1>' + esc(op.text) + '</h1>');
+      else if (op.t === 'headline') parts.push('<p class="hl">' + esc(op.text) + '</p>');
+      else if (op.t === 'contact') parts.push('<p class="ct">' + esc(op.text) + '</p>');
+      else if (op.t === 'h2') parts.push('<h2>' + esc(String(op.text).toUpperCase()) + '</h2>');
+      else if (op.t === 'job') parts.push('<p class="job"><b>' + esc(op.title) +
+        (op.org ? ' — ' + esc(op.org) : '') + '</b><span>' + esc(op.dates) + '</span></p>');
+      else if (op.t === 'bullet') parts.push('<div class="b"><span>•</span><p>' + esc(op.text) + '</p></div>');
+      else parts.push('<p>' + esc(op.text) + '</p>');
+    });
+    return '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>' +
+      esc((data && data.name) || 'Resume') + ' — Resume</title><style>' +
+      '*{box-sizing:border-box}body{font-family:Georgia,"Times New Roman",serif;color:#1F1A14;max-width:7.6in;' +
+      'margin:0.6in auto;padding:0 0.4in;line-height:1.45;font-size:11pt}' +
+      'h1{font-size:22pt;margin:0 0 2pt;letter-spacing:-.01em}' +
+      '.hl{font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#5F7161;margin:0 0 4pt;font-size:11pt}' +
+      '.ct{font-family:Helvetica,Arial,sans-serif;font-size:9.5pt;color:#6B5B4E;margin:0 0 14pt}' +
+      'h2{font-family:Helvetica,Arial,sans-serif;font-size:9.5pt;letter-spacing:.09em;text-transform:uppercase;' +
+      'border-bottom:1px solid #C9C4BC;padding-bottom:3pt;margin:16pt 0 6pt}' +
+      '.job{margin:9pt 0 3pt;font-size:11pt}.job span{float:right;font-family:Helvetica,Arial,sans-serif;' +
+      'font-size:9pt;color:#6B5B4E;font-weight:400}' +
+      '.b{display:flex;gap:7pt;margin:0 0 2.5pt}.b span{color:#5F7161}.b p{margin:0}' +
+      'p{margin:0 0 4pt}@media print{body{margin:0.5in;padding:0}}' +
+      '</style></head><body>' + parts.join('') + '</body></html>';
+  }
+
+  /* ------------------------------------------------------- generic text PDF */
+  function buildTextPDF(opts) {
+    opts = opts || {};
+    var w = new PDFWriter();
+    var body = String(opts.body || '');
+    w.space(8);
+    if (opts.title) { w.text(opts.title, { size: 16, bold: true, color: COL.ink }); w.space(20); }
+    if (opts.subtitle) { w.text(opts.subtitle, { size: 9.5, color: COL.muted }); w.space(18); }
+    w.rule(2);
+    w.space(14);
+    body.split(/\r?\n/).forEach(function (line) {
+      if (!line.trim()) { w.space(7); return; }
+      var bold = /^[A-Z][A-Z0-9 &/,'()\-]{3,}$/.test(line.trim());
+      var wrapped = wrapText(line, 9.6, bold, RIGHT - MARGIN);
+      wrapped.forEach(function (ln) {
+        w.text(ln, { size: 9.6, bold: bold, color: bold ? COL.ink : COL.body });
+        w.space(12.2);
+      });
+    });
+    return new Blob([buildPDF(w)], { type: 'application/pdf' });
+  }
+
+  /* ------------------------------------------------------------------ saving */
+  function save(blob, filename) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      try { document.body.removeChild(a); URL.revokeObjectURL(url); } catch (e) {}
+    }, 1500);
+  }
+
+  function safeName(s) {
+    return String(s || 'Resume').replace(/[^\w\s-]/g, '').replace(/\s+/g, '_').slice(0, 40) || 'Resume';
+  }
+
+  function resumeDataFromDOM() {
+    var val = function (id) {
+      var el = document.getElementById(id);
+      return el ? el.value : '';
+    };
+    var exps = [];
+    var list = document.getElementById('expList');
+    if (list) {
+      Array.prototype.forEach.call(list.children, function (row) {
+        var q = function (sel) { var el = row.querySelector(sel); return el ? el.value : ''; };
+        var inputs = row.querySelectorAll('input,textarea');
+        exps.push({
+          title: q('.eTitle') || (inputs[0] ? inputs[0].value : ''),
+          org: q('.eOrg') || (inputs[1] ? inputs[1].value : ''),
+          dates: q('.eDates') || (inputs[2] ? inputs[2].value : ''),
+          bullets: q('.eBullets') || (inputs[3] ? inputs[3].value : '')
+        });
+      });
+    }
+    return {
+      name: val('rName'),
+      headline: val('rHeadline'),
+      city: val('rCity'),
+      phone: val('rPhone'),
+      email: val('rEmail'),
+      summary: val('rSummary'),
+      skills: String(val('rSkills') || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean),
+      edu: val('rEdu'),
+      experiences: exps
+    };
+  }
+
+  root.ResumeExport = {
+    buildResumePDF: buildResumePDF,
+    buildResumeDOCX: buildResumeDOCX,
+    buildResumeTXT: buildResumeTXT,
+    buildResumeHTML: buildResumeHTML,
+    buildTextPDF: buildTextPDF,
+    buildResumeDoc: buildResumeDoc,
+    resumeDataFromDOM: resumeDataFromDOM,
+    save: save,
+    safeName: safeName,
+    textWidth: textWidth,
+    _makeZip: makeZip,
+    _buildPDF: buildPDF,
+    _PDFWriter: PDFWriter
+  };
+})(typeof window !== 'undefined' ? window : this);
+
+/* ===== end ResumeExport ===== */
+
+</script>
+</body>
+</html>

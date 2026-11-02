@@ -1,0 +1,14 @@
+{
+  "name": "proready-coach",
+  "version": "1.2.0",
+  "private": true,
+  "description": "ProReady Coach \u2014 resume builder, proofreader, and formal mock interview. Single-file web app + desktop resume studio.",
+  "scripts": {
+    "test": "bash tests/run-all.sh",
+    "sync-export": "python3 tools/sync_export.py",
+    "serve": "python3 -m http.server 8080 --bind 0.0.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}
