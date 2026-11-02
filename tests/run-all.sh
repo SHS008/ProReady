@@ -13,6 +13,8 @@ echo "== voice handling =="
 node tests/voice.test.js || fail=1
 echo "== voice integration (app + native plugins) =="
 node tests/voice-integration.test.js || fail=1
+echo "== pdf import =="
+node tests/pdf-import.test.js || fail=1
 echo "== interview question copy =="
 node tests/interview-copy.test.js || fail=1
 echo "== desktop studio =="

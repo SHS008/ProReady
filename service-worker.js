@@ -1,6 +1,6 @@
 /* ProReady Coach — offline support for the installed (PWA) app.
    Bump CACHE_VERSION whenever index.html/assets change in a release. */
-const CACHE_VERSION = 'proready-coach-v6';
+const CACHE_VERSION = 'proready-coach-v7';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const CORE_ASSETS = [
   './privacy.html',
   './desktop.html',
   './resume-export.js',
+  './pdf-text.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-512.png',

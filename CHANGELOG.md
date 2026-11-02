@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.3.0 — 2026-11-02
+
+### Resume tab reads PDF uploads
+Both the Builder and the Proofreader now accept **.pdf**, so a resume can arrive as a PDF, Word
+file, plain text or HTML.
+
+- **New `pdf-text.js` engine** (no dependencies, runs on the device, nothing uploaded). The old
+  reader only understood uncompressed streams, which almost no real PDF uses — it failed on
+  virtually every file a person actually has. The new one handles:
+  - FlateDecode, including ASCII85 / ASCIIHex / RunLength filter chains
+  - **object streams and cross-reference streams** (PDF 1.5+, what Word, Google Docs, Canva and
+    LaTeX produce)
+  - **Type0 subset fonts via ToUnicode CMaps** — this is what stops the “garbage characters”
+    that simpler extractors produce
+  - multi-page documents in page-tree order
+  - WinAnsi/Latin-1 fallback for fonts that ship no ToUnicode map
+- **Fallback DEFLATE decoder in pure JavaScript** for browsers without `DecompressionStream`.
+  iOS only got that API in 16.4, so without this an older iPhone would fail on any compressed
+  PDF. Verified against stored, fixed-Huffman and dynamic-Huffman streams.
+- **FileReader fallback** for `Blob.text()`/`arrayBuffer()`, missing on iOS 13 and earlier.
+- **Fills the Builder automatically.** Uploading a resume now populates name, headline, email,
+  phone, city/state, summary, skills, education and each job with its own bullet points and
+  dates — then lets you correct anything.
+- **Honest failure messages instead of a dead end.** Password-protected PDFs and scanned /
+  photographed PDFs (which contain no text — that needs OCR, which this app deliberately does
+  not do) are both named plainly, with the paste-the-text path offered.
+- Import asks before overwriting resume content already in the builder, and leaves your data
+  untouched if extraction fails.
+- New suite `tests/pdf-import.test.js` (29 checks) covers the engine across all PDF variants and
+  drives the real upload handler with real PDF bytes.
+
 ## 1.2.1 — 2026-11-02
 
 ### Interview questions proofread

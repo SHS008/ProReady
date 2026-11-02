@@ -121,6 +121,20 @@ WinAnsi glyph mapping) and that the DOCX zip contains a real WordprocessingML pa
 `tests/app.test.js` and `tests/desktop.test.js` drive both UIs in jsdom: export flows,
 backup/restore, proofreader, interview start, accessibility labelling, and zero JS errors.
 
+## Resume PDF import (v1.3.0)
+
+`pdf-text.js` reads the text layer out of a PDF on the device — no upload, no dependency. Both
+the Builder and the Proofreader accept `.pdf`, `.docx`, `.txt`, `.md` and `.html`.
+
+Handled: FlateDecode and the ASCII85/ASCIIHex/RunLength chains, object streams and
+cross-reference streams (PDF 1.5+), Type0 subset fonts via ToUnicode CMaps, multi-page
+documents, and a pure-JavaScript DEFLATE fallback for browsers without
+`DecompressionStream` (iOS gained it only in 16.4).
+
+Not handled, and reported plainly instead of failing silently: **encrypted** PDFs and
+**scanned/image-only** PDFs. The second one cannot work without OCR, which this app does not
+do — paste the text instead.
+
 ## Voice in the native app (v1.2.0)
 
 `voice-adapter.js` is the single speech interface:

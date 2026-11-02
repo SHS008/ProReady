@@ -17,7 +17,7 @@ const $=id=>d.getElementById(id);
 
 chk('page loads with no JS errors', errs.length===0, JSON.stringify(errs.slice(0,2)));
 chk('ResumeExport loaded from external file', typeof w.ResumeExport==='object');
-chk('version shown', /v1\.2\.1/.test(d.body.textContent) && d.querySelector('meta[name="app-version"]').content === '1.2.1');
+chk('version shown', /v1\.3\.0/.test(d.body.textContent) && d.querySelector('meta[name="app-version"]').content === '1.3.0');
 chk('skip link', !!d.querySelector('.skip-link'));
 
 // typing updates preview + score

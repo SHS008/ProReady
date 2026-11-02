@@ -6,7 +6,7 @@
 <title>ProReady Coach — Desktop Resume Studio</title>
 <meta name="description" content="Desktop resume studio: write, proofread, and export a recruiter-ready resume as PDF, Word (.docx), plain text, or print. Everything runs on your computer.">
 <meta name="theme-color" content="#432818">
-<meta name="app-version" content="1.2.1">
+<meta name="app-version" content="1.3.0">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
 :root{
@@ -145,7 +145,7 @@ footer a{font-weight:700}
   <div class="topin">
     <div class="logo"><div class="logo-badge" aria-hidden="true">✓</div>
       <div>ProReady<small>Desktop Resume Studio</small></div></div>
-    <span class="vtag">v1.2.1</span>
+    <span class="vtag">v1.3.0</span>
     <div class="spacer"></div>
     <div class="row">
       <a class="btn btn-outline" href="index.html">← Full app (interview &amp; prep)</a>
@@ -288,7 +288,7 @@ footer a{font-weight:700}
 </main>
 
 <footer>
-  <p><b>ProReady Coach — Desktop Resume Studio</b> v1.2.1 · Self-contained single file — files are generated on your computer; nothing is uploaded. ·
+  <p><b>ProReady Coach — Desktop Resume Studio</b> v1.3.0 · Self-contained single file — files are generated on your computer; nothing is uploaded. ·
   <a href="privacy.html">Privacy policy</a> · <a href="index.html">Full app: prep school, mock interview, follow-up</a></p>
 </footer>
 
@@ -1078,7 +1078,7 @@ function printResume(){
 
 /* ================= backup / restore ================= */
 function backup(){
-  const payload={app:'ProReady Coach Desktop',version:'1.2.1',exported:new Date().toISOString(),resume:exportedData()};
+  const payload={app:'ProReady Coach Desktop',version:'1.3.0',exported:new Date().toISOString(),resume:exportedData()};
   ResumeExport.save(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),
     'ProReady_Desktop_Backup_'+new Date().toISOString().slice(0,10)+'.json');
   toast('Backup downloaded.');

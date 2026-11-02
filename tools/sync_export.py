@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Re-inline resume-export.js into index.html and desktop.html.
+"""Re-inline resume-export.js, voice-adapter.js and pdf-text.js into index.html.
 
 resume-export.js is the single source of truth for PDF/DOCX/TXT output.
 Run this after editing it:   python3 tools/sync_export.py
@@ -10,6 +10,7 @@ import pathlib, re, sys
 root = pathlib.Path(__file__).resolve().parent.parent
 engine = (root / 'resume-export.js').read_text()
 voice = (root / 'voice-adapter.js').read_text()
+pdftext = (root / 'pdf-text.js').read_text()
 
 def sync_block(h, start_marker, end_marker, body):
     start = h.index(start_marker)
@@ -22,6 +23,9 @@ def sync_index():
     h = sync_block(h,
                    '/* ===== VoiceAdapter (inlined from voice-adapter.js) ===== */',
                    '/* ===== end VoiceAdapter ===== */', voice)
+    h = sync_block(h,
+                   '/* ===== PdfText (inlined from pdf-text.js) ===== */',
+                   '/* ===== end PdfText ===== */', pdftext)
     h = sync_block(h,
                    '/* ===== ResumeExport (inlined from resume-export.js) ===== */',
                    '/* ===== end ResumeExport ===== */', engine)
