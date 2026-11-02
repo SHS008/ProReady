@@ -26,22 +26,13 @@ silently does nothing.
 
 ## Route A — GitHub Pages + Safari (start here)
 
-You get a real URL, offline support, and a home-screen icon — in about two minutes. Good for
-testing everything except spoken answers, and good for showing the app to other people.
+**The app is live at → https://shs008.github.io/ProReady/**
 
-### 1. Push the repo
-See `GITHUB_SETUP.md`, step 1. You need the repo on GitHub first.
+Repo: https://github.com/SHS008/ProReady · Pages builds from `main` / root, and the first
+build already succeeded.
 
-### 2. Turn on Pages
-1. On GitHub, open your repository.
-2. **Settings** (top bar) → **Pages** (left sidebar, under "Code and automation").
-3. Under **Build and deployment → Source**, choose **Deploy from a branch**.
-4. **Branch:** `main` · **Folder:** `/ (root)` → **Save**.
-5. Wait ~60 seconds. Refresh the page; a banner appears with your URL:
-   `https://YOUR-USERNAME.github.io/proready-coach/`
-
-### 3. Open it on the iPhone
-Type that URL into **Safari** on your phone. It must be Safari for the home-screen install to
+### 1. Open it on the iPhone
+Type **https://shs008.github.io/ProReady/** into **Safari** on your phone. It must be Safari for the home-screen install to
 work — Chrome on iOS can open the page but won't offer the same install path.
 
 ### 4. Confirm it loaded correctly
@@ -75,7 +66,7 @@ a free Apple ID can sign and install a build that lasts **7 days**, after which 
 ### 1. On the Mac, get the code
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/proready-coach.git
+git clone https://github.com/SHS008/ProReady.git
 cd proready-coach
 
 # Node 20 or 22 (Capacitor 7 needs >= 20). Check with: node -v

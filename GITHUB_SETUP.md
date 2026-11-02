@@ -1,3 +1,37 @@
+# ProReady on GitHub — done
+
+| | |
+|---|---|
+| Repository | https://github.com/SHS008/ProReady |
+| Visibility | Public |
+| Branch | `main` (default) |
+| Live app | **https://shs008.github.io/ProReady/** |
+| Pages source | `main` / root, built successfully |
+| First commit | `15ea0d8` — ProReady Coach v1.2.0 |
+
+## Pushing future changes
+
+The remote is already configured, so from the project folder:
+
+```bash
+git add -A
+git commit -m "describe the change"
+git push
+```
+
+Pages rebuilds automatically in about 30–60 seconds. **Bump `CACHE_VERSION` in
+`service-worker.js`** whenever you change `index.html` or any asset, or phones that installed
+the app will keep serving the old cached copy.
+
+## Updating the app on your phone after a push
+
+- **In Safari / home-screen app:** pull to refresh, or close the tab and reopen. If it still
+  looks stale, the service worker is holding the old version — bumping `CACHE_VERSION` is the fix.
+- **In the native Xcode build:** the app does not fetch from GitHub. You must re-run
+  `node mobile/scripts/sync-www.mjs`, then `npx cap sync ios`, then rebuild (⌘R).
+
+---
+
 # Putting ProReady Coach on GitHub
 
 The repository is already prepared locally: `git` is initialised, `.gitignore` is set, and
@@ -15,7 +49,7 @@ the two options below. Option 1 is the safe one and takes about a minute.
 **Do this on your phone or laptop, in the browser:**
 
 1. Go to **https://github.com/new**
-2. **Repository name:** `proready-coach`
+2. **Repository name:** `ProReady`
 3. **Description:** `Guided resume builder, proofreader and formal mock-interview coach`
 4. **Visibility:** **Private** — recommended while you're still testing. You can flip it to
    public later in Settings → General → Danger Zone, and GitHub Pages works with
@@ -50,7 +84,7 @@ Download the project from the workspace, then on your computer:
 cd proready-coach
 
 # point at the empty repo you just created
-git remote add origin https://github.com/YOUR-USERNAME/proready-coach.git
+git remote add origin https://github.com/SHS008/ProReady.git
 git commit -m "ProReady Coach v1.2.0 — guided resume, proofreader, formal mock interview"
 git push -u origin main
 ```
@@ -73,7 +107,7 @@ git config --global user.email "you@example.com"
 2. **Source:** Deploy from a branch · **Branch:** `main` · **Folder:** `/ (root)` → **Save**
 3. Wait ~1 minute, refresh. Your URL is:
 
-   **`https://YOUR-USERNAME.github.io/proready-coach/`**
+   **`https://shs008.github.io/ProReady/`**
 
 4. Open that URL in **Safari on your iPhone**. Continue with `TESTING_ON_IPHONE.md` → Route A.
 
