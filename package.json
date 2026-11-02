@@ -1,6 +1,6 @@
 {
   "name": "proready-coach",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "ProReady Coach \u2014 resume builder, proofreader, and formal mock interview. Single-file web app + desktop resume studio.",
   "scripts": {

@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.2.1 — 2026-11-02
+
+### Interview questions proofread
+- **Fixed "the this position position."** When no job title was set, the generator fell back to
+  the string `'this position'` and the templates then appended ` position`, so every opening
+  question read "your application for the this position position". It now falls back to the
+  complete phrase `this position` and composes correctly: "for this position".
+- **Titles that already contain a role noun are de-duplicated.** "Store Manager Position" is
+  spoken as "Store Manager position", not "Store Manager Position position".
+- **A bare generic word is no longer treated as a job title.** Typing "Position" or "Role" now
+  falls back to natural phrasing instead of being read back as a job title.
+- **No invented company name.** With no company entered, questions say "about the
+  organization" rather than implying one exists.
+- **Fixed a dangling question** — "regarding this position, this team?" now reads
+  "…this team, or Acme Health?" (with "or the organization" when no company is set).
+- **Removed a redundant double question.** If a candidate gave no questions of their own at
+  the end, Alex asked "Do you have any questions…" immediately followed by the closing
+  question that asks the same thing. The follow-up is now skipped when the closing is next.
+- **Screener interview** shortens by one question as a result (6 instead of 7 when no
+  candidate questions are given); full interviews stay at 13.
+- **New suite** `tests/interview-copy.test.js` (24 checks) generates the complete question
+  script for blank titles, generic titles, redundant titles and normal titles across all
+  three formats, and fails on any repeated or malformed text.
+
 ## 1.2.0 — 2026-11-01
 
 ### Voice input now works in the native iOS/Android builds

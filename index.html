@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ProReady Coach — Resume & Interview Prep for Professional Jobs</title>
 <meta name="description" content="Step-by-step resume builder and proofreader, interview lessons, and a formal AI video mock interview with scored feedback.">
-<meta name="app-version" content="1.2.0">
+<meta name="app-version" content="1.2.1">
 <meta name="app-build" content="2026-10-31">
 <meta name="theme-color" content="#432818">
 <link rel="manifest" href="manifest.webmanifest">
@@ -553,7 +553,7 @@ html[data-theme="coach"] .stepcard:hover{border-color:#C75B39}
   <p class="small muted" id="backupStatus" style="margin-top:8px">Backups are a small JSON file you can keep in your email, cloud drive, or on a USB stick. Nothing is sent anywhere.</p>
 </div>
 <footer>
-  <p><b>ProReady Coach</b> <span class="muted">v1.2.0</span> · Your typing is saved only in this browser (localStorage). Camera/mic streams are never uploaded. Speech uses your browser's built-in tools, or your phone's in the app. · Scores are rule-based practice signals, explained on screen. · <a href="desktop.html">Desktop version with document export</a></p>
+  <p><b>ProReady Coach</b> <span class="muted">v1.2.1</span> · Your typing is saved only in this browser (localStorage). Camera/mic streams are never uploaded. Speech uses your browser's built-in tools, or your phone's in the app. · Scores are rule-based practice signals, explained on screen. · <a href="desktop.html">Desktop version with document export</a></p>
 </footer>
 
 <script>
@@ -582,7 +582,7 @@ function renderChips(el,list,key){
 function toggleChip(key,val){state.job[key]=state.job[key]||[];let a=state.job[key];a.includes(val)?a.splice(a.indexOf(val),1):a.push(val);save();renderChips($('strengthChips'),strengths,'strengths');renderChips($('concernChips'),concerns,'concerns');}
 
 /* Keywords */
-const stop=new Set('the and or for with and to of a in is are will be you your our we this that from as an at on by it its their they have has who can all per day work working job role position positions team ability abilities able include including includes required requirements experience years year skills knowledge must should other duties assigned perform provide support ensure maintain seeking looking friendly fast paced environment ideal candidate candidates join joining growing apply today now hiring preferred strong new help needed needed responsible responsibilities etc may also within across various related field fields using used use well plus'.split(' '));
+const stop=new Set('the and or for with and to of a in is are will be you your our we this that from as an at on by it its their they have has who can all per day work working job role position positions team ability abilities able include including includes required requirements experience years year skills knowledge must should other duties assigned perform provide support ensure maintain seeking looking friendly fast paced environment ideal candidate candidates join joining growing apply today now hiring preferred strong new help needed responsible responsibilities etc may also within across various related field fields using used use well plus'.split(' '));
 const SKILL_LEXICON=['scheduling','data entry','customer service','appointments','insurance','medical records','confidentiality','hipaa','communication','multitasking','cash handling','billing','microsoft office','excel','patient check-in','answering phones','records','inventory','training','problem-solving','accuracy','documentation','filing','safety','cleaning','driving','sales','teamwork','greeting','phones','patients','customers'];
 function extractKeywords(text){
   if(!text||text.trim().length<20)return [];
@@ -695,8 +695,9 @@ const commonQ=[
  {q:'Where do you see yourself in a few years?',how:'Show stability and growth inside this kind of role/company.',ex:'"I want to master this role, become someone the team can count on, and keep building skills like ___ certification."'}
 ];
 function renderCommonQuestions(){
-  let title=state.job.title||'this role';
-  let extra=[{q:`What interests you about working as a ${title}?`,how:'Tie the daily work in the posting to work you have enjoyed and done well — in any setting.',ex:'Mention 2 duties from the posting + a past example for each, even from retail, caregiving, trades, or volunteering.'},
+  let title=tidyTitle(state.job.title);
+  let roleQ=title?((/^[AEIOU]/i.test(title)?'an ':'a ')+title):'this role';
+  let extra=[{q:`What interests you about working as ${roleQ}?`,how:'Tie the daily work in the posting to work you have enjoyed and done well — in any setting.',ex:'Mention 2 duties from the posting + a past example for each, even from retail, caregiving, trades, or volunteering.'},
              {q:`How would you handle confidential or sensitive information?`,how:'Professional roles require privacy. Mention following policy, locking screens, never sharing outside work.',ex:'"I treat customer information like it was my own — only access what I need, follow policy exactly, and ask a supervisor if unsure."'}];
   $('commonQuestions').innerHTML=[...extra,...commonQ].map(x=>`<details><summary>${esc(x.q)}</summary><p class="small"><b>How to answer:</b> ${esc(x.how)}</p><p class="small"><b>Example:</b> ${esc(x.ex)}</p></details>`).join('');
 }
@@ -765,24 +766,46 @@ function scenarioFor(title){
   if(/teach|child|school|care/.test(s))return "Consider the following scenario. A parent or family member is dissatisfied with how a matter was handled and raises the concern in front of others. How would you respond at the time, and what steps would you take afterward?";
   return "Consider the following scenario. During your busiest hour, the telephone is ringing, a customer before you is dissatisfied, and your supervisor has assigned an urgent task with a deadline. Please state, in order, how you would handle each matter, and what you would say to the customer.";
 }
+/* --- Proofreading helpers. Generated questions must stay grammatical for ANY job title. --- */
+const ROLE_NOUNS=/^(position|role|job|opening|vacancy|post|posting|opportunity)$/i;
+function tidyTitle(raw){
+  let t=String(raw||'').replace(/\s+/g,' ').trim();
+  if(!t)return '';
+  let words=t.split(' ');
+  /* "Store Manager Position" -> "Store Manager"; "Sales Role" -> "Sales" */
+  while(words.length>1 && ROLE_NOUNS.test(words[words.length-1]))words.pop();
+  t=words.join(' ').trim();
+  /* a bare generic noun is not a job title */
+  if(ROLE_NOUNS.test(t))return '';
+  return t;
+}
 function buildInterviewPlan(format, style){
-  let t=state.job.title||'this position', c=state.job.company||'this organization', name=firstName();
+  /* Never fall back to the string 'this position' here: every template already says
+     "position", which produced "the this position position" when no title was set. */
+  let t=tidyTitle(state.job.title);
+  let co=String(state.job.company||'').trim();
+  let role = t ? ('the '+t+' position') : 'this position';   /* subject/object phrase */
+  let roleOf = t ? ('the '+t+' position') : 'this position';
+  let org = co || 'the organization';                        /* used after "about" */
+  let orOrg = co ? (' or '+co) : '';
+  let atCo = co ? (' at '+co) : '';
+  let name=firstName();
   let exps=resumeExps(), e1=exps[0], e2=exps[1], skills=resumeSkills();
-  let k1=kw(0,'the duties described in the posting'), k2=kw(1,'the duties of this position');
+  let kk=cleanKws()[0], k2=kw(1,'the duties described in the posting');
   let concerns=state.job.concerns||[];
   let P=[];
   /* Formal opening only — no small talk, no separate "arrival" question. The interview begins with the introduction. */
   if(format==='screen'){
     P.push(makeItem('Intro / Elevator Speech','intro',
-      `Hello${name?(', '+name):''}. This is Alex Morgan from ${c}. I am calling regarding your application for the ${t} position. To begin, please tell me about yourself and your professional background.`,
+      `Hello${name?(', '+name):''}. This is Alex Morgan${co?(' from '+co):''}. I am calling regarding your application for ${role}. To begin, please tell me about yourself and your professional background.`,
       'Present (who you are now) -> Past (1-2 proofs) -> Future (why this position); 60-90 seconds',[90,200],'about 60–90 seconds'));
   } else {
     P.push(makeItem('Intro / Elevator Speech','intro',
-      `Good day${name?(', '+name):''}. Thank you for meeting with us. My name is Alex Morgan, and I will be conducting this interview for the ${t} position. To begin, please tell me about yourself and your professional background.`,
+      `Good day${name?(', '+name):''}. Thank you for meeting with us. My name is Alex Morgan, and I will be conducting this interview for ${role}. To begin, please tell me about yourself and your professional background.`,
       'Present (who you are now) -> Past (1-2 proofs) -> Future (why this position); 60-90 seconds',[90,200],'about 60–90 seconds'));
   }
   P.push(makeItem('Motivation & Fit','motivation',
-    `Why have you applied for the ${t} position at ${c}? What do you know about this organization and the work involved?`,
+    `Why have you applied for ${role}${atCo}? What do you know about ${org} and the work involved?`,
     'specific reasons tied to the posting and organization; how their background fits',[70,180],'about 60–75 seconds'));
   if(e1){
     P.push(makeItem('Work History','history',
@@ -790,7 +813,7 @@ function buildInterviewPlan(format, style){
       'day-to-day duties; personal responsibilities ("I", not only "we"); skills relevant to this position',[90,220],'about 75–90 seconds'));
     P.push(makeItem('Work History','transition',
       concerns.includes('Changing fields')||concerns.includes('No direct experience')
-        ? `Your background differs from ${t} work. Why are you seeking this change, and how does your experience prepare you for this position?`
+        ? `Your background differs from ${t?(t+' work'):'the work described in the posting'}. Why are you seeking this change, and how does your experience prepare you for ${role}?`
         : `Why are you seeking a new position at this time?`,
       'a positive, forward-looking reason; no criticism of a former employer',[70,180],'about 60 seconds'));
     if(e2 && format!=='screen'){
@@ -808,7 +831,7 @@ function buildInterviewPlan(format, style){
       `This position requires a consistent schedule and dependable attendance. Please state your availability. A final practical item: what salary range are you seeking?`,
       'clear availability and transportation plan; a researched, flexible range (or a request for the budgeted range)',[60,170],'about 60 seconds'));
     P.push(makeItem('Your Questions','candidateqs',
-      `That concludes my questions for this call. What questions do you have regarding this position or ${c}?`,
+      `That concludes my questions for this call. What questions do you have regarding ${role} or ${org}?`,
       'at least one relevant question (training, responsibilities, next steps)',[15,140],'ask 1–2 questions'));
     P.push(makeItem('Closing','closing',
       `That concludes this call. Candidates will be contacted next week regarding next steps. Thank you for your time.`,
@@ -816,7 +839,9 @@ function buildInterviewPlan(format, style){
     return P;
   }
   P.push(makeItem('Job Skills','skill',
-    `This position requires ${k1}. Please describe your experience with this type of work. Provide a specific example, including the outcome.`,
+    kk
+      ? `This position requires ${kk}. Please describe your experience with this type of work. Provide a specific example, including the outcome.`
+      : `Please describe the experience that best prepares you for ${role}. Provide a specific example, including the outcome.`,
     'a specific example proving the primary skill in the posting, with an outcome',[90,220],'about 75–90 seconds'));
   P.push(makeItem('Job Skills','skill',
     skills.length
@@ -833,17 +858,17 @@ function buildInterviewPlan(format, style){
     'priorities in order; clear communication; adherence to policy; appropriate escalation',[90,220],'about 75–90 seconds'));
   if(format==='final'||style==='tough'){
     P.push(makeItem('Motivation & Fit','fit',
-      `Other candidates may have more direct experience in ${t} work. What would you accomplish in your first ninety days, and why should you be selected?`,
+      `Other candidates may have more direct experience in ${t?(t+' work'):'this line of work'}. What would you accomplish in your first ninety days, and why should you be selected?`,
       'a concrete first-90-days plan; specific strengths with supporting evidence',[90,220],'about 90 seconds'));
   }
   P.push(makeItem('Practical Fit','practical',
     `Please describe your record regarding attendance, punctuality, and follow-through. If your most recent supervisor were contacted, what would they state about your work?`,
     'specific evidence of reliability; a credible summary from a supervisor',[70,190],'about 60–75 seconds'));
   P.push(makeItem('Your Questions','candidateqs',
-    `That concludes my questions. What questions do you have regarding this position, this team, or ${c}?`,
+    `That concludes my questions. What questions do you have regarding ${role}, this team, or ${org}?`,
     'two or three relevant questions (responsibilities, training, measures of success, next steps)',[15,160],'ask 2–3 questions'));
   P.push(makeItem('Closing','pitch',
-    `In closing, please state briefly — in approximately thirty seconds — why you are the right candidate for the ${t} position.`,
+    `In closing, please state briefly — in approximately thirty seconds — why you are the right candidate for ${role}.`,
     'two or three strengths relevant to this position, supported briefly by evidence',[50,130],'about 30 seconds'));
   P.push(makeItem('Closing','closing',
     `That concludes the interview. We expect to complete interviews this week and will contact candidates early next week regarding next steps. Thank you for your time.`,
@@ -860,7 +885,10 @@ function pickDetail(text){
 function generateFollowUp(item,text,a){
   if(item.type==='closing'||item.type==='pitch')return null;
   if(item.type==='candidateqs'){
-    if(a.qCount===0)return{text:`Do you have any questions regarding training, daily responsibilities, or the next steps in this process?`,why:'you had no questions ready'};
+    /* Re-ask only if substantive questions follow. If the next step is the closing,
+       asking "do you have any questions?" twice in a row is redundant. */
+    let nx=(typeof queue!=='undefined'&&typeof qIdx!=='undefined')?queue[qIdx+1]:null;
+    if(a.qCount===0 && nx && nx.type!=='closing')return{text:`Do you have any questions regarding training, daily responsibilities, or the next steps in this process?`,why:'you had no questions ready'};
     return null;
   }
   if(a.words<35)
@@ -1119,7 +1147,7 @@ function downloadReport(){
 /* ===== Backup / restore / erase (all local) ===== */
 function backupData(){
   try{
-    let payload={app:'ProReady Coach',version:'1.2.0',exported:new Date().toISOString(),state:state};
+    let payload={app:'ProReady Coach',version:'1.2.1',exported:new Date().toISOString(),state:state};
     let json=JSON.stringify(payload,null,2);
     ResumeExport.save(new Blob([json],{type:'application/json'}),'ProReady_Backup_'+new Date().toISOString().slice(0,10)+'.json');
     $('backupStatus').textContent='Backup saved. Keep it somewhere you can find it — it is your only copy outside this browser.';
